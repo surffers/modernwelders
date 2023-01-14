@@ -1,0 +1,143 @@
+{% load static %}
+{% load humanize %}
+{% load i18n %}
+{% load account socialaccount %}
+
+{% block content %}
+
+
+<!--    Navbar    -->
+<nav class="navbar is-fixed-top is-flex" id="navbar">
+
+    <div class="container">
+
+        <div class="navbar-brand">
+
+              <a class="navbar-item logo" href="/">
+
+                <h1 class="navbar-item title-logo">Surffers</h1>
+            </a>
+
+          <div class="navbar-item">
+
+          </div>
+
+
+
+
+
+            <div class="navbar-burger burger" data-target="navMenubd-example">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+        </div>
+
+
+
+    <div class="navbar-menu" id="navMenubd-example">
+
+        <div class="navbar-end">
+<a class="navbar-item " href="http://bulma.io/expo/">
+        <span class="bd-emoji">🎨</span> &nbsp;Expo
+      </a>
+      <a class="navbar-item " href="http://bulma.io/love/">
+        <span class="bd-emoji">❤️</span> &nbsp;Love
+      </a>
+                <a href="#" class="navbar-item">
+                                Курсы
+                            </a>
+
+{% if request.user.is_authenticated %}
+
+                <div class="navbar-item has-dropdown is-hoverable ">
+
+            <a class="navbar-link">
+          {{ request.user.username|truncatechars:20 }}
+        </a>
+
+        <div class="navbar-dropdown is-right">
+          <a class="navbar-item " href="{% url 'profile' request.user.username %}">
+            Профиль
+          </a>
+          <a class="navbar-item " >
+            Избранное
+          </a>
+          <a class="navbar-item " href="{% url 'categories' %}">
+            Категории
+          </a>
+          <a class="navbar-item " href="{% url 'board' %}">
+            Ссылки
+          </a>
+            <a class="navbar-item " href="{% url 'tests' %}">
+            Тесты
+          </a>
+
+
+          <hr class="navbar-divider">
+          <div class="navbar-item">
+            <div>
+              <p class="is-size-6-desktop">
+                <a href="{% url 'account_logout' %}" class="has-text-danger">
+                                Выход
+                            </a>
+              </p>
+
+<!--              <small>-->
+<!--                  <span class="bd-emoji">❤️</span>-->
+<!--                <a class="bd-view-all-versions">Мы будем скучать</a>-->
+<!--              </small>-->
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+{% else %}
+            <div class="buttons">
+                <a class="button is-black is-rounded is-outlined" href="{% url 'account_login' %}">
+                    Войти
+                </a>
+
+                <a class="button is-black is-rounded" href="{% url 'account_signup' %}">
+                    Try it Free
+                </a>
+            </div>
+            {% endif %}
+        </div>
+
+        </div>
+
+    </div>
+
+
+
+
+</nav>
+<!--    End Navbar    -->
+
+{% endblock %}
+
+{% block scripts %}
+
+<script>
+    window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+  if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
+    document.getElementById("navbar").style.boxShadow = "0 1em 1em rgb(0 0 0 / 10%)";
+    document.getElementById("navbar").style.borderBottom = "none";
+  } else {
+
+    document.getElementById("navbar").style.boxShadow = "none";
+    document.getElementById("navbar").style.borderBottom = "1px solid  #fff";
+
+  }
+}
+
+</script>
+{% endblock %}

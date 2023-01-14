@@ -1,0 +1,83 @@
+{% load static %}
+{% block content %}
+<div id="user-edit-profile">
+
+    {% if request.user == user %}
+    <a @click="toggleDialog" class="button is-link">
+        Редактировать профиль
+    </a>
+    {% endif %}
+
+    <!-- ModalDeletedCategory -->
+    <div class="modal profile__user" v-bind:class="{ 'is-active': showDialog }">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title has-text-centered">Редактировать профиль</p>
+                <button @click="showDialog = !showDialog" aria-label="close" class="delete"></button>
+            </header>
+
+            <footer class="modal-card-foot">
+                <div class="column is-11">
+                    <form action="." enctype="multipart/form-data" method="post">
+                        {% csrf_token %}
+                        <div class="field is-horizontal">
+                            <div class="field-label is-normal">
+                                <!--    <label class="label">Title</label>-->
+                                <label class="label">Bio:</label>
+                            </div>
+                            <div class="field-body">
+                                <div class="field">
+                                    <div class="control">
+                                        {{ UserEditForm.bio }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="field is-horizontal">
+                            <div class="field-label">
+                                <!-- Left empty for spacing -->
+                            </div>
+                            <div class="field-body">
+                                <div class="field">
+                                    <div class="control">
+                                        <button class="button is-medium is-link login" name="btnformprofile" type="submit">
+                                            Сохранить изменения
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <!-- EndModalDeletedCategory -->
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/js.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    new Vue({
+        el: '#user-edit-profile',
+        delimiters: ['[[', ']]'],
+        data() {
+            return {
+                showDialog: false,
+                category_id: 0,
+            }
+        },
+        methods: {
+            toggleDialog(id) {
+                this.category_id = id
+                this.showDialog = true
+            },
+        }
+    })
+</script>
+{% endblock %}

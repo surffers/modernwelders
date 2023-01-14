@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% block title %}Surffers | Обратная связь {% endblock %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+
+   {% include 'core/include/navbar.html' %}
+ <section class="hero is-warning">
+     <div class="container profile">
+        <div class="hero-body">
+			<h1 class="title is-1 has-text-centered has-text-weight-bold">
+			Тарифы
+		</h1>
+			</div>
+		 </div>
+	  </section>
+
+     <section class="section">
+	<div class="container">
+
+		<div class="spacer"></div>
+		<div class="columns is-centered">
+            <div class="column is-8">
+                <div class="columns">
+			<div class="column has-text-centered">
+				<div class="box">
+                    <h2 class="title is-3 has-text-weight-bold">Free</h2>
+				<p class="subtitle is-6">Бесплатный план</p>
+				<div class="price">
+					<h2 class="title is-2 has-text-weight-bold">0₽</h2>
+				</div>
+				<div class="spacer"></div>
+				<div class="features">
+					<p>Добавлять в избранное</p>
+					<p>Комментировать</p>
+				</div>
+				<div class="spacer"></div>
+					 <a href="#!" class="button is-dark paddle_button" data-theme="none" data-product="{{ 744394 }}" data-email="{{ user.email }}">
+                           Начать бесплатно
+                       </a>
+                </div>
+			</div>
+			<div class="column has-text-centered">
+				<div class="box best_selling">
+<!--                    <h2 class="title is-3 has-text-link has-text-weight-bold">Best Selling</h2>-->
+<!--				<p class="subtitle is-6">This is the best selling plan</p>-->
+					  <h2 class="title is-3 has-text-weight-bold">Космос</h2>
+				<p class="subtitle is-6">Выгодный план</p>
+				<div class="price">
+					<h2 class="title is-2 has-text-weight-bold">490₽<span class="has-text-weight-light">/месяц</span></h2>
+				</div>
+				<div class="spacer"></div>
+				<div class="features has-text-link">
+					<p>50 Категорий</p>
+					<p>500 Закладок</p>
+				</div>
+				<div class="spacer"></div>
+
+<link rel="stylesheet" href="https://yookassa.ru/integration/simplepay/css/yookassa_construct_form.css">
+<form action="https://yookassa.ru/integration/simplepay/payment" method="post" accept-charset="utf-8" >
+    <input name="customerNumber" type="hidden" value="После оплаты, вам на email почту прийдёт письмо для входа на сайт.">
+    <div class="ym-payment-btn-block">
+        <div class="ym-input-icon-rub ym-display-none">
+            <input name="sum" placeholder="0.00" class="ym-input ym-sum-input ym-required-input" type="number" step="any" value="500">
+        </div>
+        <button data-text="Оплатить" class="button is-link"><span class="ym-text-crop">Оплатить</span></button>
+      <lineargradient id="paint0_linear" x1="57.3564" y1="0" x2="57.3564" y2="63" gradientunits="userSpaceOnUse"><stop stop-color="#0160D1"><stop offset="1" stop-color="#00479C"></stop></stop></lineargradient>
+<lineargradient id="paint1_linear" x1="12.8472" y1="9.35889" x2="12.8472" y2="55.2393" gradientunits="userSpaceOnUse"><stop stop-color="#0160D1"><stop offset="1" stop-color="#00479C"></stop></stop></lineargradient>
+
+    </div>
+<input name="shopId" type="hidden" value="927262"></form>
+<script src="https://yookassa.ru/integration/simplepay/js/yookassa_construct_form.js"></script>
+
+                </div>
+
+			</div>
+                    <div class="column has-text-centered">
+				<div class="box">
+                    <h2 class="title is-3 has-text-weight-bold">Старт</h2>
+				<p class="subtitle is-6">Начальный план</p>
+				<div class="price">
+					<h2 class="title is-2 has-text-weight-bold">290₽<span class="has-text-weight-light">/месяц</span></h2>
+				</div>
+				<div class="spacer"></div>
+				<div class="features">
+					<p>5 Категорий</p>
+					<p>50 Закладок</p>
+				</div>
+				<div class="spacer"></div>
+					 <a href="#!" class="button is-dark paddle_button" data-theme="none" data-product="{{ 744394 }}" data-email="{{ user.email }}">
+                           Оплатить
+                       </a>
+
+                </div>
+			</div>
+		</div>
+            </div>
+        </div>
+	</div>
+
+         <div class="container has-text-centered">
+             <div class="spacer"></div>
+                <div class="footer-payment">
+                    <ul>
+                      <li>
+                        <img alt="Яндекс" src="/static/img/pay_img/yandex-logo.png">
+                      </li>
+                        <li>
+                        <img alt="Mastercard" src="/static/img/pay_img/mastercard-logo.png">
+                      </li>
+                        <li>
+                        <img alt="Mastercard" src="/static/img/pay_img/pci-dss-logo.png">
+                      </li>
+                    </ul>
+                  </div>
+         </div>
+</section>
+
+
+
+
+{% include 'core/include/footer.html' %}
+
+
+
+
+{% endblock %}
+{% block scripts %}
+
+{% endblock %}

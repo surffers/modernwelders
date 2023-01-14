@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+{% block title %}Редактировать ссылку{% endblock %}
+{% load humanize %}
+
+{% block content %}
+
+{% include 'core/include/navbar.html' %}
+<section class="section">
+    <div class="container category">
+        <div class="columns is-centered">
+        <div class="column is-4">
+                <div class="box">
+                    <div class="content">
+                        <div class="subtitle is-5">
+
+
+                            <a href="{{ bookmark.url }}" class="icon-bookmark subtitle is-5 has-text-weight-bold"
+                               target="_blank">
+                                {{ bookmark.title|truncatechars:20 }}
+                            </a>
+
+
+
+                        </div>
+                        <p>
+                            <span class="subtitle is-6 has-text-weight-normal">{{ bookmark.body|truncatechars:90 }}</span>
+
+                        </p>
+
+                        {% for tag in bookmark.tags.all %}
+                        <a href="{% url 'tag_detail_url' tag.slug %}" class="is-6 has-text-link">
+                            #{{ tag.name|truncatechars:25 }}
+                        </a>
+                        {% endfor %}
+
+
+                        <p>
+                            <span class="subtitle is-7">{{ bookmark.created_at|naturaltime }}</span>
+                            &nbsp; &bull;&nbsp;
+
+                            <a href="{% url 'bookmark' bookmark.id %}">
+                                <span class="subtitle is-7">{{ bookmark.comments.all|length }}  Комментарии</span>
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            </div>
+            <div class="columns is-centered">
+
+            <div class="column is-4">
+                <div class="box">
+            <div class="btn-back">
+            <div class="">
+                <h1 class="title is-4 is-size-4-mobile has-text-centered">Редактировать ссылку</h1>
+
+            </div>
+
+            </div>
+
+
+
+            <hr>
+
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+
+
+                <div class="field">
+                    <label class="label">Название:</label>
+                    <div class="control">
+                        {{ form.title }}
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">Описание:</label>
+                    <div class="control">
+                        {{ form.body }}
+                    </div>
+                </div>
+
+
+                <div class="field">
+                    <label class="label">Url:</label>
+                    <div class="control">
+                        {{ form.url }}
+                    </div>
+                </div>
+
+                    <div class="field">
+<label class="label">Видео Url:</label>
+  <div class="control">
+    {{ form.video }}
+  </div>
+</div>
+
+                <div class="field">
+                    <label class="label">Теги:</label>
+                    <div class="control">
+                        {{ form.tags }}
+                    </div>
+                </div>
+
+
+
+      <br>
+                        <button class="button is-link login" type="submit">Сохранить</button>
+
+
+            </form>
+        </div>
+        </div>
+
+    </div>
+</div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+ $("a.icon-bookmark[href^='http']").each(function() {
+    $(this).css({
+        background: "url(http://www.google.com/s2/favicons?domain=" + this.href + ") left center no-repeat",
+        "background-size": "22px", "padding-left": "30px",
+    });
+});
+</script>
+{% endblock %}
+
+

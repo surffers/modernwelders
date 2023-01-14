@@ -1,0 +1,30 @@
+.cookie-banner {
+    display: none;
+    position: fixed;
+    z-index: 9999999;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    /* text-align: center; */
+    font-size: 14px;
+    color: #000;
+    background: rgba(51, 50, 59, 0.75);
+    padding: 15px 15px;
+    border-top: 1px solid #434E4F;
+    /* border-bottom: 1px solid #434E4F; */
+  }
+  .tgt {
+    /* border: 1px solid red; */
+    width: 100%;
+    margin: 0 auto;
+  }
+  /* Оформление кнопок */
+  .delete.cookie_close {
+    /* border: 1px solid red; */
+    float: right;
+    margin-left: 50px;
+    min-width: 30px;
+    min-height: 30px;
+  }
+  
+  

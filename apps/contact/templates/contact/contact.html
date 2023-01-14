@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% block title %}Surffers | Contact{% endblock %}
+{% load static %}
+{% load humanize %}
+{% load contact_tags %}
+
+{% block content %}
+
+    <section class="hero home has-text-centered">
+    <div class="hero-body home">
+        <div class="container">
+            <div class="slider-text">
+                <span class="subheading">👋 Привет</span>
+                <h1 class="mb-3">Sur<span>ff</span>ers</h1>
+                <p class="subtitle is-3">Сёрфи в интернете вместе с нами </p>
+
+            </div>
+        </div>
+    </div>
+    <div class="block share">
+                <a class="button is-black is-outlined sidebar-social-btn has-text-weight-normal" role="button"
+                   title="Copy link">
+                                                <span class="copy-icon">
+                                                    <i class="fas fa-link icon"></i>
+                                                </span>
+                </a>
+                <a class="button is-black is-outlined sidebar-social-btn sharer" href="#" id="share-em"
+                   title="Share Email">
+                                                <span>
+                                                    <i aria-hidden="true" class="fa fa-envelope-o"></i>
+                                                </span>
+                </a>
+                <a class="button is-black is-outlined sidebar-social-btn sharer" href="#" id="share-vk"
+                   title="Share VK">
+                                                <span>
+                                                    <i class="fab fa-vk"></i>
+                                                </span>
+                </a>
+                <a class="button is-black is-outlined sidebar-social-btn sharer" href="#" id="share-tg">
+                                                <span>
+                                                    <i class="fab fa-telegram"></i>
+                                                </span>
+                </a>
+            </div>
+</section>
+
+    <section class="hero home has-text-centered">
+    <div class="hero-body home">
+<div class="container">
+    <div class="columns is-centered">
+        <div class="column is-6">
+            <div class="box">
+    <div>
+                            <p class="title is-6">Заказать услугу.</p>
+
+                        </div>
+</div>
+        </div>
+    </div>
+</div>
+        </div>
+
+</section>
+
+    <section class="hero home has-text-centered">
+    <div class="hero-body home">
+<div class="container">
+    <div class="columns is-centered">
+        <div class="column is-6">
+            <div class="box">
+    <div>
+                            <p class="title is-6">Получите лучшее от Surffers прямо в своем почтовом ящике.</p>
+                            {% contact_form %}
+                        </div>
+</div>
+        </div>
+    </div>
+</div>
+        </div>
+
+</section>
+
+
+
+
+{% endblock %}
+{% block scripts %}
+
+{% endblock %}

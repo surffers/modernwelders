@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+{% include 'core/include/navbar.html' %}
+<section class="section">
+    <div class="container category">
+        <div class="columns is-centered">
+        <div class="column is-4">
+                <div class="box">
+                    <div class="content">
+                        <div class="subtitle is-5">
+
+
+                            <a href="" class="icon-bookmark subtitle is-5 has-text-weight-bold"
+                               target="_blank">
+                                {{ category.title|truncatechars:20 }}
+                            </a>
+
+
+
+                        </div>
+                        <p>
+                            <span class="subtitle is-6 has-text-weight-normal">{{ category.body|truncatechars:90 }}</span>
+
+                        </p>
+
+
+
+
+                        <p>
+                            <span class="subtitle is-7">{{ category.created_at|naturaltime }}</span>
+
+                        </p>
+                    </div>
+                </div>
+            </div>
+            </div>
+            <div class="columns is-centered">
+
+            <div class="column is-4">
+                <div class="box">
+            <div class="btn-back">
+            <div class="">
+                <h1 class="title is-4 is-size-4-mobile has-text-centered">Редактировать категорию</h1>
+
+            </div>
+
+            </div>
+
+
+
+            <hr>
+
+              <form class="form-add-category" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+
+
+
+    <div class="field">
+        <label class="label">Название:</label>
+      <div class="control">
+        {{ FormEdit.title }}
+      </div>
+    </div>
+
+
+
+    <div class="field">
+        <label class="label">Описание:</label>
+      <div class="control">
+        {{ FormEdit.body }}
+      </div>
+    </div>
+
+
+
+        <button class="button login is-link" type="submit" name="btnedit">
+          Сохранить изменения
+        </button>
+
+
+        </form>
+        </div>
+        </div>
+
+    </div>
+</div>
+</section>
+
+
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script type="text/javascript">
+  new Vue({
+    el: '#edit-category',
+    delimiters: ['[[', ']]'],
+    data() {
+      return {
+        showDialog: false,
+      }
+    },
+    methods: {
+      toggleDialog(id) {
+        this.showDialog = true
+      },
+    }
+  })
+</script>
+
+{% endblock %}

@@ -1,0 +1,38 @@
+.hero.home {
+    margin-top: 100px;
+}
+.hero.home .hero-body {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+.section.home {
+    padding-top: 0;
+}
+.pagination-list li  a.is-current {
+    border: 1px solid white;
+    background: #000;
+}
+.pagination-list li  a.pagination-link:hover {
+    background: black;
+    border: 1px solid black;
+    color: #ffffff;
+}
+
+
+.form-donate {
+    border: 1px solid red;
+    margin-left: 0;
+    padding: 0;
+}
+
+
+
+/* List element */
+ .forloop {
+  font-size: 1rem;
+}
+.is-divider {
+  border-left: 1px solid #000;
+  margin: auto 10px;
+  height: 30px;
+}

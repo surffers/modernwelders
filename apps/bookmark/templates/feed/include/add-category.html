@@ -1,0 +1,130 @@
+{% load static %}
+{% load humanize %}
+
+
+{% block content %}
+
+<div id="add-category" >
+
+         <a class="button is-black is-small is-rounded is-outlined"  @click="toggleDialog">
+                   <span class="icon">
+                  <i class="fas fa-plus"></i>
+              </span>
+                    <span>
+                        Создать категорию
+                    </span>
+                </a>
+
+
+
+    <!-- ModalDeletedCategory -->
+    <div class="modal" v-bind:class="{ 'is-active': showDialog }">
+        <div class="modal-background"></div>
+
+
+        <div class="modal-card">
+
+            <header class="modal-card-head">
+                <p class="modal-card-title">
+                    Создать новую категорию
+                </p>
+                <button @click="showDialog = !showDialog" aria-label="close" class="delete"></button>
+            </header>
+
+
+            <footer class="modal-card-foot">
+                <div class="column is-12">
+
+                    <form class="form-add-category" enctype="multipart/form-data" method="post">
+                        {% csrf_token %}
+
+                        <div class="field is-horizontal">
+                            <div class="field-label is-normal">
+                                <label class="label">Название:</label>
+                            </div>
+                            <div class="field-body">
+                                <div class="field">
+                                    <div class="control">
+                                        {{ AddCategoryForm.title }}
+                                    </div>
+                                    <p class="help has-text-black">
+                                        Название должно отражать суть категории.
+                                        <!--                                        The name should reflect the essence of the category.-->
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="field is-horizontal">
+                            <div class="field-label is-normal">
+                                <label class="label">Описание:</label>
+                            </div>
+                            <div class="field-body">
+                                <div class="field">
+                                    <div class="control">
+                                        {{ AddCategoryForm.body }}
+                                    </div>
+                                    <p class="help has-text-black">
+                                        Описание должно быть кратким и четким.
+                                        <!--                                        The description should be short and clear.-->
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="field is-horizontal">
+                            <div class="field-label">
+                                <!-- Left empty for spacing -->
+                            </div>
+                            <div class="field-body">
+                                <div class="field">
+                                    <div class="control">
+                                        <button class="button login is-link is-medium"
+                                                type="submit" name="btnaddcategory">
+                                            Создать
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+
+
+                </div>
+
+            </footer>
+
+        </div>
+
+    </div>
+    <!-- EndModalDeletedCategory -->
+
+
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script type="text/javascript">
+  new Vue({
+    el: '#add-category',
+    delimiters: ['[[', ']]'],
+    data() {
+      return {
+        showDialog: false,
+      }
+    },
+    methods: {
+      toggleDialog(id) {
+        this.showDialog = true
+      },
+    }
+  })
+
+
+</script>
+
+{% endblock %}

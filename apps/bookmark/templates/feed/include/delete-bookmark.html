@@ -1,0 +1,69 @@
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+   <div id="delete-bookmark" class="is-pulled-right">
+    <a  class="button is-light is-rounded is-small btn-ellipsis has-text-weight-bold has-text-danger is-light" @click="toggleDialog">
+        <span class="icon">
+            <i class="fa fa-trash-o" aria-hidden="true"></i>
+        </span>
+    </a>
+
+    <!-- ModalDeletedCategory -->
+<div class="modal" v-bind:class="{ 'is-active': showDialog }">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title">
+<!--                Are you sure?-->
+                Вы уверены?
+            </p>
+            <button class="delete" aria-label="close" @click="showDialog = !showDialog"></button>
+        </header>
+        <section class="modal-card-body">
+      <h1 class="title is-5 has-text-black">
+<!--          Delete your category?-->
+          Удалить вашу категорию?
+          <br>
+          "{{ bookmark.title }}"
+      </h1>
+    <p class="subtitle is-6 has-text-black">
+<!--        This is the last step and you won't be able to recover any data.-->
+        Это последний шаг, и вы не сможете восстановить данные.
+    </p>
+
+
+    </section>
+    <footer class="modal-card-foot">
+<a href="{% url 'bookmark_delete' bookmark.id %}" class="card-footer-item has-text-danger" >ДА</a>
+            <a class="card-footer-item has-text-black" @click="showDialog = !showDialog">
+                НЕТ
+            </a>
+    </footer>
+
+
+    </div>
+</div>
+<!-- EndModalDeletedCategory -->
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    new Vue({
+        el: '#delete-bookmark',
+        delimiters: ['[[', ']]'],
+        data() {
+            return {
+                showDialog: false,
+            }
+        },
+        methods: {
+            toggleDialog() {
+                this.showDialog = true
+            },
+        }
+    })
+</script>
+{% endblock %}

@@ -1,0 +1,13 @@
+/* button up */
+#button {
+    width: 34px;
+    height: 34px;
+    border-radius: 50px;
+    visibility: hidden;
+    z-index: 1000;
+    font-size: 14px;
+  }
+
+  #button.show {
+    visibility: visible;
+  }

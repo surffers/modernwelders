@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Surffers | Мы будем скучать по тебе{% endblock %}
+{% load i18n %}
+
+{% block head_title %}{% trans "Logout" %}{% endblock %}
+
+{% block content %}
+
+{% include 'core/include/navbar.html' %}
+
+
+    <section class="hero category">
+        <div class="container category">
+        <div class="hero-body">
+            <div class="columns is-centered">
+        <div class="column is-4">
+            <div class="box login">
+                <div class="card-content">
+                    <p class="title is-4 has-text-centered">{% trans 'Вы уверены, что хотите выйти?' %}</p>
+                    <form method="post" action="{% url 'account_logout' %}">
+                        {% csrf_token %}
+                        {% if redirect_field_value %}
+                        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+                        {% endif %}
+                        <br>
+                        <button class="button login is-danger is-medium" type="submit">{% trans 'Выйти' %}
+                        </button>
+                        <br> <br>
+                        <a class="button login is-medium is-light" href="{% url 'home' %}">{% trans 'Отмена' %}</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+        </div>
+            </div>
+    </section>
+
+
+{% endblock %}
+
+{% block scripts %}
+
+
+{% endblock %}

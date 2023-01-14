@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% block title %}Surfers | Bookmarks {% endblock %}
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+
+{% include 'core/include/navbar.html' %}
+
+    <section class="hero is-warning">
+        <div class="container category">
+        <div class="hero-body">
+            <div class="spacer"></div>
+            <div class="container">
+                <div class="columns is-vcentered">
+                    <div class="column is-10">
+                        <div class="columns">
+                            <div class="column is-6">
+                                <p class="subtitle is-7">
+                                    Черновики {{ categories_drafts.all|length|intword }}
+                                </p>
+                                <p class="title bio">
+                                    Черновик
+                                </p>
+                                <p class="subtitle is-5">
+                                    Категории в черновике видны только вам, пока вы их не опубликуете
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column is-2">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+            </div>
+        <div class="spacer"></div>
+    </section>
+
+
+<div class="container">
+    <section class="section">
+        <div class="columns is-centered is-multiline">
+            {% for category in categories_drafts %}
+            <div class="column is-3">
+                  <a href="{% url 'category' category.id %}">
+                                 <div class="card category">
+                                    <div class="card-content">
+                                        <p class="category-p has-text-dark title is-7">
+                                                Ссылки {{ category.bookmarks.all|length }}
+                                            </p>
+                                        <p class="subtitle is-4 has-text-dark has-text-weight-bold">
+                                            {{ category.title|truncatechars:40 }}
+                                        </p>
+                                        <p class="subtitle is-6 has-text-weight-normal">
+                                            {{ category.body|truncatechars:40 }}
+                                        </p>
+
+
+                                    </div>
+                                </div>
+                            </a>
+            </div>
+            {% empty %}
+        </div>
+        <div class="columns is-centered">
+            <div class="column is-4 has-text-centered">
+                <div class="box">
+                    У вас ещё нет скрытых категорий
+                </div>
+            </div>
+            <div class="spacer"></div>
+        </div>
+        {% endfor %}
+    </section>
+</div>
+
+{% include 'core/include/pagination.html' %}
+
+<span class="toastbox" role="alert"></span>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+  $("a.icon-bookmark[href^='http']").each(function() {
+    $(this).css({
+        background: "url(http://www.google.com/s2/favicons?domain=" + this.href + ") left center no-repeat",
+        "background-size": "22px", "padding-left": "30px",
+    });
+});
+
+</script>
+{% endblock %}

@@ -1,0 +1,33 @@
+
+		.is-one-third{
+			padding: 4rem 5rem;
+		}
+		.spacer{
+			height: 40px;
+		}
+
+		.price{
+			margin-top: 40px;
+		}
+
+		.price span{
+			font-size: 20px;
+		}
+		.best_selling{
+		border: 2px solid #276be0;
+
+		}
+		.best_selling h2{
+			color: #276be0;
+		}
+
+.footer-payment {
+    margin: 0 auto;
+    width: 65%
+}
+.footer-payment ul {
+    display: flex;
+}
+.footer-payment li {
+    flex: auto ;
+}

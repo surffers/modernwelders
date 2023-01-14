@@ -1,0 +1,58 @@
+.container.category {
+    margin-top: 80px;
+    width: 100%;
+}
+
+.title.category {
+    font-size: 42px;
+  font-weight: 900;
+}
+.category-list {
+    font-size: 32px;
+  line-height: 20px;
+  font-weight: 900;
+}
+
+.card.category {
+    height: 250px;
+    width: 100%;
+    min-width: 345px;
+    border-radius: 1em;
+    box-shadow: 8px 8px 15px var(--shadowDark), -8px -8px 15px var(--shadowLight);
+    cursor: pointer;
+    border: 1px solid  #fff;
+}
+.card.category .card-content, .card.category .content {
+    padding: 20px;
+}
+
+
+
+.category-delete {
+    margin-right: 10px;
+}
+
+.category-edit {
+    margin-right: 10px;
+
+}
+
+
+.date.postdate {
+    margin-bottom: 10px;
+}
+
+
+.btn-ellipsis {
+    width: 30px;
+    border: none;
+    border-radius: 50px;
+}
+
+#add-category a {
+    margin-left: 20px;
+}
+
+#add-bookmark {
+    margin-top: 20px;
+}

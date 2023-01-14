@@ -1,0 +1,104 @@
+@import "/static/css/media.css";
+@import "/static/css/cookie.css";
+@import "/static/css/courusel.css";
+@import "/static/css/profile.css";
+@import "/static/css/home.css";
+@import "/static/css/contact.css";
+@import "/static/css/button-share.css";
+
+@import "/static/css/navbar.css";
+
+@import "/static/css/blog.css";
+@import "/static/css/login.css";
+
+@import "/static/css/search.css";
+@import "/static/css/footer.css";
+
+
+@import "/static/css/category.css";
+@import "/static/css/sponsor.css";
+
+@import "/static/css/pricing.css";
+@import "/static/css/test.css";
+
+*,
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+h1,
+p,
+a {
+    font-family:BlinkMacSystemFont,-apple-system,"Segoe UI","Roboto","Oxygen","Ubuntu","Cantarell","Fira Sans","Droid Sans","Helvetica Neue","Helvetica","Arial",sans-serif!important;
+}
+:root {
+  --shadowDark: #D9DDE6;
+  --background: #E4E9F2;
+  --shadowLight: #EFF5FE;
+}
+
+
+
+.box {
+    border-radius: 1em;
+    border: 1px solid #F5F5F5;
+    box-shadow: 8px 8px 15px var(--shadowDark), -8px -8px 15px var(--shadowLight);
+}
+
+.box:hover {
+        cursor: pointer;
+}
+
+
+
+input {
+    border: 1px solid #131313;
+    background-color: transparent;
+}
+
+input.input {
+    height: 40px;
+    background-color: transparent;
+}
+
+
+input.input.is-small {
+    height: 100%;
+}
+
+
+textarea.textarea {
+    height: 90px;
+    min-height: 40px;
+    max-height: 90px;
+    background-color: transparent;
+
+}
+
+.form-add-category {
+    width: 100%;
+}
+
+
+::-webkit-scrollbar {
+  width: 0;
+}
+
+.box-link a.icon-bookmark .icon.link {
+    display: none;
+    margin-left: 10px;
+}
+.box-link:hover a.icon-bookmark .icon.link {
+    display: inline;
+
+}
+.box-link .icon.link {
+    display: none;
+    margin-left: 10px;
+}
+.box-link:hover .icon.link {
+    display: inline;
+
+}
+is-size-1-mobile

@@ -1,0 +1,61 @@
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+<div id="bot">
+
+<a @click="toggleDialog" style="position: fixed;  right: 25px; bottom: 15px;">
+      <span class="icon" style="color: #259EDB; font-size: 32px;">
+        <i class="fa fa-telegram"></i>
+      </span>
+    </a>
+
+
+    <!-- ModalDeletedCategory -->
+    <div class="modal" v-bind:class="{ 'is-active': showDialog }">
+        <div class="modal-background"></div>
+  <div class="modal-content">
+    <p class="image is-3by2">
+      <img src="https://thumb.tildacdn.com/tild3132-3931-4362-b339-363133653932/-/resize/560x/-/format/webp/______10_000__-21-2.jpg" alt="">
+    </p>
+ <section class="modal-card-body has-text-centered">
+         <h1 class="title is-4">
+          Я уверен, что ты можешь зарабатывать намного больше, чем сейчас
+      </h1>
+
+<p class="subtitle is-6">
+    Ты, я думаю, тоже не сомневаешься. Записывайся на маркетинг-ревизию, чтобы мы вместе проработали, как ты можешь зарабатывать больше!
+</p>
+     <button class="button is-link is-large">Записаться на курс</button>
+    </section>
+  </div>
+
+  <button class="modal-close is-large" aria-label="close" @click="showDialog = !showDialog"></button>
+    </div>
+
+    <!-- EndModalDeletedCategory -->
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    new Vue({
+        el: '#bot',
+        delimiters: ['[[', ']]'],
+        data() {
+            return {
+                showDialog: false,
+            }
+        },
+        methods: {
+            toggleDialog() {
+                this.showDialog = true
+            },
+        }
+    })
+
+</script>
+{% endblock %}

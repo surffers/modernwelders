@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block title %}Settings{% endblock %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+
+
+{% include 'core/include/navbar.html' %}
+
+  <div class="container">
+      <div class="section">
+        <div class="columns">
+
+          <div class="column is-12">
+      <h1 class="title has-text-centered">Выберите тариф, подходящий для вас</h1>
+
+    </div>
+
+
+      </div>
+    </div>
+
+
+
+{% endblock %}
+{% block scripts %}
+<script type="text/javascript">
+  new Vue({
+    el: '#login',
+    delimiters: ['[[', ']]'],
+    data() {
+      return {
+        showDialog: false,
+      }
+    },
+    methods: {
+      toggleDialog(id) {
+        this.showDialog = true
+      },
+    }
+  })
+</script>
+
+
+
+
+
+{% endblock %}
+

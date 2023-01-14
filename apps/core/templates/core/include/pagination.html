@@ -1,0 +1,28 @@
+{% load static %}
+{% load humanize %}
+
+
+{% block content %}
+<nav aria-label="pagination" class="pagination is-centered" role="navigation">
+    {% if page_obj.has_other_pages %}
+
+    <ul class="pagination-list">
+        {% for p in page_obj.paginator.page_range %}
+        {% if page_obj.number == p %}
+        <li>
+            <a aria-label="Goto page 1" class="pagination-link is-current" href="?page={{ p }}">{{ p }}</a>
+        </li>
+        {% elif p >= page_obj.number|add:-2 and p <= page_obj.number|add:2 %}
+        <li>
+            <a aria-label="Goto page 1" class="pagination-link" href="?page={{ p }}">{{ p }}</a>
+        </li>
+        {% endif %}
+        {% endfor %}
+    </ul>
+    {% endif %}
+</nav>
+{% endblock %}
+
+{% block scripts %}
+
+{% endblock %}

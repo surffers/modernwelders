@@ -1,0 +1,15 @@
+<form class="email" method="post" action="{% url 'contact' %}">
+    {% csrf_token %}
+    <div class="field">
+        <p class="control is-expanded">
+            {{ contact_form }}
+        </p>
+        </div>
+        <div class="field">
+        <p class="control ">
+            <button class="button is-link is-medium login has-text-weight-bold">
+                Подписаться
+            </button>
+        </p>
+    </div>
+</form>

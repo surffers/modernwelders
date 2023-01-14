@@ -1,0 +1,114 @@
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+<div id="add-comment">
+
+    {% if request.user == user %}
+       <a>
+        <div @click="toggleDialog" class="box">
+                                    <div class="card-content">
+                                        <div class="content">
+                                            <br>
+                                            <a class="profile-add-link">
+                                                <span class="icon is-small">
+                                                  <i class="fa fa-plus" aria-hidden="true"></i>
+                                                </span>
+                                              </a>
+                                            <br><br>
+                                        <p class="subtitle is-6">Добавить комментарий</p>
+                                    </div>
+                                </div>
+             </div>
+    </a>
+    {% endif %}
+
+    <!-- ModalDeletedCategory -->
+    <div class="modal" v-bind:class="{ 'is-active': showDialog }">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <header class="modal-card-head has-text-left">
+                <p class="modal-card-title">Добавить новый комментарий</p>
+                <button @click="showDialog = !showDialog" aria-label="close" class="delete"></button>
+            </header>
+            <section class="modal-card-body">
+                <div class="column is-12">
+                    <form class="form-add-category" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+
+
+                                <div class="field has-text-left">
+                                      <label class="label">Комментарий:</label>
+                                    <div class="control">
+                                        {{ form.body }}
+                                    </div>
+                                </div>
+
+
+
+                        <div class="field is-horizontal">
+                            <div class="field-label is-normal">
+                            </div>
+                            <div class="field-body">
+                                <div class="field">
+                                    <div class="control">
+                                        <div class="buttons is-right">
+                                            <button class="button is-link is-rounded "
+                                                    type="submit">
+                                                Отправить
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </form>
+                </div>
+
+            </section>
+        </div>
+
+    </div>
+    <!-- EndModalDeletedCategory -->
+
+
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script type="text/javascript">
+  new Vue({
+    el: '#add-comment',
+    delimiters: ['[[', ']]'],
+    data() {
+      return {
+        showDialog: false,
+      }
+    },
+    methods: {
+      toggleDialog(id) {
+        this.showDialog = true
+      },
+    }
+  })
+
+</script>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+

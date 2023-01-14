@@ -1,0 +1,99 @@
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+<div id="donate">
+        <a class="navbar-item " href="#">
+                                        <span class="bd-emoji">❤️</span>
+
+                                                    &nbsp;Спонсор
+
+                                    </a>
+
+    <!-- ModalDeletedCategory -->
+    <div class="modal" v-bind:class="{ 'is-active': showDialog }">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title has-text-left">
+                    Sponsor
+                </p>
+                <button @click="showDialog = !showDialog" aria-label="close" class="delete"></button>
+            </header>
+            <section class="modal-card-body">
+                <div class="column is-12 has-text-centered">
+                    <h1 class="title is-4 ">
+                        Become a Surffers sponsor and support open source
+                    </h1>
+
+                    <br>
+                    <div class="block">
+                        <div class="columns">
+                            <div class="column is-3">
+                                $1
+                                a month
+                            </div>
+                            <div class="column is-9">
+                                Thank you for supporting Bulma and open source!
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="block">
+                        <div class="columns">
+                            <div class="column is-3">
+                                <p class="title is-6">
+                                    $10
+                                    a month
+                                </p>
+                            </div>
+                            <div class="column is-9">
+                                <p class="title is-6">
+                                    Thank you for supporting Bulma and open source!
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+            <footer class="modal-card-foot">
+                <div class="columns is-centered">
+                    <div class="column">
+                        <button class="button is-primary">Primary</button>
+                    </div>
+                    <div class="column">
+                        <button class="button is-link">Link</button>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <!-- EndModalDeletedCategory -->
+
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script type="text/javascript">
+  new Vue({
+    el: '#donate',
+    delimiters: ['[[', ']]'],
+    data() {
+      return {
+        showDialog: false,
+      }
+    },
+    methods: {
+      toggleDialog(id) {
+        this.showDialog = true
+      },
+    }
+  })
+
+
+</script>
+
+{% endblock %}

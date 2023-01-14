@@ -1,0 +1,18 @@
+.form-contact {
+    width: 350px;
+}
+.form-contact input.input {
+height: 50px;
+    border: 2px solid #000;
+  border-width: 2px;
+}
+
+.form-contact textarea.textarea {
+    background-color: transparent;
+    height: 90px;
+    min-height: 40px;
+    max-height: 90px;
+    border: 2px solid #000;
+  border-width: 2px;
+    color: #000;
+}

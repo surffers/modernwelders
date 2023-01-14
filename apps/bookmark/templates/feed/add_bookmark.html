@@ -1,0 +1,250 @@
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+<div id="add-bookmark">
+
+    {% if request.user == user %}
+       <a @click="toggleDialog" class="button is-link is-flex-mobile">
+
+
+                                                     <span class="icon is-size-7">
+                                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                                </span>
+                                                   &nbsp;&nbsp;
+                                                   <span>Добавить свою ссылку</span>
+
+
+    </a>
+    {% endif %}
+
+  <!-- ModalDeletedCategory -->
+    <div class="modal" v-bind:class="{ 'is-active': showDialog }">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title">Добавить ссылку</p>
+                <button @click="showDialog = !showDialog" aria-label="close" class="delete"></button>
+            </header>
+            <section class="modal-card-body">
+                <div class="column is-12">
+                    <form action="" class="form-add-category" enctype="multipart/form-data" id="bookmark-form"
+                          method="post" role="form">
+                        {% csrf_token %}
+<div class="field">
+  <label class="label">Название:</label>
+  <div class="control">
+    {{ form.title }}
+  </div>
+</div>
+
+                        <div class="field">
+ <label class="label">Описание:</label>
+  <div class="control">
+    {{ form.body }}
+  </div>
+</div>
+
+
+
+
+                                   <div class="field">
+<label class="label">Url:</label>
+  <div class="control">
+    {{ form.url }}
+  </div>
+</div>
+
+                        {% if user.is_superuser %}
+                               <div class="field">
+<label class="label">Url icon:</label>
+  <div class="control">
+    {{ form.url_icon }}
+  </div>
+</div>
+                        {% endif %}
+
+                          <div class="field">
+<label class="label">Видео Url:</label>
+  <div class="control">
+    {{ form.video }}
+  </div>
+</div>
+
+
+                          <div class="field">
+  <label class="label">Теги:</label>
+  <div class="control">
+    {{ form.tags }}
+  </div>
+</div>
+                        <br>
+<button class="button is-link has-text-weight-bold" type="submit">
+                                                Сохранить
+                                            </button>
+      <button class="button has-text-weight-bold" @click="showDialog = !showDialog" aria-label="close">Отменить</button>
+ </form>
+
+                </div>
+                <hr>
+
+ <div class="columns is-multiline is-mobile">
+     <div class="column is-12">
+         <p class="title is-size-7 is-uppercase">Самые популярные веб-сайты</p>
+         </div>
+                {% for bookmark in b %}
+                <div class="column is-4">
+                        <div class="box is-unselectable has-text-centered">
+                        <a class="icon-bookmark title is-capitalized " href="{{ bookmark.url }}"
+                               target="_blank">
+                        <p class="subtitle is-7">{{ bookmark.title|truncatechars:40 }}</p>
+                    </a>
+                   </div>
+                </div>
+                {% endfor %}
+
+            </div>
+            </section>
+
+        </div>
+
+    </div>
+    <!-- EndModalDeletedCategory -->
+
+
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script type="text/javascript">
+  new Vue({
+    el: '#add-bookmark',
+    delimiters: ['[[', ']]'],
+    data() {
+      return {
+        showDialog: false,
+      }
+    },
+    methods: {
+      toggleDialog(id) {
+        this.showDialog = true
+      },
+    }
+  })
+
+</script>
+<script>
+
+const body = document.body;
+const input = document.querySelector('input[type=text]');
+const overlay = document.querySelector('.overlay');
+function showFloater() {
+  body.classList.add('show-floater');
+}
+function closeFloater() {
+  if (body.classList.contains('show-floater')) {
+    body.classList.remove('show-floater');
+  }
+}
+input.addEventListener('focusin', showFloater);
+// input.addEventListener('focusout', closeFloater);
+overlay.addEventListener('click', closeFloater);
+// =========================
+const bookmarksList = document.querySelector('.bookmarks-list');
+const bookmarkForm = document.querySelector('.bookmark-form');
+const bookmarkInput = bookmarkForm.querySelector('input[type=text]');
+const bookmarks = JSON.parse(localStorage.getItem('bookmarks')) || [];
+const apiUrl = 'https://opengraph.io/api/1.0/site';
+const appId = '58858c7bcf07b61e64257391';
+fillBookmarksList(bookmarks);
+function createBookmark(e) {
+  e.preventDefault();
+  if (!bookmarkInput.value) {
+    alert('We need info!');
+    return;
+  }
+  const url = encodeURIComponent(bookmarkInput.value);
+  // add a new bookmark to the bookmarks
+  fetch(`${apiUrl}/${url}?app_id=${appId}`)
+  // fetch(apiUrl + '/' + url + '?app_id=' + appId)
+  .then(response => response.json()).
+  then(data => {
+    console.log(data);
+    const bookmark = {
+      title: data.hybridGraph.title,
+      image: data.hybridGraph.image,
+      link: data.hybridGraph.url };
+
+    console.log(bookmark);
+    bookmarks.push(bookmark);
+    fillBookmarksList(bookmarks);
+    storeBookmarks(bookmarks);
+    bookmarkForm.reset();
+  }).
+  catch(error => {
+    alert('There was a problem getting info!');
+  });
+  // console.table(bookmarks);
+  // save that bookmarks list to localStorage
+  // const title        = bookmarkInput.value;
+  // const bookmark     = document.createElement('a');
+  // bookmark.className = 'bookmark';
+  // bookmark.innerText = title;
+  // bookmark.href      = '#';
+  // bookmark.target    = '_blank';
+  // bookmarksList.appendChild(bookmark);
+}
+function fillBookmarksList(bookmarks = []) {
+  const bookmarksHtml = bookmarks.map((bookmark, i) => {
+    return `
+          <a href="${bookmark.link}" class="bookmark" data-id="${i}">
+            <div class="img" style="background-image:url('${bookmark.image}')"></div>
+            <div class="title">${bookmark.title}</div>
+            <span class="glyphicon glyphicon-remove"></span>
+          </a>
+        `;
+  }).join('');
+  bookmarksList.innerHTML = bookmarksHtml;
+  // let bookmarksHtml = '';
+  // for (let i = 0; i < bookmarks.length; i++) {
+  //   bookmarksHtml += `
+  //     <a href="#" class="bookmark">
+  //       ${bookmarks[i].title}
+  //     </a>
+  //   `;
+  // }
+  // console.log(bookmarksHtml);
+}
+function removeBookmark(e) {
+  if (!e.target.matches('.glyphicon-remove')) return;
+  // find the index
+  // remove from the bookmarks using splice
+  // fill the list
+  // store back to localStorage
+  const index = e.target.parentNode.dataset.id;
+  bookmarks.splice(index, 1);
+  fillBookmarksList(bookmarks);
+  storeBookmarks(bookmarks);
+}
+function storeBookmarks(bookmarks = []) {
+  localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+}
+bookmarkForm.addEventListener('submit', createBookmark);
+bookmarksList.addEventListener('click', removeBookmark);
+
+</script>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+

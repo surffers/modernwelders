@@ -1,0 +1,75 @@
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+<div id="add-link">
+
+    <a @click="toggleDialog" class="button is-black is-outlined add-link-btn" title="Добавьте ссылку">
+        <i class="fas fa-plus"></i>
+    </a>
+
+    <!-- ModalDeletedCategory -->
+    <div class="modal" v-bind:class="{ 'is-active': showDialog }">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title">Добавить ссылку</p>
+                <button class="delete" aria-label="close" @click="showDialog = !showDialog"></button>
+            </header>
+
+            <footer class="modal-card-foot">
+                <div class="column is-12">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="field">
+                            <div class="control">
+                                {{ AddLinkForm.url }}
+                            </div>
+                        </div>
+                        <div class="field is-horizontal">
+                            <div class="field-body">
+                                <div class="field">
+                                    <div class="control">
+                                        <button class="button is-link login" type="submit"
+                                                name="btnlink">
+                                            Добавить
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+
+                    <br>
+
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <!-- EndModalDeletedCategory -->
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    new Vue({
+        el: '#add-link',
+        delimiters: ['[[', ']]'],
+        data() {
+            return {
+                showDialog: false,
+            }
+        },
+        methods: {
+            toggleDialog() {
+                this.showDialog = true
+            },
+        }
+    })
+
+</script>
+{% endblock %}

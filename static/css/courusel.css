@@ -1,0 +1,46 @@
+.container-slider {
+  margin: 0 auto;
+  position: relative;
+}
+.container-slider .carousel {
+  overflow: hidden;
+}
+ .container-slider .slider {
+  display: inline-flex;
+  transition: transform 0.5s;
+}
+.container-slider section {
+   height: 280px;
+   padding-top: 15px;
+  padding-left: 15px;
+  box-sizing: border-box;
+
+}
+
+.controls button {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid #000;
+  background: #000;
+  color: #fff;
+  position: absolute;
+  top: 35%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 14px;
+}
+.container-slider .prev {
+  left: 10px;
+
+}
+.container-slider .prev.show {
+  display: block;
+}
+.container-slider .next {
+  right: 5px;
+}
+.container-slider .nav .next.hide {
+  display: none;
+}
+

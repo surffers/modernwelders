@@ -1,0 +1,100 @@
+.card.login {
+    width: 100%;
+}
+.login-title {
+  font-size: 3.4vw;
+  line-height: 1.1;
+  margin-bottom: 40px;
+  font-weight: 900;
+}
+
+form.signup input {
+    margin-bottom: 10px;
+}
+
+form.login input {
+    margin-bottom: 20px;
+}
+
+.login-or {
+    text-align: center;
+    text-transform: uppercase;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.or {
+    color: #434E4F;
+}
+
+a.secondaryAction {
+    display: flex;
+    margin-top: 10px;
+    width: 100%;
+}
+
+ul.errorlist {
+    color: red;
+}
+
+#id_remember {
+    height: 20px;
+    width: 15px;
+    margin-left: 10px;
+    position: absolute;
+}
+form.signup input {
+    width: 100%;
+    height: 40px;
+    padding: 5px 10px;
+    border-radius: 5px;
+
+
+}
+
+form.login input,
+form.password_reset input {
+    width: 100%;
+    height: 50px;
+    padding: 5px 10px;
+    border-radius: 5px;
+
+
+}
+
+.social-links a {
+    padding-right: 20px;
+}
+
+@media (max-width: 550px) {
+    .background-image {
+        display: none;
+    }
+    .background-title {
+        display: none;
+    }
+    .modal-login {
+        left: 0;
+        background-color: transparent;
+    }
+}
+
+
+.logo-login {
+    margin-left: auto;
+    margin-right: auto;
+    width: 6em;
+}
+
+.button.login {
+    width: 100%;
+}
+
+
+
+p label {
+    display: none;
+}
+p #id_remember {
+    display: none;
+}

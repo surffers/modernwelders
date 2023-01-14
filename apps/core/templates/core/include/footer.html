@@ -1,0 +1,69 @@
+{% load static %}
+{% load humanize %}
+{% load i18n %}
+{% load contact_tags %}
+{% load account socialaccount %}
+
+{% block content %}
+<div class="box">
+    <div>
+                            <p class="title is-6">Получите лучшее от Surffers прямо в своем почтовом ящике.</p>
+                            {% contact_form %}
+                        </div>
+</div>
+
+
+<iframe src="https://yoomoney.ru/quickpay/fundraise/widget?billNumber=oWRxUgEUpXw.230110&" width="100%" height="480" frameborder="0" allowtransparency="true" scrolling="no"></iframe>
+<div class="box">
+    <h3 class="title is-4">Поддержать на любую сумму</h3>
+    <p class="subtitle is-6">
+        Спасибо, мне не нужно вознаграждение, я просто хочу поддержать проект.
+    </p>
+    <iframe src="https://yoomoney.ru/quickpay/fundraise/button?billNumber=lPN5JgErvg4.230110&" width="100%" height="50" frameborder="0" allowtransparency="true" scrolling="no"></iframe>
+    <hr>
+    <h3 class="title is-4">Добавим ваш проет</h3>
+    <p class="subtitle is-6">
+        Добавим ваш сайт, его будет видно в ленте новостей 7 дней.
+    </p>
+    <iframe src="https://yoomoney.ru/quickpay/fundraise/button?billNumber=AJYNSQEBEaI.230110&" width="100%" height="50" frameborder="0" allowtransparency="true" scrolling="no"></iframe>
+    <hr>
+    <h3 class="title is-4">Опубликуем вашу категорию</h3>
+    <p class="subtitle is-6">
+        Создавайте свои категории с подборками лучших сайтов.
+    </p>
+    <iframe src="https://yoomoney.ru/quickpay/fundraise/button?billNumber=lH7iBwJpBzo.230110&" width="330" height="50" frameborder="0" allowtransparency="true" scrolling="no"></iframe>
+    <hr>
+    <h3 class="title is-4">Добавим ваш сайт на всегда</h3>
+    <p class="subtitle is-6">
+        Ваш сайт останется на всегда в самых популярных сайтах.
+    </p>
+    <iframe src="https://yoomoney.ru/quickpay/fundraise/button?billNumber=HKREKADBmHg.230111&" width="330" height="50" frameborder="0" allowtransparency="true" scrolling="no"></iframe>​
+</div>
+
+
+
+
+
+
+
+    <div class="block">
+         <a href="{% url 'blog' %}" class="has-text-black is-size-7">Блог</a>&nbsp; &bull;&nbsp;
+        <a href="{% url 'contact' %}" class="has-text-black is-size-7">Контакт</a>&nbsp; &bull;&nbsp;
+  <a href="{% url 'about' %}" class="has-text-black is-size-7">О нас</a>&nbsp; &bull;&nbsp;
+        <a href="#" class="has-text-black is-size-7"><span class="bd-emoji">❤️</span> &nbsp;Курсы</a>&nbsp; &bull;&nbsp;
+        <a href="{% url 'price' %}" class="has-text-black is-size-7">Тарифы</a>&nbsp; &bull;&nbsp;
+        <a href="{% url 'privacy' %}" class="has-text-black is-size-7">Политика конфиденциальности</a>
+    </div>
+
+
+
+<p class="heading">
+    &copy; 2022 Surffers.
+</p>
+
+
+    {% endblock %}
+
+    {% block scripts %}
+
+    {% endblock %}
