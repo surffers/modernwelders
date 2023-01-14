@@ -60,7 +60,7 @@
             </div>
         </div>
         <h1 class="title home ">
-            Все мои ссылки
+            Мои ссылки
         </h1>
 
     <hr>
@@ -76,8 +76,15 @@
              <div class="columns is-multiline is-variable is-1-mobile is-0-tablet is-3-desktop is-8-widescreen is-2-fullhd">
                         {% for bookmark in page_obj  %}
                             <div class="column is-4">
+                                <p class="title is-7">Категория</p>
+                                    <p class="subtitle is-6 has-text-weight-bold is-uppercase">
+                                        <a href="{% url 'category'  bookmark.category.id  %}" class="has-text-black">
+                                            {{ bookmark.category.title|truncatechars:21 }}
+                                        </a>
+                                    </p>
 
                                     <div class="subtitle is-5">
+
                                         <a class="icon-bookmark subtitle is-5 has-text-weight-bold is-capitalized"
                                            href="{{ bookmark.url }}"
                                            target="_blank">
@@ -121,15 +128,17 @@
                                     </div>
 
 
-                                    <p class="subtitle is-6 has-text-weight-normal is-lowercase">
+                                    <p class="title is-6 has-text-weight-normal is-lowercase">
                                         {{ bookmark.body|truncatechars:150 }}
                                     </p>
-                                    {% for tag in bookmark.tags.all %}
-                                    <a href="{% url 'tag_detail_url' tag.slug %}" class="is-6 has-text-info">
+                                    <p class="subtitle is-6">
+                                        {% for tag in bookmark.tags.all %}
+                                        <a href="{% url 'tag_detail_url' tag.slug %}" class="has-text-info">
                                         #{{ tag.name|truncatechars:25 }}
                                     </a>
                                     {% endfor %}
-                                    <p>
+                                    </p>
+                                    <p class="title is-7">
                                         <span class="subtitle is-7"> {{ bookmark.created_at|naturaltime }}</span>
                                         &nbsp; &bull;&nbsp;
                                         <a href="{% url 'bookmark' bookmark.id %}">

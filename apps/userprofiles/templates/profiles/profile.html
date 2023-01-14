@@ -30,7 +30,7 @@
 
                 {% for link in links %}
                 <p class="u-links">
-                    <a class="icon-bookmark " href="{{ link.url }}" target="_blank">
+                    <a class="icon-bookmark " href="{{ link.url }}" target="_blank" title="{{ link.title }}">
                 </a>
                 </p>
                 {% empty %}
@@ -52,9 +52,19 @@
     {{ user.username|truncatechars:20 }}
 
 </p>
-                                {% if request.user == user %}
-                                    {% include 'feed/include/add-category.html' %}
+
+                                    {% if request.user == user %}
+                                    {% include 'profiles/include/user-edit-profile.html' %}
+                                {% else %}
+                                    <div id="add-category">
+                                    <a class="button is-link is-small is-rounded">
+
+                                            Подписаться
+
+                                    </a>
+                                    </div>
                                 {% endif %}
+
 
     </div>
 </div>
@@ -101,7 +111,7 @@
                     <div class="buttons">
 
                                 {% if request.user == user %}
-                                {% include 'profiles/include/user-edit-profile.html' %}
+
                                 {% else %}
 
                         <div class="block share has-text-centered">

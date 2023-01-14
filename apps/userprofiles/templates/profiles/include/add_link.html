@@ -22,15 +22,28 @@
                     <form method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                         <div class="field">
+                            <label class="label">Название ссылки</label>
+                            <div class="control">
+                                {{ AddLinkForm.title}}
+                            </div>
+                            <p class="help has-text-black">
+                                        Добавьте ссылку на соцсеть
+                                    </p>
+                        </div>
+                        <div class="field">
+                            <label class="label">URL</label>
                             <div class="control">
                                 {{ AddLinkForm.url }}
                             </div>
+                            <p class="help has-text-black">
+                                        Добавьте ссылку на соцсеть
+                                    </p>
                         </div>
                         <div class="field is-horizontal">
                             <div class="field-body">
                                 <div class="field">
                                     <div class="control">
-                                        <button class="button is-link login" type="submit"
+                                        <button class="button is-link login is-rounded" type="submit"
                                                 name="btnlink">
                                             Добавить
                                         </button>
@@ -42,6 +55,15 @@
 
 
                     <br>
+                    {% for link in links %}
+                <p class="u-links">
+                    <a class="icon-bookmark " href="{{ link.url }}" target="_blank">
+                </a>
+                    <a class="icon-bookmark has-text-danger" href="{% url 'link_delete' link.id %}">
+                        Удалить
+                </a>
+                </p>
+                {% endfor %}
 
                 </div>
             </footer>

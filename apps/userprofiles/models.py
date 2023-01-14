@@ -14,6 +14,7 @@ User.profile = property(lambda u:Profile.objects.get_or_create(user=u)[0])
 
 
 class Link(models.Model):
+    title = models.CharField(max_length=100, blank=True, null=True)
     url = models.URLField(max_length=200)
     user = models.ForeignKey(User, related_name='links', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)

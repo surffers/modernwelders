@@ -24,7 +24,7 @@ class ProfileForm(forms.ModelForm):
 class LinkForm(ModelForm):
     class Meta:
         model = Link
-        fields = ['url']
+        fields = ['url', 'title']
 
     def __init__(self, *args, **kwargs):
         super(LinkForm, self).__init__(*args, **kwargs)
@@ -32,6 +32,12 @@ class LinkForm(ModelForm):
             field = self.fields.get(field_name)
             self.fields['url'].widget.attrs.update({
                 "placeholder": "Введите или вставьте Url",
+                'class': "input"
+            })
+        for field_name in self.fields:
+            field = self.fields.get(field_name)
+            self.fields['title'].widget.attrs.update({
+                "placeholder": "Назание для Url",
                 'class': "input"
             })
 

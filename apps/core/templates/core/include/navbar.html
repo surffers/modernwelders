@@ -38,6 +38,9 @@
     <div class="navbar-menu" id="navMenubd-example">
 
         <div class="navbar-end">
+            {% if request.user == user %}
+                {% include 'feed/include/add-category.html' %}
+            {% endif %}
 <a class="navbar-item " href="http://bulma.io/expo/">
         <span class="bd-emoji">🎨</span> &nbsp;Expo
       </a>
