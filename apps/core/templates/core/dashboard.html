@@ -6,62 +6,77 @@
 {% block content %}
 
         {% include 'core/include/navbar.html' %}
-                <section class="hero category is-light">
+                <section class="hero category">
                     <div class="container category">
                         <div class="hero-body">
-                            <div class="columns is-multiline is-variable is-1-mobile is-0-tablet is-3-desktop is-8-widescreen is-2-fullhd">
+                            <div class="media">
+      <div class="media-left">
+         <p class="title profile category is-size-4-mobile">
+                                    Категории
+                                </p>
+      </div>
+    <div class="media-content"></div>
+      <div class="media-right">
+        <div class="buttons">
 
-                    <div class="column">
-                        <div class="is-pulled-left is-size-7">
-                            Категории {{ categories.all|length|intword }}
-                        </div>
-                        <div class="dropdown is-hoverable is-pulled-right  is-right">
-                            <div class="dropdown-trigger">
-                                <button class="button is-small is-light">
-                            <span class="icon is-size-5">
+
+            <a class="button is-light is-small" title="Количество ссылок">
+                        <span class="icon">
+                            {{ categories.all|length|intword }}
+                        </span>
+                    </a>
+
+                    <!--  Share  -->
+                    <div class="dropdown is-hoverable is-right">
+                        <div class="dropdown-trigger button is-light is-small">
+                            <div title="Поделиться">
+                            <span class="icon is-size-7">
                               <i class="fa fa-share-square-o" aria-hidden="true"></i>
                             </span>
-                                </button>
                             </div>
-                            <div class="dropdown-menu" role="menu">
-                                <div class="dropdown-content">
-                                    <a class="dropdown-item sharer" role="button">
-                                                <span class="copy-icon">
-                                                    <i class="fas fa-link icon"></i>
-                                                     Копировать ссылку
-                                                </span>
-
-                                    </a>
-                                    <a class="dropdown-item sharer" href="#" id="share-vk"
-                                       title="Share VK">
-                                                <span class="icon" style="color: #0071F2;">
-                                                    <i class="fab fa-vk"></i>
-                                                </span>
-                                        ВКонтакте
-                                    </a>
-                                    <a class="dropdown-item sharer" href="#" id="share-tg">
-                                                <span class="icon" style="color: #27A0DF;">
-                                                    <i class="fab fa-telegram"></i>
-                                                </span>
-                                        Telegram
-                                    </a>
-                                    <a class="dropdown-item sharer" href="#" id="share-em">
-                                                <span class="icon">
-                                                    <i aria-hidden="true" class="fa fa-envelope-o"></i>
-                                                </span>
-                                        Отправить на почту
-                                    </a>
-                                </div>
+                        </div>
+                        <div class="dropdown-menu" role="menu">
+                            <div class="dropdown-content">
+                                <a class="dropdown-item sharer" role="button">
+                                    <span class="copy-icon">
+                                        <i class="fas fa-link icon"></i>
+                                        Копировать ссылку
+                                    </span>
+                                </a>
+                                <a class="dropdown-item sharer" href="#" id="share-vk"
+                                   title="Share VK">
+                                    <span class="icon" style="color: #0071F2;">
+                                        <i class="fab fa-vk"></i>
+                                    </span>
+                                    ВКонтакте
+                                </a>
+                                <a class="dropdown-item sharer" href="#" id="share-tg">
+                                    <span class="icon" style="color: #27A0DF;">
+                                        <i class="fab fa-telegram"></i>
+                                    </span>
+                                    Telegram
+                                </a>
+                                <a class="dropdown-item sharer" href="#" id="share-em">
+                                    <span class="icon">
+                                        <i aria-hidden="true" class="fa fa-envelope-o"></i>
+                                    </span>
+                                    Отправить на почту
+                                </a>
                             </div>
                         </div>
                     </div>
+                    <!--  End Share  -->
+
                 </div>
+      </div>
+    </div>
+
+
+
 
                         <div class="columns is-vcentered">
                             <div class="column is-10">
-                                <p class="title profile category is-size-4-mobile">
-                                    Категории
-                                </p>
+
                                 <p class="subtitle is-6">
                                     Собирайте ссылки в одну категорию и делитесь одной ссылкой везде
                                 </p>

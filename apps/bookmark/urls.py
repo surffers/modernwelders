@@ -17,7 +17,7 @@ Including another URLconf
 from django.urls import path
 
 from apps.bookmark.views import category, category_edit, category_delete, bookmark_add, bookmark_delete, bookmark_edit, \
-    tag_detail, drafts, category_publish, bookmark, favorite_bookmark, bookmark_publish
+    tag_detail, drafts, category_publish, bookmark_detail, favorite_bookmark, bookmark_publish, sponsors
 
 
 urlpatterns = [
@@ -36,10 +36,11 @@ urlpatterns = [
     path('<int:bookmark_id>/', favorite_bookmark, name='favorite_bookmark'),
 
     path('drafts/', drafts, name='drafts'),
+    path('sponsors/', sponsors, name='sponsors'),
 
     # Tags
     path('tag/<str:slug>/', tag_detail, name='tag_detail_url'),
     # Comment
-    path('link/<int:bookmark_id>/', bookmark, name='bookmark'),
+    path('link/<int:bookmark_id>/', bookmark_detail, name='bookmark'),
     path('link/<int:bookmark_id>/publish/', bookmark_publish, name='bookmark_publish'),
 ]

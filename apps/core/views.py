@@ -13,6 +13,7 @@ import datetime
 from django.contrib import messages
 
 
+@login_required
 def users_links_lists(request):
     all_categories = Category.objects.all().select_related('user')
     userids = [request.user.id]
@@ -55,7 +56,7 @@ def price(request):
 def error_404_view(request, exception):
     return render(request, 'core/404.html')
 
-
+@login_required
 def tests(request):
     all_categories = Category.objects.all().select_related('user')
 
@@ -122,7 +123,7 @@ def home(request):
 def categories(request):
     userids = [request.user.id]
     all_categories = Category.objects.filter(published_date__lte=timezone.now()).select_related()
-    categories = Category.objects.filter(user_id__in=userids)
+    categories = Category.objects.all()
     bookmarks = Bookmark.objects.filter(user_id__in=userids).select_related('category')
 
     AddCategoryForm = CategoryForm(request.POST, request.FILES)

@@ -20,7 +20,12 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
 
-def bookmark(request, bookmark_id):
+def sponsors(request):
+    return render(request, 'feed/include/sponsors.html')
+
+
+def bookmark_detail(request, bookmark_id):
+    bookmarks = Bookmark.objects.filter().order_by("-created_at")[0:3]
     bookmark = get_object_or_404(Bookmark, pk=bookmark_id)
     is_favorite = False
     if bookmark.favorite.filter(id=request.user.id).exists():
@@ -50,10 +55,9 @@ def bookmark(request, bookmark_id):
     else:
         form = CommentForm()
 
-
-
     context = {
         'bookmark': bookmark,
+        'bookmarks': bookmarks,
         'form': form,
         'is_favorite': is_favorite,
         'BookmarkEdit': BookmarkEdit,
@@ -75,7 +79,6 @@ def tag_detail(request, slug):
 
 
 def category(request, category_id):
-
     category = Category.objects.get(pk=category_id)
     bookmarks = Bookmark.objects.filter(category_id=category_id)
     b = Bookmark.objects.all()

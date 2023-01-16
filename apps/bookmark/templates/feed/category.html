@@ -11,58 +11,50 @@
 
 
 {% if category.published_date %}
-
 <section class="section">
     <div class="box container category">
-        <div class="columns">
-            <div class="column">
-                <div class="is-pulled-left is-size-6 is-size-7-mobile">
-                    Ссылки {{ category.bookmarks.all|length|intword }}
-                </div>
-                <div class="is-pulled-right">
+    <div class="media">
+      <div class="media-left">
+          <a href="{% url 'profile' category.user.username %}">
+          <p class="title is-size-6 is-size-7-mobile">
+                    {{ category.user.first_name|truncatechars:25 }}
+                    {{ category.user.last_name|truncatechars:25 }}
+          </p>
+        <p class="subtitle is-size-6 is-size-7-mobile is-lowercase">@{{ category.user.username|truncatechars:25 }}</p>
+              </a>
+      </div>
+    <div class="media-content"></div>
+      <div class="media-right">
+        <div class="buttons">
+
                     {% if user == category.user %}
-                    <!--  Delete Category  -->
-                    <div class="dropdown is-hoverable is-right">
-                        <div class="dropdown-trigger">
-                            {% include 'feed/include/delete-category.html' %}
-                        </div>
-                        <div class="dropdown-menu" role="menu">
-                            <div class="dropdown-content">
-                                <div class="dropdown-item">
-                                    <p>Удалить категорию</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--  End Delete Category  -->
-                    <!--  Edit Category  -->
-                    <div class="dropdown is-hoverable is-right">
-                        <div class="dropdown-trigger">
-                            <a class="button is-light is-rounded is-small btn-ellipsis"
-                               href="{% url 'category_edit' category.id %}">
+                            <!--  Edit Category -->
+                            <a class="button is-light is-small" href="{% url 'category_edit' category.id %}" title="Редактировать">
                                 <span class="icon">
                                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                 </span>
                             </a>
-                        </div>
-                        <div class="dropdown-menu" role="menu">
-                            <div class="dropdown-content">
-                                <div class="dropdown-item">
-                                    <p>Редактировать категорию</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--  End edit Category  -->
+                            <!--  End Edit Category -->
+
+                            <!--  Delete Category -->
+                            {% include 'feed/include/delete-category.html' %}
+                            <!-- End Delete Category -->
                     {% endif %}
+
+            <a class="button is-light is-small" title="Количество ссылок">
+                        <span class="icon">
+                            {{ category.bookmarks.all|length|intword }}
+                        </span>
+                    </a>
+
                     <!--  Share  -->
                     <div class="dropdown is-hoverable is-right">
-                        <div class="dropdown-trigger">
-                            <button class="button is-light is-rounded is-small btn-ellipsis" title="Поделиться">
+                        <div class="dropdown-trigger button is-light is-small">
+                            <div title="Поделиться">
                             <span class="icon is-size-7">
                               <i class="fa fa-share-square-o" aria-hidden="true"></i>
                             </span>
-                            </button>
+                            </div>
                         </div>
                         <div class="dropdown-menu" role="menu">
                             <div class="dropdown-content">
@@ -95,71 +87,51 @@
                         </div>
                     </div>
                     <!--  End Share  -->
-                    {% if category.published_date %}
-                    <div class="dropdown is-hoverable is-right">
-                        <div class="dropdown-trigger">
-                            <div class="button is-light is-rounded is-small btn-ellipsis">
-                         <span class="icon has-text-success is-size-6">
-                                        <i class="fa fa-check-circle-o" aria-hidden="true"></i>
-                                    </span>
-                            </div>
-                        </div>
-                        <div class="dropdown-menu" role="menu">
-                            <div class="dropdown-content">
-                                <div class="dropdown-item">
-                                    <p>Эта категория<strong> опубликована</strong>, её видно в ленте новостей.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {% else %}
                     {% if user.is_superuser %}
-                    <div class="dropdown is-hoverable is-right">
-                        <div class="dropdown-trigger">
-                            <a class="button is-light is-rounded is-small btn-ellipsis"
-                               href="{% url 'category_publish' category.id  %}" title="Опубликовать категорию">
-                                        <span class="icon has-text-danger is-size-6">
+                    {% if category.published_date %}
+                                <a class="button is-light is-small" title="Категория опубликована">
+                                    <span class="icon has-text-success is-size-6">
                                             <i class="fa fa-check-circle-o" aria-hidden="true"></i>
                                         </span>
-                            </a>
-                        </div>
-                        <div class="dropdown-menu" role="menu">
-                            <div class="dropdown-content">
-                                <div class="dropdown-item">
-                                    <p>Хотите опубликовать свою категорию или ссылку, напишите нам.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {% endif %}
+                                </a>
+                        {% else %}
+                                <a class="button is-light is-small"
+                                   href="{% url 'category_publish' category.id  %}" title="Опубликовать категорию">
+                                            <span class="icon has-text-danger is-size-6">
+                                                <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                                            </span>
+                                </a>
+                        {% endif %}
 
-                    {% endif %}
+                        {% endif %}
+
+
+
                 </div>
-            </div>
-        </div>
-
-        <div class="subtitle">
-            <a class="category-list title category is-size-5-mobile">
-                {{ category.title }}
-            </a>
-        </div>
-        <p class="subtitle is-5 is-size-6-mobile">
-            {{ category.body }}
-        </p>
-        <p>
-            <span class="subtitle is-6 is-size-7-mobile"> {{ category.created_at|naturaltime }} &bull;&nbsp;от</span>
-            <a href="{% url 'profile' category.user.username %}"
-               class="has-text-black subtitle is-6 is-size-7-mobile">
-                {{ category.user.username }}
-            </a>
-        </p>
-
-        {% if user == category.user %}
-        {% include 'feed/add_bookmark.html' %}
-        {% endif %}
+      </div>
+    </div>
 
         <hr>
 
+
+            <div class="title has-text-weight-bold is-size-2 is-size-5-mobile">
+            <a class="has-text-black">
+                {{ category.title }}
+            </a>
+        </div>
+        <div class="column is-9 category-body">
+        <p class="subtitle is-5 is-size-6-mobile">
+            {{ category.body }}
+        </p>
+        <p  class="title is-6 is-size-7-mobile">
+            <span>{{ category.created_at|naturaltime }}</span>
+
+        </p>
+       </div>
+        {% if user == category.user %}
+            {% include 'feed/add_bookmark.html' %}
+        {% endif %}
+        <hr>
         {% if messages %}
         {% for message in messages %}
         <article class="message is-{{ message.tags }}">
@@ -174,22 +146,28 @@
             {% for bookmark in bookmarks %}
             <div class="column is-4">
                 <div class="box-link is-unselectable">
-                    <div class="subtitle is-5">
+                    {% if bookmark.url_icon %}
+                    <div class="title is-5">
                         <a class="icon-bookmark subtitle is-5 has-text-weight-bold is-capitalized"
                            href="{{ bookmark.url }}"
                            target="_blank">
+                        </a>
+                        <a class="subtitle is-5 has-text-weight-bold is-capitalized"
+                           href="{{ bookmark.url_icon }}"
+                           target="_blank">
                             {{ bookmark.title|truncatechars:40 }}
-                            {% if bookmark.published_date %}
+                        </a>
+                        {% if bookmark.published_date %}
                             <div class="dropdown is-hoverable">
                                 <div class="dropdown-trigger">
-                                    <span class="icon has-text-success is-size-6 is-size-6-mobile">
-                                        <i class="fa fa-check-circle-o" aria-hidden="true"></i>
-                                    </span>
+                                <span class="icon has-text-success is-size-6 is-size-6-mobile">
+                                    <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                                </span>
                                 </div>
                                 <div class="dropdown-menu" role="menu">
                                     <div class="dropdown-content">
                                         <div class="dropdown-item">
-                                            <p>Эта категория<strong> опубликована</strong>, её видно в ленте новостей.
+                                            <p>Этой ссылке можно <b>доверять</b>, проверенно нашей командой.
                                             </p>
                                         </div>
                                     </div>
@@ -198,20 +176,49 @@
                             {% else %}
 
                             {% endif %}
-                        </a>
-
                     </div>
-                    <p class="title is-6 has-text-weight-normal is-lowercase">
+                    {% else %}
+                    <div class="title is-5">
+                        <a class="icon-bookmark subtitle is-5 has-text-weight-bold is-capitalized"
+                           href="{{ bookmark.url }}"
+                           target="_blank">
+                            {{ bookmark.title|truncatechars:40 }}
+                        </a>
+                        {% if bookmark.published_date %}
+                            <div class="dropdown is-hoverable">
+                                <div class="dropdown-trigger">
+                                <span class="icon has-text-success is-size-6 is-size-6-mobile">
+                                    <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                                </span>
+                                </div>
+                                <div class="dropdown-menu" role="menu">
+                                    <div class="dropdown-content">
+                                        <div class="dropdown-item">
+                                            <p>Эта ссылка<strong> опубликована</strong>, её видно в ленте новостей.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% else %}
+
+                            {% endif %}
+                    </div>
+                    {% endif %}
+
+
+
+                    <p class="subtitle is-6 has-text-weight-normal is-lowercase">
                         {{ bookmark.body|truncatechars:150 }}
                     </p>
-                    <p class="subtitle is-6">
+                    <p class="title is-6 is-size-7-mobile">
                                         {% for tag in bookmark.tags.all %}
                                         <a href="{% url 'tag_detail_url' tag.slug %}" class="has-text-info">
                                         #{{ tag.name|truncatechars:25 }}
                                     </a>
                                     {% endfor %}
                                     </p>
-                    <p class="title is-7">
+                    <p  class="subtitle is-7">
                         <span class="subtitle is-7"> {{ bookmark.created_at|naturaltime }}</span>
                         &nbsp; &bull;&nbsp;
                         <a href="{% url 'bookmark' bookmark.id %}">
@@ -228,66 +235,88 @@
                 </div>
                 <br>
             </div>
-            {% endfor %}
+            {% empty %}
+
         </div>
 
 
-    </div>
-</section>
+        <div class="columns">
+            <div class="column is-4 has-text-centered">
 
+                {% if user == category.user %}
+
+                <div class="box">
+                    <span>☝️</span>
+                    <p class="subtitle is-6">
+                        Добавьте ссылку на сайт
+                    </p>
+                </div>
+
+
+                {% else %}
+                <div class="box">
+                    <span>☹️</span>
+                    <p class="subtitle is-6">
+                        {{ category.user.username|truncatechars:25 }}, еще не добавил ссылки
+                    </p>
+                </div>
+                {% endif %}
+
+            </div>
+        </div>
+
+    </div>
+
+
+    {% endfor %}
+</section>
 {% else %}
 
 {% if user == category.user %}
 <section class="section">
     <div class="box container category">
-        <div class="columns">
-            <div class="column">
-                <div class="is-pulled-left is-size-6 is-size-7-mobile">
-                    Ссылки {{ category.bookmarks.all|length|intword }}
-                </div>
-                <div class="is-pulled-right">
+    <div class="media">
+      <div class="media-left">
+          <a href="{% url 'profile' category.user.username %}">
+          <p class="title is-size-6 is-size-7-mobile">
+                    {{ category.user.first_name|truncatechars:25 }}
+                    {{ category.user.last_name|truncatechars:25 }}
+          </p>
+        <p class="subtitle is-size-6 is-size-7-mobile is-lowercase">@{{ category.user.username|truncatechars:25 }}</p>
+              </a>
+      </div>
+    <div class="media-content"></div>
+      <div class="media-right">
+        <div class="buttons">
 
                     {% if user == category.user %}
-                    <div class="dropdown is-hoverable is-right">
-                        <div class="dropdown-trigger">
-                            {% include 'feed/include/delete-category.html' %}
-                        </div>
-                        <div class="dropdown-menu" role="menu">
-                            <div class="dropdown-content">
-                                <div class="dropdown-item">
-                                    <p>Удалить категорию</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="dropdown is-hoverable is-right">
-                        <div class="dropdown-trigger">
-                            <a class="button is-light is-rounded is-small btn-ellipsis"
-                               href="{% url 'category_edit' category.id %}">
-                                        <span class="icon">
-                                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                        </span>
+                            <!--  Edit Category -->
+                            <a class="button is-light is-small" href="{% url 'category_edit' category.id %}" title="Редактировать">
+                                <span class="icon">
+                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                </span>
                             </a>
-                        </div>
-                        <div class="dropdown-menu" role="menu">
-                            <div class="dropdown-content">
-                                <div class="dropdown-item">
-                                    <p>Редактировать категорию</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                            <!--  End Edit Category -->
 
-
+                            <!--  Delete Category -->
+                            {% include 'feed/include/delete-category.html' %}
+                            <!-- End Delete Category -->
                     {% endif %}
+
+            <a class="button is-light is-small" title="Количество ссылок">
+                        <span class="icon">
+                            {{ category.bookmarks.all|length|intword }}
+                        </span>
+                    </a>
+
+                    <!--  Share Category -->
                     <div class="dropdown is-hoverable is-right">
-                        <div class="dropdown-trigger">
-                            <button class="button is-light is-rounded is-small btn-ellipsis" title="Поделиться">
+                        <div class="dropdown-trigger button is-light is-small">
+                            <div class="" title="Поделиться">
                             <span class="icon is-size-7">
                               <i class="fa fa-share-square-o" aria-hidden="true"></i>
                             </span>
-                            </button>
+                            </div>
                         </div>
                         <div class="dropdown-menu" role="menu">
                             <div class="dropdown-content">
@@ -319,66 +348,52 @@
                             </div>
                         </div>
                     </div>
-
-                    {% if category.published_date %}
-                    <div class="dropdown is-hoverable is-right">
-                        <div class="dropdown-trigger">
-                            <div class="button is-light is-rounded is-small btn-ellipsis">
-                         <span class="icon has-text-success is-size-6">
-                                        <i class="fa fa-check-circle-o" aria-hidden="true"></i>
-                                    </span>
-                            </div>
-                        </div>
-                        <div class="dropdown-menu" role="menu">
-                            <div class="dropdown-content">
-                                <div class="dropdown-item">
-                                    <p>Эта категория<strong> опубликована</strong>, её видно в ленте новостей.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {% else %}
+                    <!--  End Share Category -->
                     {% if user.is_superuser %}
-                    <div class="dropdown is-hoverable is-right">
-                        <div class="dropdown-trigger">
-                            <a class="button is-light is-rounded is-small btn-ellipsis"
-                               href="{% url 'category_publish' category.id  %}" title="Опубликовать категорию">
-                                        <span class="icon has-text-danger is-size-6">
+                    {% if category.published_date %}
+
+                                <a class="button is-light is-small" title="Категория опубликована">
+                                    <span class="icon has-text-success is-size-6">
                                             <i class="fa fa-check-circle-o" aria-hidden="true"></i>
                                         </span>
-                            </a>
-                        </div>
-                        <div class="dropdown-menu" role="menu">
-                            <div class="dropdown-content">
-                                <div class="dropdown-item">
-                                    <p>Хотите опубликовать свою категорию или ссылку, напишите нам.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {% endif %}
+                                </a>
+                        {% else %}
 
-                    {% endif %}
+
+                                <a class="button is-light is-small"
+                                   href="{% url 'category_publish' category.id  %}" title="Опубликовать категорию">
+                                            <span class="icon has-text-danger is-size-6">
+                                                <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                                            </span>
+                                </a>
+
+                        {% endif %}
+
+                        {% endif %}
+
+
+
                 </div>
-            </div>
-        </div>
-        <div class="subtitle">
-            <a class="category-list title category is-size-5-mobile">
+      </div>
+    </div>
+
+        <hr>
+        <div class="title has-text-weight-bold is-size-2 is-size-5-mobile">
+            <a class="has-text-black">
                 {{ category.title }}
             </a>
         </div>
+        <div class="column is-9 category-body">
         <p class="subtitle is-5 is-size-6-mobile">
             {{ category.body }}
         </p>
-        <p>
-            <span class="subtitle is-6 is-size-7-mobile"> {{ category.created_at|naturaltime }} &bull;&nbsp;от</span>
-            <a href="{% url 'profile' category.user.username %}"
-               class="has-text-black subtitle is-6 is-size-7-mobile">
-                {{ category.user.username }}
-            </a>
+        <p  class="title is-6 is-size-7-mobile">
+            <span>{{ category.created_at|naturaltime }}</span>
+
         </p>
+       </div>
         {% if user == category.user %}
-        {% include 'feed/add_bookmark.html' %}
+            {% include 'feed/add_bookmark.html' %}
         {% endif %}
         <hr>
         {% if messages %}
@@ -395,12 +410,19 @@
             {% for bookmark in bookmarks %}
             <div class="column is-4">
                 <div class="box-link is-unselectable">
-                    <div class="subtitle is-5">
+
+                    {% if bookmark.url_icon %}
+                    <div class="title is-5">
                         <a class="icon-bookmark subtitle is-5 has-text-weight-bold is-capitalized"
                            href="{{ bookmark.url }}"
                            target="_blank">
+                        </a>
+                        <a class="subtitle is-5 has-text-weight-bold is-capitalized"
+                           href="{{ bookmark.url_icon }}"
+                           target="_blank">
                             {{ bookmark.title|truncatechars:40 }}
-                            {% if bookmark.published_date %}
+                        </a>
+                        {% if bookmark.published_date %}
                             <div class="dropdown is-hoverable">
                                 <div class="dropdown-trigger">
                                 <span class="icon has-text-success is-size-6 is-size-6-mobile">
@@ -410,7 +432,7 @@
                                 <div class="dropdown-menu" role="menu">
                                     <div class="dropdown-content">
                                         <div class="dropdown-item">
-                                            <p>Эта категория<strong> опубликована</strong>, её видно в ленте новостей.
+                                            <p>Этой ссылке можно <b>доверять</b>, проверенно нашей командой.
                                             </p>
                                         </div>
                                     </div>
@@ -419,35 +441,48 @@
                             {% else %}
 
                             {% endif %}
-
-                        </a>
-
-                        {% if user == category.user %}
-                        <div class="buttons is-pulled-right">
-                            <div class="is-pulled-left button is-light is-rounded is-small btn-ellipsis">
-                                <a href="{% url 'bookmark_edit'  bookmark.id %}"
-                                   class="">
-                                                        <span class="icon has-text-warning">
-                                                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                                        </span>
-                                </a>
-                            </div>
-
-                        </div>
-                        {% endif %}
-
                     </div>
+                    {% else %}
+                    <div class="title is-5">
+                        <a class="icon-bookmark subtitle is-5 has-text-weight-bold is-capitalized"
+                           href="{{ bookmark.url }}"
+                           target="_blank">
+                            {{ bookmark.title|truncatechars:40 }}
+                        </a>
+                        {% if bookmark.published_date %}
+                            <div class="dropdown is-hoverable">
+                                <div class="dropdown-trigger">
+                                <span class="icon has-text-success is-size-6 is-size-6-mobile">
+                                    <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                                </span>
+                                </div>
+                                <div class="dropdown-menu" role="menu">
+                                    <div class="dropdown-content">
+                                        <div class="dropdown-item">
+                                            <p>Эта ссылка<strong> опубликована</strong>, её видно в ленте новостей.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% else %}
+
+                            {% endif %}
+                    </div>
+                    {% endif %}
 
 
                     <p class="subtitle is-6 has-text-weight-normal is-lowercase">
                         {{ bookmark.body|truncatechars:150 }}
                     </p>
-                    {% for tag in bookmark.tags.all %}
-                    <a href="{% url 'tag_detail_url' tag.slug %}" class="is-6 has-text-info">
-                        #{{ tag.name|truncatechars:25 }}
-                    </a>
-                    {% endfor %}
-                    <p>
+                    <p class="title is-6 is-size-7-mobile">
+                                        {% for tag in bookmark.tags.all %}
+                                        <a href="{% url 'tag_detail_url' tag.slug %}" class="has-text-info">
+                                        #{{ tag.name|truncatechars:25 }}
+                                    </a>
+                                    {% endfor %}
+                                    </p>
+                    <p  class="subtitle is-7">
                         <span class="subtitle is-7"> {{ bookmark.created_at|naturaltime }}</span>
                         &nbsp; &bull;&nbsp;
                         <a href="{% url 'bookmark' bookmark.id %}">

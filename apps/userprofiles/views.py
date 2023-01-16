@@ -11,7 +11,6 @@ from .forms import ProfileForm, LinkForm
 from apps.bookmark.forms import CategoryForm
 
 
-@login_required
 def profile(request, username):
     user = get_object_or_404(User, username=username)
     links = Link.objects.filter(user=user)

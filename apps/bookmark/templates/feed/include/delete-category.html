@@ -5,9 +5,11 @@
 
 {% block content %}
 
-<div id="delete-category" class="button is-light is-rounded is-small btn-ellipsis">
-    <a  class="has-text-weight-bold has-text-danger is-light" @click="toggleDialog">
-        <i class="fa fa-trash-o" aria-hidden="true"></i>
+<div id="delete-category">
+    <a  class="button is-light is-small" @click="toggleDialog" title="Удалить">
+        <span class="icon">
+            <i class="fa fa-trash-o" aria-hidden="true"></i>
+        </span>
     </a>
 
     <!-- ModalDeletedCategory -->

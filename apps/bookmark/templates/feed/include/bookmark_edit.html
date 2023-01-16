@@ -88,6 +88,15 @@
                     </div>
                 </div>
 
+                 {% if user.is_superuser %}
+                               <div class="field">
+<label class="label">Ссылка на партнёрку:</label>
+  <div class="control">
+    {{ form.url_icon }}
+  </div>
+</div>
+                        {% endif %}
+
                     <div class="field">
 <label class="label">Видео Url:</label>
   <div class="control">

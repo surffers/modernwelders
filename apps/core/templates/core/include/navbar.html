@@ -21,11 +21,6 @@
           <div class="navbar-item">
 
           </div>
-
-
-
-
-
             <div class="navbar-burger burger" data-target="navMenubd-example">
       <span></span>
       <span></span>
@@ -38,43 +33,76 @@
     <div class="navbar-menu" id="navMenubd-example">
 
         <div class="navbar-end">
-            {% if request.user == user %}
+            {% if request.user.is_authenticated %}
                 {% include 'feed/include/add-category.html' %}
             {% endif %}
-<a class="navbar-item " href="http://bulma.io/expo/">
-        <span class="bd-emoji">🎨</span> &nbsp;Expo
+            <a class="navbar-item " href="{% url 'categories' %}">
+              <span>
+                  Категории
+              </span>
+          </a>
+      <a class="navbar-item " href="{% url 'sponsors' %}">
+        <span class="bd-emoji">❤️</span> &nbsp;Спонсоры
       </a>
-      <a class="navbar-item " href="http://bulma.io/love/">
-        <span class="bd-emoji">❤️</span> &nbsp;Love
-      </a>
-                <a href="#" class="navbar-item">
-                                Курсы
-                            </a>
+
 
 {% if request.user.is_authenticated %}
 
                 <div class="navbar-item has-dropdown is-hoverable ">
 
             <a class="navbar-link">
-          {{ request.user.username|truncatechars:20 }}
-        </a>
+                {{ request.user.username|truncatechars:20 }}
+            </a>
 
         <div class="navbar-dropdown is-right">
-          <a class="navbar-item " href="{% url 'profile' request.user.username %}">
-            Профиль
+          <a class="navbar-item" href="{% url 'profile' request.user.username %}">
+               <span class="icon-text">
+              <span class="icon has-text-link">
+                    <i class="fa fa-user-o" aria-hidden="true"></i>
+                </span>
+                <span>
+                    Профиль
+                </span>
+                   </span>
           </a>
-          <a class="navbar-item " >
-            Избранное
+          <a class="navbar-item" href="{% url 'bookmark_favorite_lists' request.user.username %} ">
+               <span class="icon-text">
+              <span class="icon has-text-link">
+                  <i class="fa fa-heart-o" aria-hidden="true"></i>
+              </span>
+              <span>
+                  Избранное
+              </span>
+                   </span>
           </a>
           <a class="navbar-item " href="{% url 'categories' %}">
-            Категории
+               <span class="icon-text">
+              <span class="icon has-text-link">
+                  <i class="fa fa-folder-o" aria-hidden="true"></i>
+              </span>
+              <span>
+                  Категории
+              </span>
+              </span>
           </a>
-          <a class="navbar-item " href="{% url 'board' %}">
-            Ссылки
+          <a class="navbar-item" href="{% url 'board' %}">
+              <span class="icon-text">
+              <span class="icon has-text-link">
+                  <i class="fa fa-external-link" aria-hidden="true"></i>
+              </span>
+              <span>
+                  Ссылки
+              </span>
+                  </span>
           </a>
-            <a class="navbar-item " href="{% url 'tests' %}">
-            Тесты
-          </a>
+            <a class="navbar-item" href="{% url 'tests' %}">
+                <span class="icon-text">
+                  <span class="icon has-text-link">
+                    <i class="fa fa-thermometer-empty" aria-hidden="true"></i>
+                  </span>
+                  <span>Тесты</span>
+                </span>
+            </a>
 
 
           <hr class="navbar-divider">

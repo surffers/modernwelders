@@ -1,5 +1,5 @@
 .container.category {
-    margin-top: 80px;
+    margin-top: 100px;
     width: 100%;
 }
 
@@ -26,27 +26,15 @@
     padding: 20px;
 }
 
-
-
-.category-delete {
-    margin-right: 10px;
-}
-
-.category-edit {
-    margin-right: 10px;
-
+.category-body {
+    padding-left: 0;
+    padding-top: 0;
+    padding-bottom: 0;
 }
 
 
 .date.postdate {
     margin-bottom: 10px;
-}
-
-
-.btn-ellipsis {
-    width: 30px;
-    border: none;
-    border-radius: 50px;
 }
 
 #add-category a {

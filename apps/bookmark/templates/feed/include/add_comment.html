@@ -2,25 +2,24 @@
 {% load humanize %}
 
 {% block content %}
-<div id="add-comment">
+<div id="add-comment" class="has-text-centered">
 
     {% if request.user == user %}
-       <a>
-        <div @click="toggleDialog" class="box">
-                                    <div class="card-content">
-                                        <div class="content">
-                                            <br>
-                                            <a class="profile-add-link">
+
+
+                                            <a @click="toggleDialog" class="button is-link login is-medium">
                                                 <span class="icon is-small">
                                                   <i class="fa fa-plus" aria-hidden="true"></i>
                                                 </span>
+                                                <span>
+                                                    Добавить комментарий
+                                                </span>
                                               </a>
-                                            <br><br>
-                                        <p class="subtitle is-6">Добавить комментарий</p>
-                                    </div>
-                                </div>
-             </div>
-    </a>
+
+     <div class="spacer"></div>
+
+
+
     {% endif %}
 
     <!-- ModalDeletedCategory -->

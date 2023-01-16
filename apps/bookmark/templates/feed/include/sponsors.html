@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% block title %}Surffers - Спонсоры {% endblock %}
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+
+{% include 'core/include/navbar.html' %}
+
+<section class="section">
+    <div class="box container category">
+    <div class="media">
+      <div class="media-left">
+          <p class="title has-text-weight-bold is-size-2 is-size-3-mobile">
+            <a class="has-text-black">
+                Спонсоры
+            </a>
+        </p>
+      </div>
+    <div class="media-content"></div>
+      <div class="media-right">
+        <div class="buttons">
+                    <!--  Share  -->
+                    <div class="dropdown is-hoverable is-right">
+                        <div class="dropdown-trigger button is-light is-small">
+                            <div title="Поделиться">
+                            <span class="icon is-size-7">
+                              <i class="fa fa-share-square-o" aria-hidden="true"></i>
+                            </span>
+                            </div>
+                        </div>
+                        <div class="dropdown-menu" role="menu">
+                            <div class="dropdown-content">
+                                <a class="dropdown-item sharer" role="button">
+                                    <span class="copy-icon">
+                                        <i class="fas fa-link icon"></i>
+                                        Копировать ссылку
+                                    </span>
+                                </a>
+                                <a class="dropdown-item sharer" href="#" id="share-vk"
+                                   title="Share VK">
+                                    <span class="icon" style="color: #0071F2;">
+                                        <i class="fab fa-vk"></i>
+                                    </span>
+                                    ВКонтакте
+                                </a>
+                                <a class="dropdown-item sharer" href="#" id="share-tg">
+                                    <span class="icon" style="color: #27A0DF;">
+                                        <i class="fab fa-telegram"></i>
+                                    </span>
+                                    Telegram
+                                </a>
+                                <a class="dropdown-item sharer" href="#" id="share-em">
+                                    <span class="icon">
+                                        <i aria-hidden="true" class="fa fa-envelope-o"></i>
+                                    </span>
+                                    Отправить на почту
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!--  End Share  -->
+                </div>
+      </div>
+    </div>
+        <p class="subtitle">
+               Вы можете ежемесячно поддерживать нас через  <br>
+               <b>Boosty</b> или стать спонсором через <b>Yoomoney</b>.
+                <br>
+               Мы благодарны компаниям и людям, которые делают <b>Surffers</b> <br>
+               возможным.
+
+           </p>
+
+        <hr>
+        <div class="spacer"></div>
+        <div class="columns is-multiline is-variable is-1-mobile is-0-tablet is-3-desktop is-8-widescreen is-2-fullhd is-centered">
+            <div class="column is-5 has-text-centered">
+                  <img class="sponsor-image" src="/static/img/cost-saving.png" alt="Placeholder image">
+                <h1 class="title is-3 has-text-weight-bold">Спонсорство</h1>
+                <p class="title is-4 has-text-weight-light">
+                    Если вы хотите видеть на этом сайте логотип вашей компании со ссылкой для перехода, вы можете стать спонсором прямо через платформу Yoomoney!
+                </p>
+                <iframe src="https://yoomoney.ru/quickpay/fundraise/button?billNumber=BFBWUwHk7mM.230115&" width="230" height="50" frameborder="0" allowtransparency="true" scrolling="no"></iframe>
+            </div>
+            <div class="column is-5 is-offset-2 has-text-centered">
+                <img class="sponsor-image" src="/static/img/donation.png" alt="Placeholder image">
+                <h1 class="title is-3 has-text-weight-bold">Поддержите нас на Boosty</h1>
+                <p class="title is-4 has-text-weight-light">
+                    Внесение вклада через наш Boosty вознаградит вас доступом к нашему каналу по разработке в Telegram и вашим именем, указанным на этой странице.
+                </p>
+                <a class="button is-link is-medium" style="background: #D45124; height: 50px; width: 230px;" href="https://boosty.to/" target="_blank">
+                    <img class="sponsor-image" src="/static/img/boosty.png" alt="Placeholder image">
+                </a>
+            </div>
+        </div>
+        <div class="spacer"></div>
+        <div class="columns">
+            <div class="column">
+                <h1 class="title has-text-centered">Поддерживается</h1>
+            </div>
+        </div>
+        <div class="spacer"></div>
+    </div>
+
+</section>
+
+{% endblock %}
+
+{% block scripts %}
+
+{% endblock %}
