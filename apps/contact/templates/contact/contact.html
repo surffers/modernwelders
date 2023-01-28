@@ -6,42 +6,90 @@
 
 {% block content %}
 
-    <section class="hero home has-text-centered">
-    <div class="hero-body home">
-        <div class="container">
-            <div class="slider-text">
-                <span class="subheading">👋 Привет</span>
-                <h1 class="mb-3">Sur<span>ff</span>ers</h1>
-                <p class="subtitle is-3">Сёрфи в интернете вместе с нами </p>
+
+ <section class="section">
+    <div class="container category">
+        <div class="columns is-centered">
+        <div class="column is-4">
+                <div class="box">
+                    <div class="content">
+                        <div class="subtitle is-5">
+
+
+                            <a href="" class="icon-bookmark subtitle is-5 has-text-weight-bold"
+                               target="_blank">
+                                {{ category.title|truncatechars:20 }}
+                            </a>
+
+
+
+                        </div>
+                        <p>
+                            <span class="subtitle is-6 has-text-weight-normal">{{ category.body|truncatechars:90 }}</span>
+
+                        </p>
+
+
+
+
+                        <p>
+                            <span class="subtitle is-7">{{ category.created_at|naturaltime }}</span>
+
+                        </p>
+                    </div>
+                </div>
+            </div>
+            </div>
+            <div class="columns is-centered">
+
+            <div class="column is-4">
+                <div class="box">
+            <div class="btn-back">
+            <div class="">
+                <h1 class="title is-4 is-size-4-mobile has-text-centered">Редактировать категорию</h1>
 
             </div>
-        </div>
-    </div>
-    <div class="block share">
-                <a class="button is-black is-outlined sidebar-social-btn has-text-weight-normal" role="button"
-                   title="Copy link">
-                                                <span class="copy-icon">
-                                                    <i class="fas fa-link icon"></i>
-                                                </span>
-                </a>
-                <a class="button is-black is-outlined sidebar-social-btn sharer" href="#" id="share-em"
-                   title="Share Email">
-                                                <span>
-                                                    <i aria-hidden="true" class="fa fa-envelope-o"></i>
-                                                </span>
-                </a>
-                <a class="button is-black is-outlined sidebar-social-btn sharer" href="#" id="share-vk"
-                   title="Share VK">
-                                                <span>
-                                                    <i class="fab fa-vk"></i>
-                                                </span>
-                </a>
-                <a class="button is-black is-outlined sidebar-social-btn sharer" href="#" id="share-tg">
-                                                <span>
-                                                    <i class="fab fa-telegram"></i>
-                                                </span>
-                </a>
+
             </div>
+
+
+
+            <hr>
+
+              <form class="form-add-category" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+
+
+
+    <div class="field">
+        <label class="label">Название:</label>
+      <div class="control">
+        {{ FormEdit.title }}
+      </div>
+    </div>
+
+
+
+    <div class="field">
+        <label class="label">Описание:</label>
+      <div class="control">
+        {{ FormEdit.body }}
+      </div>
+    </div>
+
+
+
+        <button class="button login is-link" type="submit" name="btnedit">
+          Сохранить изменения
+        </button>
+
+
+        </form>
+        </div>
+        </div>
+
+    </div>
+</div>
 </section>
 
     <section class="hero home has-text-centered">

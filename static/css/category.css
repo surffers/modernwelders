@@ -16,12 +16,15 @@
 .card.category {
     height: 250px;
     width: 100%;
-    min-width: 345px;
+    min-width: 245px;
     border-radius: 1em;
-    box-shadow: 8px 8px 15px var(--shadowDark), -8px -8px 15px var(--shadowLight);
     cursor: pointer;
-    border: 1px solid  #fff;
+    box-shadow: 8px 8px 15px var(--shadowDark), -8px -8px 15px var(--shadowLight);
 }
+.card.category:hover {
+    transform: scale(1.05, 1.05);
+}
+
 .card.category .card-content, .card.category .content {
     padding: 20px;
 }

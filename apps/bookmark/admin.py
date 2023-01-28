@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.utils.safestring import mark_safe
 
 from django import forms
-from .models import Category, Bookmark, Comment
+from .models import Category, Bookmark, Comment, Ip
 
 
 class CategoryAdmin(admin.ModelAdmin):
@@ -17,6 +17,9 @@ class CategoryAdmin(admin.ModelAdmin):
     date_hierarchy = ('created_at')
 
 admin.site.register(Category, CategoryAdmin)
+
+
+admin.site.register(Ip)
 
 
 class BookmarkAdmin(admin.ModelAdmin):

@@ -6,9 +6,9 @@
 
 Организуйте ссылки, статьи и многое другое со всего Интернета в одном месте. Это больше, чем просто инструмент для создания закладок.
 
-[🔮 Website](https://webcrate.app) - [🚀 Install](https://deta.space/discovery/webcrate)
+[🔮 Website](https://surffers.ru)
 
-![preview](https://webcrate.fra1.cdn.digitaloceanspaces.com/static/readme-image.png)
+![preview](http://127.0.0.1:8000/static/img/home.png)
 
 <br/>
 	
@@ -59,11 +59,8 @@ WebCrate is free to use and I ([@BetaHuhn](https://github.com/BetaHuhn)) am curr
 - [Buy me a coffee](https://www.buymeacoffee.com/betahuhn)
 - [Support me via Ko-Fi](https://ko-fi.com/betahuhn)
 
-### Related
 
-- [Browser Extension](https://github.com/WebCrateApp/browser-extension) - Add links directly from your browser
 
 ### Links
 
-- [Follow WebCrate on Twitter](https://twitter.com/WebCrateApp)
-- [Support WebCrate on ProductHunt](https://www.producthunt.com/posts/webcrate-2)
+- [Подписывайтесь на Surffers в ВКонтакте](https://vk.com/surffers_ru)

@@ -5,7 +5,13 @@
 <div id="add-link">
 
     <a @click="toggleDialog" class="button is-black is-outlined add-link-btn" title="Добавьте ссылку">
-        <i class="fas fa-plus"></i>
+        <span class="icon">
+                       <svg style="fill: currentColor; width: 1rem; height: 1rem;" version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+                            <title>add</title>
+                            <path d="M16.943 0.943h-1.885v14.115h-14.115v1.885h14.115v14.115h1.885v-14.115h14.115v-1.885h-14.115v-14.115z">
+                            </path>
+                          </svg>
+                   </span>
     </a>
 
     <!-- ModalDeletedCategory -->
@@ -17,7 +23,7 @@
                 <button class="delete" aria-label="close" @click="showDialog = !showDialog"></button>
             </header>
 
-            <footer class="modal-card-foot">
+            <section class="modal-card-body">
                 <div class="column is-12">
                     <form method="post" enctype="multipart/form-data">
                         {% csrf_token %}
@@ -43,7 +49,7 @@
                             <div class="field-body">
                                 <div class="field">
                                     <div class="control">
-                                        <button class="button is-link login is-rounded" type="submit"
+                                        <button class="button is-link login" type="submit"
                                                 name="btnlink">
                                             Добавить
                                         </button>
@@ -54,7 +60,7 @@
                     </form>
 
 
-                    <br>
+                    <hr>
                     {% for link in links %}
                 <p class="u-links">
                     <a class="icon-bookmark " href="{{ link.url }}" target="_blank">
@@ -66,7 +72,7 @@
                 {% endfor %}
 
                 </div>
-            </footer>
+            </section>
         </div>
     </div>
 

@@ -7,11 +7,6 @@
   }
 
   @media (max-width: 1920px) {
-  .navbar {
-    padding-right: 20px;
-    padding-left: 20px;
-}
-
   /* Login */
   .login_text_mobile {
     display: none;
@@ -25,6 +20,11 @@
 }
 
 /* Profile */
+.card.profile {
+    height:250px;
+    border-radius: 1em;
+    cursor: pointer;
+}
 .level.is-mobile.mobile {
     display: none;
 }
@@ -47,11 +47,6 @@
   }
 
  @media screen and (max-width: 550px){
- .navbar {
-    padding-right: 0;
-    padding-left: 0;
-}
-
 
 /* Login */
 .login_text_desktop {
@@ -61,6 +56,11 @@
 
 
  /* Profile */
+ .card.profile {
+    height:150px;
+    border-radius: 1em;
+    cursor: pointer;
+}
  .block.share a {
     margin-top: 20px;
 }

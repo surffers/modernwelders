@@ -91,46 +91,116 @@
 
         <div class="columns is-multiline is-variable is-1-mobile is-0-tablet is-3-desktop is-8-widescreen is-2-fullhd">
             {% for bookmark in favorite_bookmarks %}
-            <div class="column is-4">
-                <div class="content">
-                    <p class="subtitle is-5">
-                        <a class="icon-bookmark subtitle is-5 has-text-weight-bold" href="{{ bookmark.url }}"
-                           target="_blank">
-                            {{ bookmark.title|truncatechars:40 }}
-                        </a>
-                    </p>
-                    <div class="spacing"></div>
-                    <p class="subtitle is-6 has-text-weight-normal">
-                        {{ bookmark.body|truncatechars:150 }}
-                    </p>
-                    {% for tag in bookmark.tags.all %}
-                    <a href="{% url 'tag_detail_url' tag.slug %}" class="is-6 has-text-info">
-                        #{{ tag.name|truncatechars:25 }}
-                    </a>
-                    {% endfor %}
-                    <p>
-                        <span class="subtitle is-7"> {{ bookmark.created_at|naturaltime }}</span>
-                        &nbsp; &bull;&nbsp;
-                        <a href="{% url 'bookmark' bookmark.id %}">
-                            <span class="subtitle is-7">{{ bookmark.comments.all|length }} Комментарии</span>
-                        </a>
-                        &bull;&nbsp;
-                            <a class='hero-btn'>
-                                                <span class="forloop has-text-weight-bold is-size-7-mobile">
-                                                 ☆
-                                                </span>
-                                <span class="forloop is-size-7-mobile"> 0</span>
-                            </a>
-                    </p>
-                </div>
-                <br>
-            </div>
+             <div class="column is-4">
+                                    <p class="title is-7 has-text-weight-bold is-uppercase">
+                                        <a href="{% url 'category'  bookmark.category.id  %}" class="has-text-black">
+                                            {{ bookmark.category.title|truncatechars:100 }}
+                                        </a>
+
+                                    </p>
+                                <p class="subtitle is-7 has-text-weight-bold">
+                                        <a href="{% url 'profile' bookmark.user.username %}" class="has-text-black is-lowercase">
+                                            @{{ bookmark.user.username|truncatechars:25 }}
+                                         </a>
+                                    </p>
+
+
+
+
+                                        {% if bookmark.url_icon %}
+                                        <div class="subtitle is-5">
+                                            <a class="icon-bookmark subtitle is-5 has-text-weight-bold is-capitalized"
+                                               href="{{ bookmark.url }}"
+                                               target="_blank">
+                                            </a>
+                                            <a class="subtitle is-5 has-text-weight-bold is-capitalized"
+                                               href="{{ bookmark.url_icon }}"
+                                               target="_blank">
+                                                {{ bookmark.title|truncatechars:40 }}
+                                            </a>
+                                            {% if bookmark.published_date %}
+                                                <div class="dropdown is-hoverable">
+                                                    <div class="dropdown-trigger">
+                                                    <span class="icon has-text-success is-size-6 is-size-6-mobile">
+                                                        <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                                                    </span>
+                                                    </div>
+                                                    <div class="dropdown-menu" role="menu">
+                                                        <div class="dropdown-content">
+                                                            <div class="dropdown-item">
+                                                                <p>Этой ссылке можно <b>доверять</b>, проверенно нашей командой.
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {% else %}
+
+                                                {% endif %}
+                                        </div>
+                                    {% else %}
+                                        <div class="subtitle is-5">
+                                            <a class="icon-bookmark subtitle is-5 has-text-weight-bold is-capitalized"
+                                               href="{{ bookmark.url }}"
+                                               target="_blank">
+                                                {{ bookmark.title|truncatechars:40 }}
+                                            </a>
+                                            {% if bookmark.published_date %}
+                                                <div class="dropdown is-hoverable">
+                                                    <div class="dropdown-trigger">
+                                                    <span class="icon has-text-success is-size-6 is-size-6-mobile">
+                                                        <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                                                    </span>
+                                                    </div>
+                                                    <div class="dropdown-menu" role="menu">
+                                                        <div class="dropdown-content">
+                                                            <div class="dropdown-item">
+                                                                <p>Эта ссылка<strong> опубликована</strong>, её видно в ленте новостей.
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {% else %}
+
+                                                {% endif %}
+                                        </div>
+                                    {% endif %}
+
+
+
+                                    <p class="title is-6 has-text-weight-normal is-lowercase is-size-7-mobile">
+                                        {{ bookmark.body|truncatechars:150 }}
+                                    </p>
+                                    <p class="subtitle is-6 is-size-7-mobile">
+                                        {% for tag in bookmark.tags.all %}
+                                        <a href="{% url 'tag_detail_url' tag.slug %}" class="has-text-info">
+                                        #{{ tag.name|truncatechars:25 }}
+                                    </a>
+                                    {% endfor %}
+                                    </p>
+                                    <p class="title is-7">
+                                        <span class="subtitle is-7"> {{ bookmark.created_at|naturaltime }}</span>
+                                        &nbsp; &bull;&nbsp;
+                                        <a href="{% url 'bookmark' bookmark.id %}">
+                                            <span class="subtitle is-7">{{ bookmark.comments.all|length }} Комментарии</span>
+                                        </a>
+                                        &bull;&nbsp;
+                                        <a class='hero-btn'>
+                                                                <span class="forloop has-text-weight-bold is-size-7-mobile">
+                                                                 ☆
+                                                                </span>
+                                            <span class="forloop is-size-7-mobile"> 0</span>
+                                        </a>
+                                    </p>
+                                <br>
+                                </div>
             {% empty %}
             <div class="column is-4 has-text-black has-text-centered">
                 <div class="box">
                     <span>☝️</span>
                     <p class="title is-6">
-                        Вы ещё не добавили ссылку
+                        Вы ещё не добавили ссылку в избранное
                     </p>
                 </div>
             </div>

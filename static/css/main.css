@@ -27,6 +27,7 @@ body {
     margin: 0;
     padding: 0;
 }
+
 h1,
 p,
 a {
@@ -36,30 +37,25 @@ a {
   --shadowDark: #D9DDE6;
   --background: #E4E9F2;
   --shadowLight: #EFF5FE;
+  --main-bg-color: brown;
 }
 
-
-
+.card {
+    border-radius: 1em;
+}
 .box {
     border-radius: 1em;
-    border: 1px solid #F5F5F5;
+    border: 1px solid #eee;
     box-shadow: 8px 8px 15px var(--shadowDark), -8px -8px 15px var(--shadowLight);
+    background: transparent;
 }
 
 .box:hover {
         cursor: pointer;
 }
 
-
-
-input {
-    border: 1px solid #131313;
-    background-color: transparent;
-}
-
 input.input {
     height: 40px;
-    background-color: transparent;
 }
 
 
@@ -72,8 +68,6 @@ textarea.textarea {
     height: 90px;
     min-height: 40px;
     max-height: 90px;
-    background-color: transparent;
-
 }
 
 .form-add-category {
@@ -101,4 +95,3 @@ textarea.textarea {
     display: inline;
 
 }
-is-size-1-mobile

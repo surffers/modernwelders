@@ -2,10 +2,10 @@
 {% load humanize %}
 
 {% block content %}
-<div id="add-bookmark">
+<div id="add-bookmark" class="buttons">
 
     {% if request.user == user %}
-       <a @click="toggleDialog" class="button is-link is-flex-mobile">
+       <a @click="toggleDialog" class="button is-link">
 <span class="icon">
                        <svg style="fill: currentColor; width: 1rem; height: 1rem;" version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
                             <title>add</title>
@@ -81,7 +81,7 @@
   </div>
 </div>
                         <br>
-<button class="button is-link has-text-weight-bold" type="submit">
+<button class="button is-link has-text-weight-bold " type="submit">
                                                 Сохранить
                                             </button>
       <button class="button has-text-weight-bold" @click="showDialog = !showDialog" aria-label="close">Отменить</button>

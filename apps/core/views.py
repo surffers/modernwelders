@@ -13,27 +13,24 @@ import datetime
 from django.contrib import messages
 
 
-@login_required
 def users_links_lists(request):
+    # userids = [request.user.id]
+    # bookmarks = Bookmark.objects.filter(user_id__in=userids).select_related('category')
     all_categories = Category.objects.all().select_related('user')
-    userids = [request.user.id]
-    bookmarks = Bookmark.objects.filter(user_id__in=userids).select_related('category')
+    user_bookmarks = Bookmark.objects.filter(published_date__lte=timezone.now()).select_related('category')
     categories = Category.objects.all()
 
-    paginator = Paginator(bookmarks, 99)
+    paginator = Paginator(user_bookmarks, 99)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
     context = {
-        'bookmarks': bookmarks,
+        'user_bookmarks': user_bookmarks,
         'all_categories': all_categories,
         'page_obj': page_obj,
         'categories': categories,
     }
     return render(request, 'core/users_links_lists.html', context)
-
-
-
 
 
 def privacy(request):
@@ -87,13 +84,13 @@ def tests(request):
 def home(request):
     date_from = datetime.datetime.now() - datetime.timedelta(days=1)
     tags = Tag.objects.all
+    comments = Comment.objects.all().order_by("-created_at")[0:1]
     # userids = [request.user.id]
 
     profiles = Profile.objects.all().order_by("-created")
-    home_categories = Category.objects.filter(published_date__lte=timezone.now()).order_by("-created_at")#[0:3]
-    bookmarks = Bookmark.objects.filter(published_date__lte=timezone.now())
+    home_categories = Category.objects.filter(published_date__lte=timezone.now()).select_related('user').order_by("-created_at")#[0:3]
+    bookmarks = Bookmark.objects.filter(published_date__lte=timezone.now()).select_related('category',)
     user_categories = Category.objects.filter(published_date__lte=timezone.now())
-
 
     AddCategoryForm = CategoryForm(request.POST, request.FILES)
     if AddCategoryForm.is_valid():
@@ -103,12 +100,12 @@ def home(request):
         messages.success(request, 'Категория создана!')
         return redirect('categories')
 
-
     paginator = Paginator(bookmarks, 10)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
     context = {
+        'comments': comments,
         'tags': tags,
         'page_obj': page_obj,
         'profiles': profiles,
@@ -122,9 +119,10 @@ def home(request):
 
 def categories(request):
     userids = [request.user.id]
-    all_categories = Category.objects.filter(published_date__lte=timezone.now()).select_related()
-    categories = Category.objects.all()
-    bookmarks = Bookmark.objects.filter(user_id__in=userids).select_related('category')
+    all_categories = Category.objects.filter(published_date__lte=timezone.now())
+    categories = Category.objects.all().select_related('user')
+    published_categories = Category.objects.filter(published_date__lte=timezone.now()).select_related('user')
+    bookmarks = Bookmark.objects.filter(user_id__in=userids).select_related('category', 'user')
 
     AddCategoryForm = CategoryForm(request.POST, request.FILES)
     if AddCategoryForm.is_valid():
@@ -143,28 +141,29 @@ def categories(request):
         'all_categories': all_categories,
         'page_obj': page_obj,
         'categories': categories,
+        'published_categories': published_categories,
         'AddCategoryForm': AddCategoryForm,
     }
     return render(request, 'core/dashboard.html', context)
 
 
 def search(request):
-    home_categories = Category.objects.filter(published_date__lte=timezone.now())
-    query = request.GET.get('query', '')
+    b = Bookmark.objects.filter(published_date__lte=timezone.now())
+    query = request.GET.get('q', '')
 
     if len(query) > 0:
-        bookmarks = Bookmark.objects.filter(title__icontains=query, published_date__lte=timezone.now())
+        bookmarks = Bookmark.objects.filter(Q(title__icontains=query, published_date__lte=timezone.now()) | Q(category__title__icontains=query))
         categories = Category.objects.filter(title__icontains=query, published_date__lte=timezone.now())
 
     else:
         bookmarks = [],
-        categories = []
+        categories = [],
 
     paginator = Paginator(bookmarks, 10)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
-    return render(request, 'core/search.html', {'home_categories': home_categories, 'bookmarks': bookmarks, 'page_obj': page_obj, 'categories': categories, 'query': query})
+    return render(request, 'core/search.html', {'b': b, 'bookmarks': bookmarks, 'page_obj': page_obj, 'categories': categories, 'query': query})
 
 
 

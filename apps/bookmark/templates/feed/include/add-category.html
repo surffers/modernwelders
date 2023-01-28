@@ -6,7 +6,7 @@
 
 <div id="add-category" class="navbar-item ">
 
-         <a class="button is-link is-small"  @click="toggleDialog" >
+         <a class="button is-black is-small is-rounded is-outlined"  @click="toggleDialog" >
                    <span class="icon">
                        <svg style="fill: currentColor; width: 0.7rem; height: 0.7rem;" version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
                             <title>add</title>
@@ -36,18 +36,15 @@
             </header>
 
 
-            <footer class="modal-card-foot">
+             <section class="modal-card-body">
                 <div class="column is-12">
 
                     <form class="form-add-category" enctype="multipart/form-data" method="post">
                         {% csrf_token %}
 
-                        <div class="field is-horizontal">
-                            <div class="field-label is-normal">
-                                <label class="label">Название:</label>
-                            </div>
-                            <div class="field-body">
+
                                 <div class="field">
+                                    <label class="label">Название</label>
                                     <div class="control">
                                         {{ AddCategoryForm.title }}
                                     </div>
@@ -56,15 +53,9 @@
                                         <!--                                        The name should reflect the essence of the category.-->
                                     </p>
                                 </div>
-                            </div>
-                        </div>
 
-                        <div class="field is-horizontal">
-                            <div class="field-label is-normal">
-                                <label class="label">Описание:</label>
-                            </div>
-                            <div class="field-body">
                                 <div class="field">
+                                    <label class="label">Описание:</label>
                                     <div class="control">
                                         {{ AddCategoryForm.body }}
                                     </div>
@@ -73,32 +64,26 @@
                                         <!--                                        The description should be short and clear.-->
                                     </p>
                                 </div>
-                            </div>
-                        </div>
 
 
-                        <div class="field is-horizontal">
-                            <div class="field-label">
-                                <!-- Left empty for spacing -->
-                            </div>
-                            <div class="field-body">
+
+
                                 <div class="field">
                                     <div class="control">
-                                        <button class="button login is-link is-rounded"
+                                        <button class="button login is-link"
                                                 type="submit" name="btnaddcategory">
                                             Создать
                                         </button>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
+
 
                     </form>
 
 
                 </div>
 
-            </footer>
+            </section>
 
         </div>
 

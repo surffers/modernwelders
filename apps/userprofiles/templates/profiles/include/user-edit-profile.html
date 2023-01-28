@@ -3,7 +3,7 @@
 <div id="user-edit-profile">
 
     {% if request.user == user %}
-    <a @click="toggleDialog" class="button is-link is-small is-rounded">
+    <a @click="toggleDialog" class="button is-black is-rounded is-small">
         Редактировать профиль
     </a>
     {% endif %}
@@ -13,11 +13,11 @@
         <div class="modal-background"></div>
         <div class="modal-card">
             <header class="modal-card-head">
-                <p class="modal-card-title has-text-centered">Редактировать профиль</p>
+                <p class="modal-card-title">Редактировать профиль</p>
                 <button @click="showDialog = !showDialog" aria-label="close" class="delete"></button>
             </header>
 
-            <footer class="modal-card-foot">
+             <section class="modal-card-body">
                 <div class="column is-11">
                     <form action="." enctype="multipart/form-data" method="post">
                         {% csrf_token %}
@@ -43,7 +43,7 @@
                             <div class="field-body">
                                 <div class="field">
                                     <div class="control">
-                                        <button class="button is-medium is-link login" name="btnformprofile" type="submit">
+                                        <button class="button is-link login" name="btnformprofile" type="submit">
                                             Сохранить изменения
                                         </button>
                                     </div>
@@ -52,7 +52,7 @@
                         </div>
                     </form>
                 </div>
-            </footer>
+            </section>
         </div>
     </div>
     <!-- EndModalDeletedCategory -->

@@ -7,7 +7,7 @@
 
 
 <!--    Navbar    -->
-<nav class="navbar is-fixed-top is-flex" id="navbar">
+<nav class="navbar is-fixed-top is-flex has-centered-menu" id="navbar">
 
     <div class="container">
 
@@ -31,32 +31,43 @@
 
 
     <div class="navbar-menu" id="navMenubd-example">
+        <div class="navbar-start">
+                                <a class="navbar-item" href="/"> Главная </a>
+                                <a class="navbar-item" href="{% url 'categories' %}"> Категории </a>
+                                <a href="{% url 'board' %}" class="navbar-item"> Ссылки </a>
+                                <div class="navbar-item has-dropdown is-hoverable">
+                                    <a class="navbar-link" href="http://project4427261.tilda.ws/page33414046.html"> Курсы </a>
+                                    <div class="navbar-dropdown">
+                                        <a class="navbar-item"> About </a>
+                                        <a class="navbar-item"> Jobs </a>
+                                        <a class="navbar-item"> Contact </a>
+                                        <hr class="navbar-divider">
+                                        <a class="navbar-item"> Report an issue </a>
+                                    </div>
+                                </div>
+                            </div>
 
         <div class="navbar-end">
             {% if request.user.is_authenticated %}
                 {% include 'feed/include/add-category.html' %}
             {% endif %}
-            <a class="navbar-item " href="{% url 'categories' %}">
-              <span>
-                  Категории
-              </span>
-          </a>
-      <a class="navbar-item " href="{% url 'sponsors' %}">
-        <span class="bd-emoji">❤️</span> &nbsp;Спонсоры
-      </a>
 
 
 {% if request.user.is_authenticated %}
+              <div class="navbar-item">
+        <div class="dropdown is-right">
+             <div class="dropdown-trigger">
+    <button class="button is-black is-small is-rounded is-outlined add-link-btn " aria-haspopup="true" aria-controls="dropdown-menu">
+      <span class="icon is-small">
+        <i class="fas fa-angle-down" aria-hidden="true"></i>
+      </span>
+    </button>
+  </div>
 
-                <div class="navbar-item has-dropdown is-hoverable ">
-
-            <a class="navbar-link">
-                {{ request.user.username|truncatechars:20 }}
-            </a>
-
-        <div class="navbar-dropdown is-right">
-          <a class="navbar-item" href="{% url 'profile' request.user.username %}">
-               <span class="icon-text">
+            <div class="dropdown-menu" role="menu">
+                <div class="dropdown-content">
+                    <a class="dropdown-item" href="{% url 'profile' request.user.username %}">
+            <span class="icon-text">
               <span class="icon has-text-link">
                     <i class="fa fa-user-o" aria-hidden="true"></i>
                 </span>
@@ -64,8 +75,8 @@
                     Профиль
                 </span>
                    </span>
-          </a>
-          <a class="navbar-item" href="{% url 'bookmark_favorite_lists' request.user.username %} ">
+                    </a>
+                    <a class="dropdown-item" href="{% url 'bookmark_favorite_lists' request.user.username %} ">
                <span class="icon-text">
               <span class="icon has-text-link">
                   <i class="fa fa-heart-o" aria-hidden="true"></i>
@@ -75,8 +86,8 @@
               </span>
                    </span>
           </a>
-          <a class="navbar-item " href="{% url 'categories' %}">
-               <span class="icon-text">
+                    <a class="dropdown-item" href="{% url 'categories' %}">
+            <span class="icon-text">
               <span class="icon has-text-link">
                   <i class="fa fa-folder-o" aria-hidden="true"></i>
               </span>
@@ -84,9 +95,9 @@
                   Категории
               </span>
               </span>
-          </a>
-          <a class="navbar-item" href="{% url 'board' %}">
-              <span class="icon-text">
+                    </a>
+                    <a class="dropdown-item" href="{% url 'board' %}">
+                        <span class="icon-text">
               <span class="icon has-text-link">
                   <i class="fa fa-external-link" aria-hidden="true"></i>
               </span>
@@ -94,48 +105,32 @@
                   Ссылки
               </span>
                   </span>
-          </a>
-            <a class="navbar-item" href="{% url 'tests' %}">
-                <span class="icon-text">
+                    </a>
+                    <a class="dropdown-item" href="{% url 'tests' %}">
+                        <span class="icon-text">
                   <span class="icon has-text-link">
                     <i class="fa fa-thermometer-empty" aria-hidden="true"></i>
                   </span>
                   <span>Тесты</span>
                 </span>
-            </a>
-
-
-          <hr class="navbar-divider">
-          <div class="navbar-item">
-            <div>
-              <p class="is-size-6-desktop">
-                <a href="{% url 'account_logout' %}" class="has-text-danger">
-                                Выход
-                            </a>
-              </p>
-
-<!--              <small>-->
-<!--                  <span class="bd-emoji">❤️</span>-->
-<!--                <a class="bd-view-all-versions">Мы будем скучать</a>-->
-<!--              </small>-->
-
+                    </a>
+                    <hr class="dropdown-divider">
+                    <a href="{% url 'account_logout' %}" class="dropdown-item has-text-danger">
+                        Выход
+                    </a>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-
-
-
-
+    </div>
 
 {% else %}
             <div class="buttons">
-                <a class="button is-black is-rounded is-outlined" href="{% url 'account_login' %}">
+                <a class="button is-black is-small is-rounded is-outlined" href="{% url 'account_login' %}">
                     Войти
                 </a>
 
-                <a class="button is-black is-rounded" href="{% url 'account_signup' %}">
-                    Try it Free
+                <a class="button is-black is-small is-rounded" href="{% url 'account_signup' %}">
+                    Регистрация
                 </a>
             </div>
             {% endif %}
@@ -165,7 +160,7 @@ function scrollFunction() {
   } else {
 
     document.getElementById("navbar").style.boxShadow = "none";
-    document.getElementById("navbar").style.borderBottom = "1px solid  #fff";
+
 
   }
 }

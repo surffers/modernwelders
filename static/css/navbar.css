@@ -1,5 +1,8 @@
-.navbar {
 
+/* Centered Menu */
+.navbar.has-centered-menu .navbar-start {
+  flex-grow: 1;
+  justify-content: center;
 }
 .navbar-item.logo {
     padding-bottom: 15px;
@@ -11,34 +14,18 @@
 /* Navbar */
 .title-logo {
     font-size: 28px;
-
     font-weight: 900;
 }
 
-
-
-.navbar { top: 0;
-    right: 0;
-    width: 100%;
-    grid-area: 1/1/2/2;
+.navbar {
     display: flex;
     flex-direction: row;
-  justify-content: flex-end;
-  transition: all 0.2s ease-out;
-
+    justify-content: flex-end;
+    transition: all 0.2s ease-out;
 }
 
 
 
-.navbar-item .button.navbar-link {
-    border: none;
-    outline: 0;
-    outline-offset: 0;
-}
 
-.navbaritem-link {
-    padding-top: 2em;
-    padding-right: 1em;
-}
 
 

@@ -7,56 +7,67 @@
 {% block content %}
 <div class="box">
     <div>
-                            <p class="title is-6">Получите лучшее от Surffers прямо в своем почтовом ящике.</p>
-                            {% contact_form %}
-                        </div>
-</div>
+        <p class="title is-6">Получите лучшее от Surffers прямо в своем почтовом ящике.</p>
+        {% contact_form %}
 
+        <p class="is-size-6 has-text-centered">&horbar;&horbar;&horbar; ИЛИ &horbar;&horbar;&horbar;</p>
 
-<iframe src="https://yoomoney.ru/quickpay/fundraise/widget?billNumber=oWRxUgEUpXw.230110&" width="100%" height="480" frameborder="0" allowtransparency="true" scrolling="no"></iframe>
-<div class="box">
-    <h3 class="title is-4">Поддержать на любую сумму</h3>
-    <p class="subtitle is-6">
-        Спасибо, мне не нужно вознаграждение, я просто хочу поддержать проект.
-    </p>
-    <iframe src="https://yoomoney.ru/quickpay/fundraise/button?billNumber=lPN5JgErvg4.230110&" width="100%" height="50" frameborder="0" allowtransparency="true" scrolling="no"></iframe>
-    <hr>
-    <h3 class="title is-4">Добавим ваш проет</h3>
-    <p class="subtitle is-6">
-        Добавим ваш сайт, его будет видно в ленте новостей 7 дней.
-    </p>
-    <iframe src="https://yoomoney.ru/quickpay/fundraise/button?billNumber=AJYNSQEBEaI.230110&" width="100%" height="50" frameborder="0" allowtransparency="true" scrolling="no"></iframe>
-    <hr>
-    <h3 class="title is-4">Опубликуем вашу категорию</h3>
-    <p class="subtitle is-6">
-        Создавайте свои категории с подборками лучших сайтов.
-    </p>
-    <iframe src="https://yoomoney.ru/quickpay/fundraise/button?billNumber=lH7iBwJpBzo.230110&" width="330" height="50" frameborder="0" allowtransparency="true" scrolling="no"></iframe>
-    <hr>
-    <h3 class="title is-4">Добавим ваш сайт на всегда</h3>
-    <p class="subtitle is-6">
-        Ваш сайт останется на всегда в самых популярных сайтах.
-    </p>
-    <iframe src="https://yoomoney.ru/quickpay/fundraise/button?billNumber=HKREKADBmHg.230111&" width="330" height="50" frameborder="0" allowtransparency="true" scrolling="no"></iframe>​
-</div>
+        <div class="button login is-medium" style="background: #0088CC; color: #fff; padding-top: 15px;">
+            <script src="//fbstore.sendpulse.com/loader.js" data-sp-widget-id="64be7b77-178e-4422-bf8c-5922f5e564d0" async></script>
+        </div>
 
-
-
-
-
-
-
-    <div class="block">
-         <a href="{% url 'blog' %}" class="has-text-black is-size-7">Блог</a>&nbsp; &bull;&nbsp;
-        <a href="{% url 'contact' %}" class="has-text-black is-size-7">Контакт</a>&nbsp; &bull;&nbsp;
-  <a href="{% url 'about' %}" class="has-text-black is-size-7">О нас</a>&nbsp; &bull;&nbsp;
-        <a href="{% url 'sponsors' %}" class="has-text-black is-size-7">
-        <span class="bd-emoji">❤️</span> &nbsp;Спонсоры
-     </a>&nbsp; &bull;&nbsp;
-        <a href="{% url 'price' %}" class="has-text-black is-size-7">Тарифы</a>&nbsp; &bull;&nbsp;
-        <a href="{% url 'privacy' %}" class="has-text-black is-size-7">Политика конфиденциальности</a>
+        <div class="button login is-medium" style="background: #0874D8; color: #fff;">
+            <i class="fab fa-vk"></i>
+            <!-- Senler.ru button code -->
+            <script src="https://senler.ru/dist/web/js/senler.js?9"></script>
+            <script>try {Senler.ButtonSubscribe("senlerBtn-1674535324");} catch (e) {console.log(e);}</script>
+            <div id="senlerBtn-1674535324" data-vk_group_id="209688786" data-subscription_id="1827898" data-text="Подписаться в ВКонтакте" data-alt_text=""></div>
+        </div>
     </div>
+</div>
 
+<iframe src="https://yoomoney.ru/quickpay/fundraise/widget?billNumber=oWRxUgEUpXw.230110&" width="100%" height="480"
+        frameborder="0" allowtransparency="true" scrolling="no"></iframe>
+<!--<div class="box">-->
+<!--    <h3 class="title is-4">Поддержать на любую сумму</h3>-->
+<!--    <p class="subtitle is-6">-->
+<!--        Спасибо, мне не нужно вознаграждение, я просто хочу поддержать проект.-->
+<!--    </p>-->
+<!--    <iframe src="https://yoomoney.ru/quickpay/fundraise/button?billNumber=lPN5JgErvg4.230110&" width="100%" height="50" frameborder="0" allowtransparency="true" scrolling="no"></iframe>-->
+<!--    <hr>-->
+<!--    <h3 class="title is-4">Добавим ваш проет</h3>-->
+<!--    <p class="subtitle is-6">-->
+<!--        Добавим ваш сайт, его будет видно в ленте новостей 7 дней.-->
+<!--    </p>-->
+<!--    <iframe src="https://yoomoney.ru/quickpay/fundraise/button?billNumber=AJYNSQEBEaI.230110&" width="100%" height="50" frameborder="0" allowtransparency="true" scrolling="no"></iframe>-->
+<!--    <hr>-->
+<!--    <h3 class="title is-4">Опубликуем вашу категорию</h3>-->
+<!--    <p class="subtitle is-6">-->
+<!--        Создавайте свои категории с подборками лучших сайтов.-->
+<!--    </p>-->
+<!--    <iframe src="https://yoomoney.ru/quickpay/fundraise/button?billNumber=lH7iBwJpBzo.230110&" width="330" height="50" frameborder="0" allowtransparency="true" scrolling="no"></iframe>-->
+<!--    <hr>-->
+<!--    <h3 class="title is-4">Добавим ваш сайт на всегда</h3>-->
+<!--    <p class="subtitle is-6">-->
+<!--        Ваш сайт останется на всегда в самых популярных сайтах.-->
+<!--    </p>-->
+<!--    <iframe src="https://yoomoney.ru/quickpay/fundraise/button?billNumber=HKREKADBmHg.230111&" width="330" height="50" frameborder="0" allowtransparency="true" scrolling="no"></iframe>-->
+<!--</div>-->
+
+
+<div class="block">
+    <a href="https://vc.ru/u/762241-surffers" class="has-text-black is-size-7">Блог</a>&nbsp; &bull;&nbsp;
+    <a href="{% url 'contact' %}" class="has-text-black is-size-7">Контакт</a>&nbsp; &bull;&nbsp;
+    <a href="{% url 'about' %}" class="has-text-black is-size-7">О нас</a>&nbsp; &bull;&nbsp;
+    <a href="{% url 'sponsors' %}" class="has-text-black is-size-7">
+        &nbsp;Спонсоры
+    </a>&nbsp; &bull;&nbsp;
+    <a class="has-text-black is-size-7" href="{% url 'courses' %}">
+        Курсы
+    </a> &bull;&nbsp;
+    <a href="{% url 'price' %}" class="has-text-black is-size-7">Тарифы</a>&nbsp; &bull;&nbsp;
+    <a href="{% url 'privacy' %}" class="has-text-black is-size-7">Политика конфиденциальности</a>
+</div>
 
 
 <p class="heading">
@@ -64,8 +75,8 @@
 </p>
 
 
-    {% endblock %}
+{% endblock %}
 
-    {% block scripts %}
+{% block scripts %}
 
-    {% endblock %}
+{% endblock %}

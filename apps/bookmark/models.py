@@ -26,6 +26,13 @@ class Category(models.Model):
         return self.title
 
 
+class Ip(models.Model): # наша таблица где будут айпи адреса
+    ip = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.ip
+
+
 class Bookmark(models.Model):
     user = models.ForeignKey(User, related_name='bookmarks', on_delete=models.CASCADE)
     category = models.ForeignKey(Category, related_name='bookmarks', on_delete=models.CASCADE)
@@ -33,6 +40,7 @@ class Bookmark(models.Model):
     body = models.TextField(max_length=555, blank=True, null=True)
     url = models.URLField()
     url_icon = models.URLField(blank=True, null=True)
+    views = models.ManyToManyField(Ip, related_name="post_views", blank=True)
     video = EmbedVideoField(blank=True, null=True)  # same like models.URLField()
     created_at = models.DateTimeField(auto_now_add=True)
     tags = TaggableManager(related_name='tags')
@@ -43,6 +51,9 @@ class Bookmark(models.Model):
     def publish(self):
         self.published_date = timezone.now()
         self.save()
+
+    def total_views(self):
+        return self.views.count()
 
     class Meta:
         ordering = ('-created_at',)

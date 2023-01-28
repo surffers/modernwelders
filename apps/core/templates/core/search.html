@@ -89,7 +89,7 @@
 
         <form method="get" action="{% url 'search' %}" class="search-bar is-centered">
 
-            <input class="input" type="text" placeholder="{{ query }}" name="query">
+            <input class="input" type="text" placeholder="{{ q }}" name="q">
 
         </form>
         <br>
@@ -131,21 +131,25 @@
 
     </div>
 
-
-
-
     <div class="hero-body">
-        <div class="container-slider">
-            <div class="carousel">
 
-                <div class="slider">
-                    {% for category in home_categories %}
-                    <section class="card-container">
+            <div class="container">
+                <div class="columns is-multiline">
+                    <div class="column is-1"></div>
+                    {% for category in categories %}
+                <div class="column is-4 ">
+
                         <a href="{% url 'category' category.id %}">
                             <div class="card category">
                                 <div class="card-content">
                                     <p class="category-p has-text-dark title is-7">
-                                        Ссылки {{ category.bookmarks.all|length }}
+                                        {% if user == category.user %}
+                                        Ссылки {{ category.b.all|length }}
+                                        {% else %}
+
+                                                        {{ b.all|length|intword }}
+
+                                        {% endif %}
                                     </p>
                                     <p class="subtitle is-4 has-text-dark has-text-weight-bold">
                                         {{ category.title|truncatechars:21 }}
@@ -155,7 +159,7 @@
                                     </p>
                                     <span class="has-text-black">от {{ category.user.username }}</span>
                                     <div class="title">
-                                        {% for bookmark in category.bookmarks.all %}
+                                        {% for bookmark in category.b.all %}
                                             {% if forloop.counter <= 10 %}
                                             <a class="icon-bookmark subtitle"
                                                href="{{ bookmark.url }}"
@@ -171,93 +175,103 @@
                                 </div>
                             </div>
                         </a>
-                    </section>
+
+
+                </div>
                     {% endfor %}
-                </div>
-                <div class="controls">
-                    <button class="next"><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
-                    <button class="prev"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
-                </div>
             </div>
-        </div>
+            </div>
+
 
     </div>
+
 </section>
 
 
 
-
+<div class="spacer"></div>
 <section class="section home is-unselectable">
     <div class="container">
-        <div class="columns">
-            <div class="column is-12">
-
-                <p class="title home is-size-4-mobile">
-                    Ссылки {{ bookmarks.all|length|intword }}
+        <div class="columns is-centered">
+            <div class="column is-5">
+                <p class="title has-text-weight-bold is-size-5 is-size-6-mobile">
+                    Новые продукты, сайты, сервисы и стартапы, которые помогут в работе и учёбе 👇
                 </p>
-                <p class="subtitle is-5 is-size-6-mobile">
-                    Новые сайты, программы, сервисы и стартапы, которые помогут в работе и учёбе.
-                </p>
-
-            </div>
-        </div>
-        <div class="columns">
-            <div class="column is-7">
+                <hr>
                 {% for bookmark in page_obj %}
-                <div class="box home-feed-link box-link">
-                    <div class="content is-unselectable">
+                <div class="box-home box-link">
+                                    <p class="title is-7 has-text-weight-bold is-uppercase">
+                                        <a href="{% url 'category'  bookmark.category.id  %}" class="has-text-black">
+                                            {{ bookmark.category.title|truncatechars:100 }}
+                                        </a>
 
-                        <div class="subtitle is-6">
-                            <a class="subtitle is-6 has-text-weight-semibold is-size-7-mobile"
-                               href="{% url 'profile' bookmark.user.username %}">
-                                {{ bookmark.user.username|truncatechars:25 }}
-                            </a>
-                            &nbsp&bull;&nbsp
-                            <a class="subtitle is-6 has-text-weight-semibold is-size-7-mobile"
-                               href="{% url 'category' bookmark.category.id %}">
-                                {{ bookmark.category.title|truncatechars:20 }}
-
-                            </a>
-
-                        </div>
-
-                        <p class="subtitle is-5">
+                                    </p>
+                                <p class="subtitle is-7 has-text-weight-bold">
+                                        <a href="{% url 'profile' bookmark.user.username %}" class="has-text-black is-lowercase">
+                                            @{{ bookmark.user.username|truncatechars:25 }}
+                                         </a>
+                                    </p>
+                                {% if bookmark.url_icon %}
+                                   <p class="subtitle is-5">
+                                       <a class="icon-bookmark subtitle is-5 has-text-weight-bold is-size-6-mobile"
+                                           href="{{ bookmark.url }}"
+                                           target="_blank">
+                                        </a>
+                                       <a href="{{ bookmark.url_icon }}" class="subtitle is-5 has-text-weight-bold"
+                                       target="_blank">
+                                        {{ bookmark.title|truncatechars:40 }}
+                                           <span class="icon link is-size-6">
+                                            <i class="fa fa-external-link" aria-hidden="true"></i>
+                                        </span>
+                                    </a>
+                        </p>
+                    {% else %}
+                       <p class="subtitle is-5">
                             <a class="icon-bookmark subtitle is-5 has-text-weight-bold is-size-6-mobile"
                                href="{{ bookmark.url }}"
                                target="_blank">
                                 {{ bookmark.title|truncatechars:40 }}
-                                <span class="icon link is-size-6">
+                                           <span class="icon link is-size-6">
                                             <i class="fa fa-external-link" aria-hidden="true"></i>
                                         </span>
                             </a>
-                        </p>
-                        <div class="spacing"></div>
-                        <p class="subtitle is-6 has-text-weight-normal is-size-7-mobile">
-                            {{ bookmark.body|truncatechars:120 }}
-                        </p>
-                        {% for tag in bookmark.tags.all %}
-                        <a href="{% url 'tag_detail_url' tag.slug %}"
-                           class="is-6 has-text-info is-size-7-mobile">
-                            #{{ tag.name|truncatechars:25 }}
-                        </a>
-                        {% endfor %}
-                        <p>
-                            <span class="subtitle is-7 is-size-7-mobile"> {{ bookmark.published_date|naturaltime }}</span>
-                            &nbsp; &bull;&nbsp;
-                            <a href="{% url 'bookmark' bookmark.id %}">
-                                <span class="subtitle is-7 is-size-7-mobile">{{ bookmark.comments.all|length }} Комментарии</span>
-                            </a>
-                            &bull;&nbsp;
-                            <a class='hero-btn'>
-                                                <span class="forloop has-text-weight-bold is-size-7-mobile">
-                                                 ☆
-                                                </span>
-                                <span class="forloop is-size-7-mobile"> 0</span>
-                            </a>
-                        </p>
-                    </div>
-                </div>
+                           </p>
+                    {% endif %}
 
+
+                                    <p class="title is-6 has-text-weight-normal is-lowercase is-size-7-mobile">
+                                        {{ bookmark.body|truncatechars:150 }}
+                                    </p>
+                                    <p class="subtitle is-6 is-size-7-mobile">
+                                        {% for tag in bookmark.tags.all %}
+                                        <a href="{% url 'tag_detail_url' tag.slug %}" class="has-text-info">
+                                        #{{ tag.name|truncatechars:25 }}
+                                    </a>
+                                    {% endfor %}
+                                    </p>
+                                    <p class="title is-7">
+                                        <span class="subtitle is-7"> {{ bookmark.created_at|naturaltime }}</span>
+                                        &nbsp; &bull;&nbsp;
+                                        <a href="{% url 'bookmark' bookmark.id %}">
+                                            <span class="subtitle is-7">{{ bookmark.comments.all|length }} Комментарии</span>
+                                        </a>
+                                        &bull;&nbsp;
+                                        <a class='hero-btn'>
+                                                                <span class="forloop has-text-weight-bold is-size-7-mobile">
+                                                                 ☆
+                                                                </span>
+                                            <span class="forloop is-size-7-mobile"> 0</span>
+                                        </a>
+                                    </p>
+                </div>
+                <hr>
+                {% empty %}
+                                <div class="box has-text-centered">
+                                    <span>☹️</span>
+                                    <p class="subtitle is-6">
+                                        Ничего не найденно!
+                                    </p>
+                                </div>
                 {% endfor %}
                 {% include 'core/include/pagination.html' %}
             </div>
@@ -265,7 +279,7 @@
                 <aside>
                     <div class="box">
                         <h1 class="title is-6">
-                            Сегодняшнее облако тегов
+                            Облако тегов
                         </h1>
 
                         <div class="tags">
@@ -276,6 +290,10 @@
                                 #{{ tag.name|truncatechars:25 }}
                             </a>
                             {% endfor %}
+                            {% empty %}
+                                    <p class="subtitle is-6 tag">
+                                        Ничего не найденно!
+                                    </p>
                             {% endfor %}
                         </div>
                     </div>

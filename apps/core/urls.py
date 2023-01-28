@@ -8,7 +8,7 @@ urlpatterns = [
     #
     #
     path('', home, name='home'),
-    path('board/', users_links_lists, name='board'),
+    path('links/', users_links_lists, name='board'),
 
     path('categories/', categories, name='categories'),
     path('search/', search, name='search'),

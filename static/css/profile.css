@@ -24,6 +24,11 @@
     font-size: 14px;
 }
 
+
+.card.profile:hover{
+    transform: scale(1.05, 1.05);
+}
+
 .title-user {
     font-size: 22px;
     line-height: 50.4px;

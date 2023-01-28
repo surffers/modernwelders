@@ -11,12 +11,32 @@ from .forms import ProfileForm, LinkForm
 from apps.bookmark.forms import CategoryForm
 
 
+@login_required
+def user_links(request, username):
+    all_categories = Category.objects.all().select_related('user')
+    userids = [request.user.id]
+    bookmarks = Bookmark.objects.filter(user_id__in=userids).select_related('category')
+    categories = Category.objects.all()
+
+    paginator = Paginator(bookmarks, 99)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    context = {
+        'bookmarks': bookmarks,
+        'all_categories': all_categories,
+        'page_obj': page_obj,
+        'categories': categories,
+    }
+    return render(request, 'profiles/user_links.html', context)
+
+
 def profile(request, username):
     user = get_object_or_404(User, username=username)
     links = Link.objects.filter(user=user)
-    bookmarks = Bookmark.objects.all().select_related('category')
-    categories = Category.objects.filter(user=user).order_by("created_at")
-    categories_public = Category.objects.filter(user=user)
+    bookmarks = Bookmark.objects.filter(user=user).select_related('category', 'user')
+    categories = Category.objects.filter(user=user, published_date__lte=timezone.now()).order_by("created_at")
+    categories_public = Category.objects.filter(user=user).select_related('user')
     categories_drafts = Category.objects.filter(user=user, published_date__isnull=True)
     favorite_bookmarks = user.favorite.all()
 

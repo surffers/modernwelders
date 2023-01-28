@@ -10,7 +10,7 @@ import datetime
 
 from django.utils import timezone
 
-from .models import Category, Bookmark, Comment
+from .models import Category, Bookmark, Comment, Ip
 from apps.userprofiles.models import Profile
 from .forms import CategoryForm, BookmarkForm, CommentForm
 from taggit.models import Tag
@@ -25,12 +25,19 @@ def sponsors(request):
 
 
 def bookmark_detail(request, bookmark_id):
-    bookmarks = Bookmark.objects.filter().order_by("-created_at")[0:3]
+    bookmarks = Bookmark.objects.filter(published_date__lte=timezone.now()).select_related('category', 'user',).order_by("-created_at")[0:3]
     bookmark = get_object_or_404(Bookmark, pk=bookmark_id)
     is_favorite = False
     if bookmark.favorite.filter(id=request.user.id).exists():
         is_favorite = True
-
+    # Views
+    ip = get_client_ip(request)
+    if Ip.objects.filter(ip=ip).exists():
+        bookmark.views.add(Ip.objects.get(ip=ip))
+    else:
+        Ip.objects.create(ip=ip)
+        bookmark.views.add(Ip.objects.get(ip=ip))
+    # Bookmark Edit
     if request.method == 'POST' and 'btnedit' in request.POST:
         BookmarkEdit = BookmarkForm(request.POST, request.FILES, instance=bookmark)
 
@@ -40,7 +47,7 @@ def bookmark_detail(request, bookmark_id):
             return redirect('bookmark', bookmark_id=bookmark_id)
     else:
         BookmarkEdit = BookmarkForm(instance=bookmark)
-
+    # Comment
     if request.method == 'POST':
         form = CommentForm(request.POST)
 
@@ -80,8 +87,8 @@ def tag_detail(request, slug):
 
 def category(request, category_id):
     category = Category.objects.get(pk=category_id)
-    bookmarks = Bookmark.objects.filter(category_id=category_id)
-    b = Bookmark.objects.all()
+    bookmarks = Bookmark.objects.filter(category_id=category_id).select_related('category', 'user')
+    b = Bookmark.objects.filter(category_id=category_id, published_date__lte=timezone.now()).select_related('category', 'user')
 
     if request.method == 'POST':
         form = BookmarkForm(request.POST, request.FILES)
@@ -187,6 +194,15 @@ def category_delete(request, category_id):
     return redirect('profile', username=request.user.username)
 
 
+def get_client_ip(request):
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR') # В REMOTE_ADDR значение айпи пользователя
+    return ip
+
+
 @login_required
 def bookmark_add(request, category_id):
     if request.method == 'POST':
@@ -239,11 +255,11 @@ def bookmark_edit(request, bookmark_id):
 
 
 @login_required
-def bookmark_delete(request, bookmark_id):
+def bookmark_delete(request, category_id, bookmark_id):
     bookmark = Bookmark.objects.filter(user=request.user).get(pk=bookmark_id)
     bookmark.delete(request.POST, request.FILES)
     messages.success(request, 'Ссылка удалена!')
-    return redirect('board')
+    return redirect('category', category_id=category_id)
 
 
 @login_required

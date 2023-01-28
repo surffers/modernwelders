@@ -1,46 +1,129 @@
-.container-slider {
-  margin: 0 auto;
+
+/*
+ * Stories
+ */
+.inside-wrapper {
   position: relative;
-}
-.container-slider .carousel {
+  border-radius: 20px 20px;
   overflow: hidden;
 }
- .container-slider .slider {
-  display: inline-flex;
-  transition: transform 0.5s;
-}
-.container-slider section {
-   height: 280px;
-   padding-top: 15px;
-  padding-left: 15px;
-  box-sizing: border-box;
 
+.stories {
+  width: 100%;
+  height:300px;
+  overflow: hidden;
+  position: relative;
+  padding: 20px;
 }
-
-.controls button {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  border: 1px solid #000;
-  background: #000;
-  color: #fff;
-  position: absolute;
-  top: 35%;
-  transform: translateY(-50%);
+.stories .story-item {
   cursor: pointer;
-  font-size: 14px;
+  height:250px;
+    width:250px;
+    border-radius: 1em;
+
+  overflow: hidden;
+  position: relative;
+  display: inline-block;
+    box-shadow: 8px 8px 15px var(--shadowDark), -8px -8px 15px var(--shadowLight);
+  z-index: 100;
 }
-.container-slider .prev {
-  left: 10px;
+
+.stories .story-item:nth-child(1) {
+  height:250px;
+    width:250px;
+}
+.stories .story-item:nth-child(4) {
+  width:250px;
+}
+
+
+.stories .card.slider {
+    height:250px;
+    width:250px;
+    border-radius: 1em;
+    cursor: pointer;
 
 }
-.container-slider .prev.show {
-  display: block;
+.stories .story-item:hover{
+    transform: scale(1.05, 1.05);
 }
-.container-slider .next {
+
+.stories .story-item a {
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+
+}
+
+.sts-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+}
+
+.ld {
+  width: 100%;
+  height: 100%;
+}
+
+
+
+.prev {
+  display: none;
+  left: 0px;
+  border-radius: 20px 0 0 20px;
+  background: linear-gradient(-90deg, rgba(255, 255, 255, 0.01) 10%, white);
+}
+.prev svg {
+  left: 5px;
+}
+
+
+
+p.title-body {
+    padding-bottom: 10px;
+}
+.next {
+  display: none;
+  right: 0px;
+  border-radius: 0 20px 20px 0;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.01) 10%, white);
+}
+.next svg {
   right: 5px;
 }
-.container-slider .nav .next.hide {
-  display: none;
+
+.nav-btn {
+  top: 0;
+  position: absolute;
+  height: 100%;
+  width: 80px;
+  border: none;
+  cursor: pointer;
+}
+.nav-btn svg {
+  position: absolute;
+  top: 42%;
+}
+
+.nav-btn--active {
+  display: block;
+}
+
+
+
+@media screen and (max-width: 800px) {
+  .nav-btn {
+    outline: none;
+  }
+}
+@media screen and (max-width: 700px) {
+  .nav-btn {
+    outline: none;
+  }
 }
 

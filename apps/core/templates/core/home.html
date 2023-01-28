@@ -6,27 +6,33 @@
 
 {% block content %}
 
-<div class="navbar">
+<nav class="navbar">
+
     {% if request.user.is_authenticated %}
     <div class="navbar-item">
         <a class="button is-black is-small is-rounded is-outlined" href="#">
               <span class="icon">
-                  <i class="fas fa-plus"></i>
-              </span>
+                       <svg style="fill: currentColor; width: 0.7rem; height: 0.7rem;" version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+                            <title>add</title>
+                            <path d="M16.943 0.943h-1.885v14.115h-14.115v1.885h14.115v14.115h1.885v-14.115h14.115v-1.885h-14.115v-14.115z">
+                            </path>
+                          </svg>
+                   </span>
             <span>
-                        Добавить ссылку
+                        Запуск
                     </span>
         </a>
     </div>
-
     <div class="navbar-item">
         <div class="dropdown is-right">
-            <div class="dropdown-trigger">
-                <button class="button navbar-link"
-                >
-                    {{ user.username|truncatechars:20 }}
-                </button>
-            </div>
+             <div class="dropdown-trigger">
+    <button class="button is-black is-small is-rounded is-outlined add-link-btn " aria-haspopup="true" aria-controls="dropdown-menu">
+      <span class="icon is-small">
+        <i class="fas fa-angle-down" aria-hidden="true"></i>
+      </span>
+    </button>
+  </div>
+
             <div class="dropdown-menu" role="menu">
                 <div class="dropdown-content">
                     <a class="dropdown-item" href="{% url 'profile' user.username %}">
@@ -39,6 +45,16 @@
                 </span>
                    </span>
                     </a>
+                      <a class="dropdown-item" href="{% url 'bookmark_favorite_lists' request.user.username %} ">
+               <span class="icon-text">
+              <span class="icon has-text-link">
+                  <i class="fa fa-heart-o" aria-hidden="true"></i>
+              </span>
+              <span>
+                  Избранное
+              </span>
+                   </span>
+          </a>
                     <a class="dropdown-item" href="{% url 'categories' %}">
             <span class="icon-text">
               <span class="icon has-text-link">
@@ -75,22 +91,18 @@
             </div>
         </div>
     </div>
-
-
     {% else %}
+    <div class="buttons navbar-item">
+                <a class="button is-black is-small is-rounded is-outlined" href="{% url 'account_login' %}">
+                    Войти
+                </a>
 
-    <div class="buttons ">
-        <a class="button is-black is-rounded is-outlined" href="{% url 'account_login' %}">
-            Войти
-        </a>
-
-        <a class="button is-black is-rounded" href="{% url 'account_signup' %}">
-            Try it Free
-        </a>
-    </div>
-
+                <a class="button is-black is-small is-rounded" href="{% url 'account_signup' %}">
+                    Регистрация
+                </a>
+            </div>
     {% endif %}
-</div>
+</nav>
 
 
 <section class="hero home is-unselectable">
@@ -105,129 +117,114 @@
             </a>
         </div>
         {% endif %}
-
+https://school.surffers.ru/
+        http://school.surffers.ru/
         <h1 class="has-text-centered">Sur<span>ff</span>ers</h1>
         <p class="subtitle is-3 has-text-centered">Сёрфи в интернете вместе с нами </p>
 
         <form method="get" action="{% url 'search' %}" class="search-bar is-centered">
 
-            <input class="input" type="text" placeholder="Поиск" name="query">
+            <input class="input" type="text" placeholder="Поиск" name="q">
 
         </form>
         <br>
         <div class="block share has-text-centered">
-
-
+            <div ></div>
             <a class="button is-light" role="button" title="Копировать ссыылку">
-                                                <span class="copy-icon ">
-                                                    <i class="fas fa-link icon"></i>
-                                                </span>
+                <span class="copy-icon ">
+                    <i class="fas fa-link icon"></i>
+                </span>
             </a>
-
             <a class="button is-light sharer" href="#" id="share-em" title="Отправить на почту">
-                                                <span>
-                                                    <i aria-hidden="true" class="fa fa-envelope-o"></i>
-                                                </span>
+                <span>
+                    <i aria-hidden="true" class="fa fa-envelope-o"></i>
+                </span>
             </a>
-
             <a class="button is-light sharer" href="#" id="share-vk" title="Поделиться ВКонтакте">
-                                                <span>
-                                                    <i class="fab fa-vk"></i>
-                                                </span>
+                <span>
+                    <i class="fab fa-vk"></i>
+                </span>
             </a>
-
             <a class="button is-light sharer" href="#" id="share-tg" title="Поделиться в Telegram">
-                                                <span>
-                                                    <i class="fab fa-telegram"></i>
-                                                </span>
+                <span>
+                    <i class="fab fa-telegram"></i>
+                </span>
             </a>
-
-            <a class="button is-light sharer" href="#" id="share-rt" title="Поделиться в Telegram">
-                                                <span>
-                                                    <i class="fab fa-reddit"></i>
-                                                </span>
+            <a  class="button is-light sharer" href="https://connect.ok.ru/offer?url=URL_TO_SHARE&title=TITLE" id="share-ok" title="Поделиться в Одноклассниках">
+                <span>
+                    <i class="fa fa-odnoklassniki" aria-hidden="true"></i>
+                </span>
             </a>
         </div>
 
     </div>
 
-
     <div class="hero-body">
-        <div class="container-slider">
-            <div class="carousel">
-
-                <div class="slider">
-                    {% for category in home_categories %}
-                    <section class="card-container">
-                        <a href="{% url 'category' category.id %}">
-                            <div class="card category">
+        <div class="ld">
+  <div class="inside-wrapper">
+    <div class="stories">
+        {% for category in home_categories %}
+		<div class="story-item">
+			 <a href="{% url 'category' category.id %}">
+                            <div class="card slider">
                                 <div class="card-content">
-                                    <p class="category-p has-text-dark title is-7">
-                                        Ссылки {{ category.bookmarks.all|length }}
+                                    <p class="title is-4 has-text-weight-bold v">
+                                        {{ category.title|truncatechars:25 }}
                                     </p>
-                                    <p class="subtitle is-4 has-text-dark has-text-weight-bold">
-                                        {{ category.title|truncatechars:21 }}
-                                    </p>
-                                    <p class="subtitle is-6 has-text-weight-normal">
+
+                                    <div class="block-home-category">
+                                        <p class="title is-6 has-text-weight-normal title-body is-lowercase">
                                         {{ category.body|truncatechars:55 }}
-                                    </p>
-                                    <span class="has-text-black">от {{ category.user.username }}</span>
-                                    <div class="title">
-                                        {% for bookmark in category.bookmarks.all %}
-                                        {% if forloop.counter <= 10 %}
-                                        <a class="icon-bookmark subtitle"
-                                           href="{{ bookmark.url }}"
-                                           target="_blank"
-                                           title="{{ bookmark.title}}"
-                                        >
-                                        </a>
-                                        {% endif %}
-                                        {% endfor %}
+                                        </p>
+                                        <p class="subtitle  is-7 has-text-weight-bold is-lowercase">
+                                                @{{ category.user.username|truncatechars:25 }}
+                                        </p>
+                                        <p  class="title is-size-7 has-text-weight-normal is-lowercase">
+                                            <span>{{ category.created_at|naturaltime }}</span>
+                                        </p>
+
                                     </div>
-
-
                                 </div>
                             </div>
                         </a>
-                    </section>
-                    {% endfor %}
-                </div>
-                <div class="controls">
-                    <button class="next"><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
-                    <button class="prev"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
-                </div>
-            </div>
-        </div>
-
+		</div>
+		 {% endfor %}
     </div>
+    <button class="nav-btn prev"><svg style="width:24px;height:24px" viewBox="0 0 24 24">
+      <path fill="#000000" d="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z" />
+      </svg></button>
+    <button class="nav-btn next"><svg style="width:24px;height:24px" viewBox="0 0 24 24">
+      <path fill="#000000" d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" />
+      </svg></button>
+  </div>
+</div>
+    </div>
+
 </section>
 <div class="spacer"></div>
 <section class="section home is-unselectable">
     <div class="container">
-        <div class="columns">
-            <div class="column is-12">
-
-                <p class="title home is-size-4-mobile">
-                    Новости {{ bookmarks.all|length|intword }}
+        <div class="columns is-centered">
+            <div class="column is-5">
+                <p class="title has-text-weight-bold is-size-5 is-size-6-mobile">
+                    Новые продукты, сайты, сервисы и стартапы, которые помогут в работе и учёбе 👇
                 </p>
-                <p class="subtitle is-5 is-size-6-mobile">
-                    Новые сайты, программы, сервисы и стартапы, которые помогут в работе и учёбе.
-                </p>
-
-            </div>
-        </div>
-        <div class="columns">
-            <div class="column is-7">
+                <hr>
                 {% for bookmark in page_obj %}
-                <div class="box home-feed-link box-link">
-                                    <p class="subtitle is-7 has-text-weight-bold is-uppercase">
+                <div class="box-home box-link">
+                                    <p class="title is-7 has-text-weight-bold is-uppercase">
                                         <a href="{% url 'category'  bookmark.category.id  %}" class="has-text-black">
                                             {{ bookmark.category.title|truncatechars:100 }}
                                         </a>
+
+                                    </p>
+                                <p class="subtitle is-7 has-text-weight-bold">
+                                        <a href="{% url 'profile' bookmark.user.username %}" class="has-text-black is-lowercase">
+                                            @{{ bookmark.user.username|truncatechars:25 }}
+                                         </a>
                                     </p>
                                 {% if bookmark.url_icon %}
                                    <p class="subtitle is-5">
-                                       a
                                        <a class="icon-bookmark subtitle is-5 has-text-weight-bold is-size-6-mobile"
                                            href="{{ bookmark.url }}"
                                            target="_blank">
@@ -241,9 +238,8 @@
                                     </a>
                         </p>
                     {% else %}
-                    b
                        <p class="subtitle is-5">
-<a class="icon-bookmark subtitle is-5 has-text-weight-bold is-size-6-mobile"
+                            <a class="icon-bookmark subtitle is-5 has-text-weight-bold is-size-6-mobile"
                                href="{{ bookmark.url }}"
                                target="_blank">
                                 {{ bookmark.title|truncatechars:40 }}
@@ -280,17 +276,47 @@
                                         </a>
                                     </p>
                 </div>
-
+                <hr>
                 {% endfor %}
                 {% include 'core/include/pagination.html' %}
             </div>
             <div class="column is-4 is-offset-1 is-unselectable">
+
+
+
                 <aside>
+                    <div class="box">
+                        <h1 class="title is-6">
+                            Последний комментарий
+                        </h1>
+                        <hr>
+                        {% for comment in comments.all %}
+                                <p class="subtitle is-6">
+                                    <strong>{{ comment.user.username }}</strong> &bull;&nbsp;
+                                    <small>{{ comment.created_at|naturaltime }} </small><br>
+
+                                </p>
+                        <p class="title is-6">
+                            {{ comment.body }}
+                        </p>
+                          <p class="subtitle is-5">
+                                       <a class="icon-bookmark subtitle is-5 has-text-weight-bold is-size-6-mobile"
+                                           href="{{ comment.bookmark.url }}"
+                                           target="_blank">
+                                        </a>
+                                       <a href="{% url 'bookmark' comment.bookmark.id %}" class="subtitle is-5 has-text-weight-bold"
+                                       target="_blank">
+                                        {{ comment.bookmark.title|truncatechars:40 }}
+                                    </a>
+                        </p>
+
+                        {% endfor %}
+                    </div>
                     <div class="box">
                         <h1 class="title is-6">
                             Сегодняшнее облако тегов
                         </h1>
-
+                        <hr>
                         <div class="tags">
                             {% for bookmark in page_obj %}
                             {% for tag in bookmark.tags.all %}
@@ -318,10 +344,12 @@
 
 {% block scripts %}
 
-
+<script>
+const randomColor = "#"+((1<<24)*Math.random()|0).toString(16);
+document.documentElement.style.setProperty('--main-bg-color', randomColor);
+</script>
 <script>
   var btn = $('#button');
-
   $(window).scroll(function () {
     if ($(window).scrollTop() > 300) {
       btn.addClass('show');
@@ -336,9 +364,6 @@
       scrollTop: 0
     }, '300');
   });
-
-
-
 </script>
 <script>
  $("a.icon-bookmark[href^='http']").each(function() {
@@ -363,6 +388,8 @@
 
     //facebook
     $('#share-fb').attr('data-url', url).attr('data-sharer', 'facebook');
+    //ok
+     $('#share-ok').attr('data-url', url).attr('data-sharer', 'odnoklassniki');
     //vk
     $('#share-vk').attr('data-url', url).attr('data-sharer', 'vk');
     //reddit
@@ -400,12 +427,6 @@
     if (isMobile == true) {
       $("#share-wa").hide();
     }
-
-
-
-
-
-
 
   });
 
@@ -476,17 +497,546 @@
   })();
 
   copyToClipboard.handleCopyIconClick();
+</script>
+
+<!-- Slider -->
+<script>
+$(document).on('click', '.tamb img', function () {
+  var currentURL = $(this).attr('src');
+  createLB('photo', currentURL);
+});
+$(document).on('click', '.tamb video', function () {
+  var currentURL = $(this).attr('src');
+  createLB('video', currentURL);
+});
+$(document).on('click', '.ld-lightbox__close, .ld-lightbox', function () {
+  $('.ld-lightbox').css({ opacity: 0 });
+  setTimeout(function () {
+    closeLB();
+  }, 300);
+});
+
+function createLB(type, url) {
+  var content;
+  if (type === 'photo') {
+    content = '<img src=' + url + '/>';
+  } else if (type === 'video') {
+    content = '<video src=' + url + ' class="ld-lightbox__video" controls></video>';
+  }
+  var template = '<div class="ld-lightbox">' +
+  '<span class="ld-lightbox__close">' +
+  '<svg style="width:24px;height:24px" viewBox="0 0 24 24">' +
+  '<path fill="#ffffff" d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" />' +
+  '</svg>' +
+  '</span> ' +
+  '<div class="ld-lightbox__vl"> ' +
+  '<div class="ld-lightbox__content">' +
+  content +
+  '</div>' +
+  '<div/>' +
+  '</div>';
+  $('body').append(template);
+}
+function closeLB() {
+  $('.ld-lightbox').remove();
+}function StoriesSlider(config) {
+  this.containerName = config.container;
+  this.containerEl = document.querySelector(this.containerName);
+  this.slides = null;
+
+  this.itemOffsetSide = config.itemOffsetSide || 0;
+  this.itemLeftOffset =
+  config.itemLeftOffset === "undefined" ?
+  this.itemOffsetSide :
+  config.itemLeftOffset;
+  this.itemRightOffset =
+  config.itemRightOffset === "undefined" ?
+  this.itemOffsetSide :
+  config.itemRightOffset;
+  this.minDragDistance =
+  config.minDragDistance === "undefined" ? 40 : config.minDragDistance;
+  this.inertionCoef = config.inertionCoef || 0.92;
+
+  this.useSelfController = config.useIsideController ?
+  config.useIsideController :
+  !isNaN(+config.useIsideController) ?
+  config.useIsideController :
+  null;
+  this.dataAttributeName = config.dataAttrName ?
+  config.dataAttrName :
+  "data-sts";
+  this.dataAttributeValue = config.dataAttrValue ?
+  config.dataAttrValue :
+  "stories-slider";
+
+  this.slidesWrapper = null;
+  this.childrenArray = null;
+
+  this.referencePoint = 0;
+  this.isDrag = false;
+  this.offset = 0;
+  this.offsetForAnimation = 0;
+  this.tran = 0;
+  this.pos = 0;
+  this.diff = 0.05;
+
+  this.diffBetweenContainerAndSlidesWrapper = null;
+
+  this.isClickPrevent = false;
+
+  this.dir = 1; // -1 --- left, 1 --- right;
+
+  this.leftPosition = 0;
+
+  this.isBorder = false;
+
+  this.isGateOpen = false;
+
+  this.canInteract = true;
+
+  this.setRAF = this.setRAF.bind(this);
+
+  this.moveLeft = this.moveLeft.bind(this);
+
+  this.moveRight = this.moveRight.bind(this);
+
+  this._watcher = this.deb(this.watcher, this, 1000);
+
+  this._updater = this.positionUpdaterForClick.bind(this);
+
+  this._ls = function () {};
+  this._rs = function () {};
+  this._md = function () {};
+
+  this.init();
+}
+
+StoriesSlider.prototype.getInteractPossibility = function () {
+  return this.canInteract;
+};
+
+StoriesSlider.prototype.watcher = function () {
+  this.setDiffBetweenContainerAndSlidesWrapper();
+};
+
+StoriesSlider.prototype.positionUpdaterForClick = function (fn) {
+  if (this.isGateOpen) {
+    this.offset += this.dir * 5;
+    fn.call(this);
+  } else {
+    return false;
+  }
+};
+
+StoriesSlider.prototype.deb = function (fn, ctx, d) {
+  var t = true;
+  return function () {
+    if (t) {
+      t = false;
+      setTimeout(function () {
+        fn.call(ctx);
+        t = true;
+      }, d);
+    } else {
+      return false;
+    }
+  };
+};
+
+StoriesSlider.prototype.init = function () {
+  this.childrenArray = this.leadToArray(this.getSlides());
+  var wrap = this.createSlidesWrapper();
+  var sizes = this.getFullSizesOfSliderLine(this.childrenArray);
+  this.setSizesOnSlidesWrapper(sizes);
+  this.setSlidesOnSlidesWrapper(wrap, this.childrenArray);
+  this.setWrapperOnContainer(this.slidesWrapper);
+  this.setDiffBetweenContainerAndSlidesWrapper();
+  this.setRAF();
+  if (this.useSelfController) {
+    this.controller();
+  }
+};
+
+StoriesSlider.prototype.getSlides = function () {
+  return this.containerEl.children;
+};
+
+StoriesSlider.prototype.isChildren = function () {
+  return this.containerEl.childNodes.length !== 0;
+};
+
+StoriesSlider.prototype.leadToArray = function (slides) {
+  return Array.prototype.slice.call(slides);
+};
+
+StoriesSlider.prototype.getContainerPaddings = function () {
+  var _styles =
+  this.containerEl.currentStyle || window.getComputedStyle(this.containerEl);
+  return {
+    pl: _styles["padding-left"],
+    pt: _styles["padding-top"],
+    pr: _styles["padding-right"],
+    pb: _styles["padding-bottom"] };
+
+};
+
+StoriesSlider.prototype.getFullSizesOfSliderLine = function (slides) {
+  var sizes = { w: 0, h: 0 };
+  var pad = this.getContainerPaddings();
+  var _pl, _pr;
+  for (var i = 0, len = slides.length; i < len; i++) {
+    sizes.w += slides[i].offsetWidth;
+    sizes.h = Math.max(sizes.h, slides[i].offsetHeight);
+    var ml = null;
+    var mr = null;
+    if (i === 0) {
+      _pl = parseInt(pad.pl, 10);
+      ml = this.itemLeftOffset + _pl + "px";
+      mr = this.itemOffsetSide + "px";
+    } else if (i !== 0 && i !== len - 1) {
+      ml = this.itemOffsetSide + "px";
+      mr = this.itemOffsetSide + "px";
+    } else {
+      _pr = parseInt(pad.pr, 10);
+      ml = this.itemOffsetSide + "px";
+      mr = this.itemRightOffset + _pr + "px";
+    }
+    slides[i].style.marginLeft = ml;
+    slides[i].style.marginRight = mr;
+  }
+  sizes.w += this.getSideOffsetCorrection(slides.length) + _pr + _pl;
+  sizes.topMargin = parseInt(pad.pt, 10);
+  sizes.bottomMargin = parseInt(pad.pb, 10);
+  return sizes;
+};
+
+StoriesSlider.prototype.getSideOffsetCorrection = function (amount) {
+  return (
+    this.itemOffsetSide * 2 * (amount - 1) +
+    this.itemLeftOffset +
+    this.itemRightOffset);
+
+};
+
+StoriesSlider.prototype.createSlidesWrapper = function () {
+  this.slidesWrapper = document.createElement("div");
+  this.slidesWrapper.className = "sts-wrapper";
+  this.slidesWrapper.setAttribute(
+  this.dataAttributeName,
+  this.dataAttributeValue);
+
+  var self = this;
+  return function (elements) {
+    elements.forEach(function (el) {
+      self.slidesWrapper.appendChild(el);
+    });
+  };
+};
+
+StoriesSlider.prototype.setSizesOnSlidesWrapper = function (sizes) {
+  this.slidesWrapper.style.width = sizes.w + "px";
+  this.slidesWrapper.style.height = sizes.h + "px";
+  this.slidesWrapper.style.marginTop = sizes.topMargin + "px";
+  this.slidesWrapper.style.marginBottom = sizes.bottomMargin + "px";
+  this.containerEl.style.height =
+  sizes.h + sizes.topMargin + sizes.bottomMargin + "px";
+};
+
+StoriesSlider.prototype.setSlidesOnSlidesWrapper = function (
+wrapperSeter,
+slides)
+{
+  wrapperSeter(slides);
+};
+
+StoriesSlider.prototype.setWrapperOnContainer = function (wrap) {
+  this.containerEl.appendChild(wrap);
+};
+
+StoriesSlider.prototype.setDiffBetweenContainerAndSlidesWrapper = function () {
+  this.diffBetweenContainerAndSlidesWrapper =
+  this.containerEl.clientWidth - this.slidesWrapper.clientWidth;
+};
+
+StoriesSlider.prototype.checkBorder = function (fn) {
+  if (this.isBorder) {
+    return false;
+  } else {
+    fn.call(this);
+    this.isBorder = true;
+  }
+};
+StoriesSlider.prototype.getLeftPosition = function () {
+  return (
+    this.slidesWrapper.getBoundingClientRect().left -
+    this.containerEl.getBoundingClientRect().left);
+
+};
+
+StoriesSlider.prototype.setRAF = function () {
+  this._watcher();
+
+  this._updater(function () {
+    this.offsetForAnimation =
+    Math.abs(this.offset) <= this.minDragDistance ?
+    this.offset :
+    this.offset / 25;
+    this.pos = this.tran + parseInt(this.offset.toFixed(3), 10);
+  });
+
+  this.leftPosition = this.getLeftPosition();
+
+  this.dir = this.offset >= 0 ? 1 : -1;
+
+  if (!this.isDrag && this.tran !== 0) {
+    this.tran += this.offsetForAnimation *= this.inertionCoef;
+    this.pos = this.tran;
+  }
+
+  if (this.leftPosition >= 0 && this.diffBetweenContainerAndSlidesWrapper < 0) {
+    if (!!this._ls) {
+      this.isBorder = false;
+    } else {
+      this.isBorder = true;
+    }
+    this.checkBorder(function () {
+      this._ls();
+    });
+  }
+
+  if (this.leftPosition > 0 && this.dir > 0) {
+    this.isBorder = false;
+    this.isGateOpen = false;
+    this.isDrag = false;
+    this.tran = 0;
+    this.pos = 0;
+    this.offset = 0;
+    this.offsetForAnimation = 0;
+    this.checkBorder(function () {
+      this._ls();
+    });
+  }
+  if (
+  this.diffBetweenContainerAndSlidesWrapper >= this.leftPosition &&
+  this.dir < 0)
+  {
+    this.isBorder = false;
+    this.isGateOpen = false;
+    this.isDrag = false;
+    this.tran = this.leftPosition;
+    this.pos = this.leftPosition;
+    this.offset = 0;
+    this.offsetForAnimation = 0;
+    this.checkBorder(function () {
+      this._rs();
+    });
+  }
+  if (
+  this.diffBetweenContainerAndSlidesWrapper < this.leftPosition &&
+  this.leftPosition < 0)
+  {
+    this.checkBorder(function () {
+      this._md();
+    });
+  }
+  this.moveContainer(this.pos);
+  requestAnimationFrame(this.setRAF);
+};
+
+StoriesSlider.prototype.isLeftSide = function (callback) {
+  this._ls = callback;
+};
+
+StoriesSlider.prototype.isRightSide = function (callback) {
+  this._rs = callback;
+};
+
+StoriesSlider.prototype.isMedium = function (callback) {
+  this._md = callback;
+};
+
+StoriesSlider.prototype.moveContainer = function (offset) {
+  this.slidesWrapper.style.transform = "translate3d(" + offset + "px, 0, 0)";
+};
+
+StoriesSlider.prototype.getEvent = function (e) {
+  return !!e.targetTouches ? e.targetTouches[0].clientX : e.clientX;
+};
+
+StoriesSlider.prototype.down = function (e) {
+  if (this.isClickPrevent) {
+    e.preventDefault();
+    e.stopPropagation();
+  }
+  this.canInteract = true;
+  this.isDrag = true;
+  this.referencePoint = this.getEvent(e);
+};
+
+StoriesSlider.prototype.up = function (e) {
+  this.isClickPrevent = false;
+  //e.preventDefault();
+  //e.stopPropagation();
+  this.isDrag = false;
+  this.tran = this.pos;
+};
+
+StoriesSlider.prototype.move = function (e) {
+  this.isClickPrevent = true;
+  e.preventDefault();
+  e.stopPropagation();
+  this.canInteract = false;
+  this.isBorder = false;
+  if (this.isDrag && !this.isGateOpen) {
+    this.offset = this.getEvent(e) - this.referencePoint;
+    this.offsetForAnimation =
+    Math.abs(this.offset) <= this.minDragDistance ?
+    this.offset :
+    this.offset / 8;
+    this.pos = this.tran + parseInt(this.offset.toFixed(3), 10);
+  }
+};
+
+StoriesSlider.prototype.setSliderMotion = function (direction) {
+  if (this.isGateOpen) {
+    return false;
+  }
+  var self = this;
+  this.offset = 0;
+  this.isBorder = false;
+  this.dir = direction;
+  this.isGateOpen = true;
+  this.isDrag = true;
+  setTimeout(function () {
+    self.isGateOpen = false;
+    self.isDrag = false;
+    self.tran = self.pos;
+  }, 500);
+};
+
+StoriesSlider.prototype.moveLeft = function () {
+  this.setSliderMotion(1);
+};
+
+StoriesSlider.prototype.moveRight = function () {
+  this.setSliderMotion(-1);
+};
+
+StoriesSlider.prototype.controller = function (wrap) {
+  var self = this;
+
+  this.slidesWrapper.addEventListener("mousedown", function (e) {
+    self.down(e);
+  });
+
+  this.slidesWrapper.addEventListener("mouseup", function (e) {
+    self.up(e);
+  });
+
+  this.slidesWrapper.addEventListener("mousemove", function (e) {
+    self.move(e);
+  });
+
+  this.slidesWrapper.addEventListener("mouseleave", function (e) {
+    self.up(e);
+  });
+  /***************************************************************/
+  this.slidesWrapper.addEventListener("touchstart", function (e) {
+    self.down(e);
+  });
+
+  this.slidesWrapper.addEventListener("touchmove", function (e) {
+    self.move(e);
+  });
+
+  this.slidesWrapper.addEventListener("touchend", function (e) {
+    self.up(e);
+  });
+};
+
+var slider = new StoriesSlider({
+  container: ".stories",
+  itemLeftOffset: 5,
+  itemRightOffset: 5,
+  itemOffsetSide: 5,
+  minDragDistance: 10,
+  useIsideController: false,
+  inertionCoef: 0.93 });
 
 
+var el = $("[data-sts]");
 
+el.on("mousedown touchstart", function (e) {
+  slider.down(e);
+});
+el.on("mousemove touchmove", function (e) {
+  slider.move(e);
+});
+el.on("mouseup", function (e) {
+  slider.up(e);
+});
+el.on("mouseleave touchend", function (e) {
+  slider.up(e);
+});
 
+function showButtons() {
+  var prev = document.querySelector(".prev");
+  var next = document.querySelector(".next");
+  return function (type) {
+    if (type === "left") {
+      next.classList.add("nav-btn--active");
+      prev.classList.remove("nav-btn--active");
+    }
+    if (type === "right") {
+      next.classList.remove("nav-btn--active");
+      prev.classList.add("nav-btn--active");
+    }
+    if (type === "medium") {
+      next.classList.add("nav-btn--active");
+      prev.classList.add("nav-btn--active");
+    }
+  };
+}
 
+var setActionsState = showButtons();
 
+slider.isLeftSide(function () {
+  setActionsState("left");
+});
 
+slider.isRightSide(function () {
+  setActionsState("right");
+});
 
+slider.isMedium(function () {
+  setActionsState("medium");
+});
 
+var prev = document.querySelector(".prev");
+var next = document.querySelector(".next");
 
+prev.addEventListener("click", function () {
+  slider.moveLeft();
+});
 
+next.addEventListener("click", function () {
+  slider.moveRight();
+});
+
+//console.log( a ? a : !isNaN(+a) ? a : null );
+
+$(document).on("click", "img", function (e) {
+  if ($(this).attr("src") && slider.getInteractPossibility()) {
+    createLB("photo", $(this).attr("src"));
+  }
+});
+
+$(document).on("click", ".ld-lightbox__close, .ld-lightbox", function () {
+  $(".ld-lightbox").css({ opacity: 0 });
+  setTimeout(function () {
+    closeLB();
+  }, 300);
+});
 </script>
 {% endblock %}
 
