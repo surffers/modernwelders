@@ -2,15 +2,14 @@ import os
 import sys
 from pathlib import Path
 import environ
-root = environ.Path(__file__) - 1
-env = environ.Env()
-environ.Env.read_env(env.str(root(), '.env'))
-
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 STATIC_DIR = BASE_DIR.parent
 sys.path.insert(0, os.path.join(BASE_DIR, "apps"))
+
+env = environ.Env()
+environ.Env.read_env(env_file=os.path.join(BASE_DIR, '.env'))
 
 DEBUG = env.bool('DEBUG', True)
 SECRET_KEY = env('SECRET_KEY')
@@ -32,8 +31,6 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-    'apps.blog',
-    'apps.courses',
     'apps.contact',
     'apps.core',
     'apps.document',
@@ -46,7 +43,6 @@ INSTALLED_APPS = [
     # 'allauth.socialaccount.providers.vk',
     'taggit',
     'embed_video',
-
 ]
 
 MIDDLEWARE = [

@@ -21,10 +21,6 @@ urlpatterns = [
     #
     # Feed
     path('', include('apps.bookmark.urls')),
-    # Blog
-    path('', include('apps.blog.urls')),
-    # Courses
-    path('', include('apps.courses.urls')),
     # Contact
     path('contact/', include('apps.contact.urls')),
     #
