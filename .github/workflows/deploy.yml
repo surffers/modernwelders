@@ -23,6 +23,5 @@ jobs:
           git pull
           python manage.py makemigrations
           python manage.py migrate
-          sudo service ${{ secrets.GUNICORN }} restart
-          sudo -S /path/to/command < ${{ secrets.PASSWORD }}
+          sudo service gunicorn restart
           sudo service nginx restart
