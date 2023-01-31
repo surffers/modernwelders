@@ -40,9 +40,9 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
-    # 'allauth.socialaccount.providers.vk',
     'taggit',
     'embed_video',
+
 ]
 
 MIDDLEWARE = [

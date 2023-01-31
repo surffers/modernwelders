@@ -269,28 +269,7 @@
 
                 </div>
             </div>
-            <div class="column is-4 is-offset-1">
-                <div class="is-unselectable">
-                    <p class="title is-size-7 is-uppercase">Самые популярные веб-сайты</p>
-                    <hr>
-                    {% for bookmark in bookmarks.all %}
-                    <div class="media">
-      <div class="media-left">
-        <a class="icon-bookmark"
-           href="{{ bookmark.url }}"
-           target="_blank">
-        </a>
-      </div>
-      <div class="media-content">
-        <p class="title is-size-7">{{ bookmark.title|truncatechars:40 }}</p>
-        <p class="subtitle is-size-7 is-lowercase">{{ bookmark.body|truncatechars:150 }}</p>
-      </div>
-    </div>
 
-
-                    {% endfor %}
-                </div>
-            </div>
 
     </div>
 </div>

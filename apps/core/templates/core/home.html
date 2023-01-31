@@ -6,158 +6,12 @@
 
 {% block content %}
 
-<nav class="navbar">
-
-    {% if request.user.is_authenticated %}
-    <div class="navbar-item">
-        <a class="button is-black is-small is-rounded is-outlined" href="#">
-              <span class="icon">
-                       <svg style="fill: currentColor; width: 0.7rem; height: 0.7rem;" version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
-                            <title>add</title>
-                            <path d="M16.943 0.943h-1.885v14.115h-14.115v1.885h14.115v14.115h1.885v-14.115h14.115v-1.885h-14.115v-14.115z">
-                            </path>
-                          </svg>
-                   </span>
-            <span>
-                        Запуск
-                    </span>
-        </a>
-    </div>
-    <div class="navbar-item">
-        <div class="dropdown is-right">
-             <div class="dropdown-trigger">
-    <button class="button is-black is-small is-rounded is-outlined add-link-btn " aria-haspopup="true" aria-controls="dropdown-menu">
-      <span class="icon is-small">
-        <i class="fas fa-angle-down" aria-hidden="true"></i>
-      </span>
-    </button>
-  </div>
-
-            <div class="dropdown-menu" role="menu">
-                <div class="dropdown-content">
-                    <a class="dropdown-item" href="{% url 'profile' user.username %}">
-            <span class="icon-text">
-              <span class="icon has-text-link">
-                    <i class="fa fa-user-o" aria-hidden="true"></i>
-                </span>
-                <span>
-                    Профиль
-                </span>
-                   </span>
-                    </a>
-                      <a class="dropdown-item" href="{% url 'bookmark_favorite_lists' request.user.username %} ">
-               <span class="icon-text">
-              <span class="icon has-text-link">
-                  <i class="fa fa-heart-o" aria-hidden="true"></i>
-              </span>
-              <span>
-                  Избранное
-              </span>
-                   </span>
-          </a>
-                    <a class="dropdown-item" href="{% url 'categories' %}">
-            <span class="icon-text">
-              <span class="icon has-text-link">
-                  <i class="fa fa-folder-o" aria-hidden="true"></i>
-              </span>
-              <span>
-                  Категории
-              </span>
-              </span>
-                    </a>
-                    <a class="dropdown-item" href="{% url 'board' %}">
-                        <span class="icon-text">
-              <span class="icon has-text-link">
-                  <i class="fa fa-external-link" aria-hidden="true"></i>
-              </span>
-              <span>
-                  Ссылки
-              </span>
-                  </span>
-                    </a>
-                    <a class="dropdown-item" href="{% url 'tests' %}">
-                        <span class="icon-text">
-                  <span class="icon has-text-link">
-                    <i class="fa fa-thermometer-empty" aria-hidden="true"></i>
-                  </span>
-                  <span>Тесты</span>
-                </span>
-                    </a>
-                    <hr class="dropdown-divider">
-                    <a href="{% url 'account_logout' %}" class="dropdown-item has-text-danger">
-                        Выход
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-    {% else %}
-    <div class="buttons navbar-item">
-                <a class="button is-black is-small is-rounded is-outlined" href="{% url 'account_login' %}">
-                    Войти
-                </a>
-
-                <a class="button is-black is-small is-rounded" href="{% url 'account_signup' %}">
-                    Регистрация
-                </a>
-            </div>
-    {% endif %}
-</nav>
+   {% include 'core/include/navbar.html' %}
 
 
 <section class="hero home is-unselectable">
 
-    <div class="slider-text">
-        {% if request.user.is_authenticated %}
-        <div class="subheading">
-            👋 Привет
-            ,
-            <a href="{% url 'profile' user.username %}" class="has-text-black">
-                <span> {{ user.username }}</span>
-            </a>
-        </div>
-        {% endif %}
-https://school.surffers.ru/
-        http://school.surffers.ru/
-        <h1 class="has-text-centered">Sur<span>ff</span>ers</h1>
-        <p class="subtitle is-3 has-text-centered">Сёрфи в интернете вместе с нами </p>
 
-        <form method="get" action="{% url 'search' %}" class="search-bar is-centered">
-
-            <input class="input" type="text" placeholder="Поиск" name="q">
-
-        </form>
-        <br>
-        <div class="block share has-text-centered">
-            <div ></div>
-            <a class="button is-light" role="button" title="Копировать ссыылку">
-                <span class="copy-icon ">
-                    <i class="fas fa-link icon"></i>
-                </span>
-            </a>
-            <a class="button is-light sharer" href="#" id="share-em" title="Отправить на почту">
-                <span>
-                    <i aria-hidden="true" class="fa fa-envelope-o"></i>
-                </span>
-            </a>
-            <a class="button is-light sharer" href="#" id="share-vk" title="Поделиться ВКонтакте">
-                <span>
-                    <i class="fab fa-vk"></i>
-                </span>
-            </a>
-            <a class="button is-light sharer" href="#" id="share-tg" title="Поделиться в Telegram">
-                <span>
-                    <i class="fab fa-telegram"></i>
-                </span>
-            </a>
-            <a  class="button is-light sharer" href="https://connect.ok.ru/offer?url=URL_TO_SHARE&title=TITLE" id="share-ok" title="Поделиться в Одноклассниках">
-                <span>
-                    <i class="fa fa-odnoklassniki" aria-hidden="true"></i>
-                </span>
-            </a>
-        </div>
-
-    </div>
 
     <div class="hero-body">
         <div class="ld">
@@ -261,20 +115,28 @@ https://school.surffers.ru/
                                     </a>
                                     {% endfor %}
                                     </p>
-                                    <p class="title is-7">
-                                        <span class="subtitle is-7"> {{ bookmark.created_at|naturaltime }}</span>
-                                        &nbsp; &bull;&nbsp;
-                                        <a href="{% url 'bookmark' bookmark.id %}">
-                                            <span class="subtitle is-7">{{ bookmark.comments.all|length }} Комментарии</span>
-                                        </a>
-                                        &bull;&nbsp;
-                                        <a class='hero-btn'>
-                                                                <span class="forloop has-text-weight-bold is-size-7-mobile">
-                                                                 ☆
-                                                                </span>
-                                            <span class="forloop is-size-7-mobile"> 0</span>
-                                        </a>
-                                    </p>
+                                    <p  class="title is-7">
+
+                            <a href="{% url 'bookmark' bookmark.id %}" class="tag is-light hero-btn" title="Просмотров">
+                                <span class="icon">
+                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                </span>
+                                <span>{{bookmark.total_views}}</span>
+                            </a>
+                            <a href="{% url 'bookmark' bookmark.id %}" class="tag is-light" title="Комментариев">
+                                <span class="subtitle is-7">
+                                    <i class="fa fa-comment-o" aria-hidden="true"></i>
+                                    {{ bookmark.comments.all|length }}
+                                </span>
+                            </a>
+
+                            <a href="{% url 'bookmark' bookmark.id %}" class="tag is-light" title="Проголосовали">
+                                                    <span class="icon">
+                                                     <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                    </span>
+                                <span> 0</span>
+                            </a>
+                        </p>
                 </div>
                 <hr>
                 {% endfor %}

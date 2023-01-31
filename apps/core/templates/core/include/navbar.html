@@ -7,9 +7,7 @@
 
 
 <!--    Navbar    -->
-<nav class="navbar is-fixed-top is-flex has-centered-menu" id="navbar">
-
-    <div class="container">
+<nav class="navbar is-fixed-top" id="navbar">
 
         <div class="navbar-brand">
 
@@ -32,19 +30,16 @@
 
     <div class="navbar-menu" id="navMenubd-example">
         <div class="navbar-start">
+            <a class="navbar-item">
+                <form method="get" action="{% url 'search' %}" class="search-bar">
+
+            <input class="input" type="text" placeholder="Поиск" name="q">
+
+        </form>
+            </a>
                                 <a class="navbar-item" href="/"> Главная </a>
                                 <a class="navbar-item" href="{% url 'categories' %}"> Категории </a>
                                 <a href="{% url 'board' %}" class="navbar-item"> Ссылки </a>
-                                <div class="navbar-item has-dropdown is-hoverable">
-                                    <a class="navbar-link" href="https://school.surffers.ru/"> Курсы </a>
-                                    <div class="navbar-dropdown">
-                                        <a class="navbar-item"> About </a>
-                                        <a class="navbar-item"> Jobs </a>
-                                        <a class="navbar-item"> Contact </a>
-                                        <hr class="navbar-divider">
-                                        <a class="navbar-item"> Report an issue </a>
-                                    </div>
-                                </div>
                             </div>
 
         <div class="navbar-end">
@@ -138,11 +133,6 @@
 
         </div>
 
-    </div>
-
-
-
-
 </nav>
 <!--    End Navbar    -->
 
@@ -160,7 +150,7 @@ function scrollFunction() {
   } else {
 
     document.getElementById("navbar").style.boxShadow = "none";
-
+    document.getElementById("navbar").style.borderBottom = "1px solid #D9E1EC";
 
   }
 }

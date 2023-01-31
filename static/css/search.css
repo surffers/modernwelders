@@ -1,15 +1,14 @@
 .search-bar {
   z-index: 3;
   position: relative;
-
    margin: 0 auto;
-   height: 50px;
+
    width: 100%;
     max-width: 600px;
 }
 .search-bar input.input {
     border-radius: 50px;
-  height: 50px;
+
   width: 100%;
   display: block;
   padding: 0 54px;
