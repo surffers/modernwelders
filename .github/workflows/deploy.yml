@@ -22,6 +22,3 @@ jobs:
           source venv/bin/activate
           python manage.py makemigrations
           python manage.py migrate
-          sudo -S -v <<< ${{ secrets.SSH_PASSWORD }}
-          sudo service ${{ secrets.GUNICORN }} restart
-          sudo service nginx restart
