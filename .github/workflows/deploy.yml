@@ -20,5 +20,6 @@ jobs:
           # Выполняет деплой
           cd ${{ secrets.PATH }}
           source venv/bin/activate
+          git pull
           python manage.py makemigrations
           python manage.py migrate
