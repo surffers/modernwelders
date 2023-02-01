@@ -20,7 +20,7 @@ jobs:
           # Выполняет деплой
           cd ${{ secrets.PATH }}
           source venv/bin/activate
-          git pull
+          git config pull.rebase false
           python manage.py makemigrations
           python manage.py migrate
           sudo service ${{ secrets.GUNICORN }} restart
