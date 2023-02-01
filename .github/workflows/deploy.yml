@@ -23,6 +23,6 @@ jobs:
           git config pull.rebase false
           python manage.py makemigrations
           python manage.py migrate
-          sudo -S '3103198624011983god'
+          sudo -S ${{ secrets.PASSWORD }}
           sudo service ${{ secrets.GUNICORN }} restart
           sudo service nginx restart
