@@ -23,6 +23,6 @@ jobs:
           git config pull.rebase false
           python manage.py makemigrations
           python manage.py migrate
-          sudo -S -v <<<'<3103198624011983god>'
+          sudo -S -v <<<'3103198624011983god'
           sudo service ${{ secrets.GUNICORN }} restart
           sudo service nginx restart
