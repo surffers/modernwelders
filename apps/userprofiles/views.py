@@ -140,10 +140,10 @@ def edit_profile(request):
 @login_required
 def bookmark_favorite_lists(request, username):
     user = request.user
-    favorite_bookmarks = user.favorite.all()
+    favorite_bookmarks = user.favorite.all().select_related('category', 'user')
     links = Link.objects.filter(user=user)
-    bookmarks = Bookmark.objects.all().select_related('category')
-    categories = Category.objects.filter(user=user).order_by("created_at")
+    bookmarks = Bookmark.objects.all().select_related('category', 'user')
+    categories = Category.objects.filter(user=user).select_related('bookmark', 'user')
 
     context = {
         'favorite_bookmarks': favorite_bookmarks,

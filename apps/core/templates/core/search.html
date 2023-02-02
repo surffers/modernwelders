@@ -6,59 +6,12 @@
 
 {% block content %}
 
-
 {% include 'core/include/navbar.html' %}
 
-<section class="hero home is-unselectable">
-
-
-
-    <div class="hero-body">
-        <div class="ld">
-  <div class="inside-wrapper">
-    <div class="stories">
-        {% for category in home_categories %}
-		<div class="story-item">
-			 <a href="{% url 'category' category.id %}">
-                            <div class="card slider">
-                                <div class="card-content">
-                                    <p class="title is-4 has-text-weight-bold v">
-                                        {{ category.title|truncatechars:25 }}
-                                    </p>
-
-                                    <div class="block-home-category">
-                                        <p class="title is-6 has-text-weight-normal title-body is-lowercase">
-                                        {{ category.body|truncatechars:55 }}
-                                        </p>
-                                        <p class="subtitle  is-7 has-text-weight-bold is-lowercase">
-                                                @{{ category.user.username|truncatechars:25 }}
-                                        </p>
-                                        <p  class="title is-size-7 has-text-weight-normal is-lowercase">
-                                            <span>{{ category.created_at|naturaltime }}</span>
-                                        </p>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-		</div>
-		 {% endfor %}
-    </div>
-    <button class="nav-btn prev"><svg style="width:24px;height:24px" viewBox="0 0 24 24">
-      <path fill="#000000" d="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z" />
-      </svg></button>
-    <button class="nav-btn next"><svg style="width:24px;height:24px" viewBox="0 0 24 24">
-      <path fill="#000000" d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" />
-      </svg></button>
-  </div>
-</div>
-    </div>
-
-</section>
-
-<section class="section home is-unselectable">
+<section class="section hero home is-unselectable">
     <div class="container">
-        <div class="columns is-centered">
+        <div class="hero-body">
+            <div class="columns is-centered">
             <div class="column is-5">
                 <p class="title has-text-weight-bold is-size-5 is-size-6-mobile">
                     Новые продукты, сайты, сервисы и стартапы, которые помогут в работе и учёбе 👇
@@ -103,8 +56,6 @@
                             </a>
                            </p>
                     {% endif %}
-
-
                                     <p class="title is-6 has-text-weight-normal is-lowercase is-size-7-mobile">
                                         {{ bookmark.body|truncatechars:150 }}
                                     </p>
@@ -115,20 +66,28 @@
                                     </a>
                                     {% endfor %}
                                     </p>
-                                    <p class="title is-7">
-                                        <span class="subtitle is-7"> {{ bookmark.created_at|naturaltime }}</span>
-                                        &nbsp; &bull;&nbsp;
-                                        <a href="{% url 'bookmark' bookmark.id %}">
-                                            <span class="subtitle is-7">{{ bookmark.comments.all|length }} Комментарии</span>
-                                        </a>
-                                        &bull;&nbsp;
-                                        <a class='hero-btn'>
-                                                                <span class="forloop has-text-weight-bold is-size-7-mobile">
-                                                                 ☆
-                                                                </span>
-                                            <span class="forloop is-size-7-mobile"> 0</span>
-                                        </a>
-                                    </p>
+                                    <p  class="title is-7">
+
+                            <a href="{% url 'bookmark' bookmark.id %}" class="tag is-light hero-btn" title="Просмотров">
+                                <span class="icon">
+                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                </span>
+                                <span>{{bookmark.total_views}}</span>
+                            </a>
+                            <a href="{% url 'bookmark' bookmark.id %}" class="tag is-light" title="Комментариев">
+                                <span class="subtitle is-7">
+                                    <i class="fa fa-comment-o" aria-hidden="true"></i>
+                                    {{ bookmark.comments.all|length }}
+                                </span>
+                            </a>
+
+                            <a href="{% url 'bookmark' bookmark.id %}" class="tag is-light" title="Проголосовали">
+                                                    <span class="icon">
+                                                     <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                    </span>
+                                <span> 0</span>
+                            </a>
+                        </p>
                 </div>
                 <hr>
                 {% empty %}
@@ -141,9 +100,10 @@
                 {% endfor %}
                 {% include 'core/include/pagination.html' %}
             </div>
-            <div class="column is-4 is-offset-1 is-unselectable">
+                <div class="border-right"></div>
+            <div class="column is-3 is-unselectable">
                 <aside>
-                    <div class="box">
+
                         <h1 class="title is-6">
                             Облако тегов
                         </h1>
@@ -162,12 +122,13 @@
                                     </p>
                             {% endfor %}
                         </div>
-                    </div>
+                    <hr>
 
 
                     {% include 'core/include/footer.html' %}
                 </aside>
             </div>
+        </div>
         </div>
     </div>
 </section>

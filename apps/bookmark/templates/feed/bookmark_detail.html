@@ -2,277 +2,284 @@
 {% block title %}Surffers | {{ bookmark.title|truncatechars:40 }}{% endblock %}
 {% load static %}
 {% load humanize %}
-{% load embed_video_tags %}
 
 {% block content %}
 
 
 {% include 'core/include/navbar.html' %}
+<section class="section">
 
-<div class="container">
-    <div class="columns is-multiline container category">
-
-            <div class="column">
-
-                <div class="box is-unselectable">
-<div class="media">
-      <div class="media-left">
-          <a href="{% url 'profile' bookmark.user.username %}">
-          <p class="title is-size-6 is-size-7-mobile">
-
-          </p>
-        <p class="subtitle is-size-6 is-lowercase">@{{ bookmark.user.username|truncatechars:25 }}</p>
-              </a>
-      </div>
-    <div class="media-content"></div>
-      <div class="media-right">
-        <div class="buttons">
+        <div class="container">
+    <div class="columns bookmark__detail is-centered">
+        <div class="column is-8">
+            <div class="box is-unselectable">
+                <div class="media">
+                    <div class="media-left">
+                        <a href="{% url 'profile' bookmark.user.username %}">
+                            <p class="title is-size-6 is-size-7-mobile">
+                            </p>
+                            <p class="subtitle is-size-6 is-lowercase">@{{ bookmark.user.username|truncatechars:25 }}</p>
+                        </a>
+                    </div>
+                    <div class="media-content"></div>
+                    <div class="media-right">
+                        <div class="buttons">
                             {% if user == bookmark.user %}
-                                <div class="button is-light is-small">
-                                    <a href="{% url 'bookmark_edit'  bookmark.id %}" class="has-text-weight-bold has-text-black" title="Редактировать">
+                            <div class="button is-light is-small">
+                                <a href="{% url 'bookmark_edit'  bookmark.id %}"
+                                   class="has-text-weight-bold has-text-black" title="Редактировать">
                                             <span class="icon">
                                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                             </span>
-                                    </a>
-                                </div>
-                                {% include 'feed/include/delete-bookmark.html' %}
+                                </a>
+                            </div>
 
-                                {% endif %}
+                            {% include 'feed/include/delete-bookmark.html' %}
 
-                                      {% if is_favorite %}
-                                <a href="{% url 'favorite_bookmark' bookmark.id %}"
-                                   class="button is-light is-small"
-                                   title="Убрать из избранного">
+                            {% endif %}
+
+                            {% if is_favorite %}
+                            <a href="{% url 'favorite_bookmark' bookmark.id %}"
+                               class="button is-light is-small"
+                               title="Убрать из избранного">
                                             <span class="icon is-size-6">
                                                 <i class="fa fa-heart" aria-hidden="true"></i>
                                             </span>
-                                </a>
-                                {% else %}
-                                <a href="{% url 'favorite_bookmark' bookmark.id %}"
-                                   class="button is-light is-small">
+                            </a>
+                            {% else %}
+                            <a href="{% url 'favorite_bookmark' bookmark.id %}"
+                               class="button is-light is-small">
                                             <span class="icon is-size-6" title="Добавить в избранное">
                                                 <i class="fa fa-heart-o" aria-hidden="true"></i>
                                             </span>
-                                </a>
-                                {% endif %}
-                                <div class="is-pulled-right">
-                                    <div class="dropdown is-hoverable is-right">
-                                        <div class="dropdown-trigger">
-                                            <button class="button is-light is-small"
-                                                    title="Поделиться">
+                            </a>
+                            {% endif %}
+                            <div class="is-pulled-right">
+                                <div class="dropdown is-hoverable is-right">
+                                    <div class="dropdown-trigger">
+                                        <button class="button is-light is-small"
+                                                title="Поделиться">
                                 <span class="icon is-size-6">
                                   <i class="fa fa-share-square-o" aria-hidden="true"></i>
                                 </span>
-                                            </button>
-                                        </div>
-                                        <div class="dropdown-menu" role="menu">
-                                            <div class="dropdown-content">
-                                                <a class="dropdown-item sharer" role="button">
+                                        </button>
+                                    </div>
+                                    <div class="dropdown-menu" role="menu">
+                                        <div class="dropdown-content">
+                                            <a class="dropdown-item sharer" role="button">
                                                     <span class="copy-icon">
                                                         <i class="fas fa-link icon"></i>
                                                          Копировать ссылку
                                                     </span>
-                                                </a>
-                                                <a class="dropdown-item sharer" href="#" id="share-vk"
-                                                   title="Share VK">
+                                            </a>
+                                            <a class="dropdown-item sharer" href="#" id="share-vk"
+                                               title="Share VK">
                                                     <span class="icon" style="color: #0071F2;">
                                                         <i class="fab fa-vk"></i>
                                                     </span>
-                                                    ВКонтакте
-                                                </a>
-                                                <a class="dropdown-item sharer" href="#" id="share-tg">
+                                                ВКонтакте
+                                            </a>
+                                            <a class="dropdown-item sharer" href="#" id="share-tg">
                                                     <span class="icon" style="color: #27A0DF;">
                                                         <i class="fab fa-telegram"></i>
                                                     </span>
-                                                    Telegram
-                                                </a>
-                                                <a class="dropdown-item sharer" href="#" id="share-em">
+                                                Telegram
+                                            </a>
+                                            <a class="dropdown-item sharer" href="#" id="share-em">
                                                     <span class="icon">
                                                         <i aria-hidden="true" class="fa fa-envelope-o"></i>
                                                     </span>
-                                                    Отправить на почту
-                                                </a>
-                                            </div>
+                                                Отправить на почту
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
-                                {% if bookmark.published_date %}
+                            </div>
+                            {% if bookmark.published_date %}
 
-                                <a class="button is-light is-small" title="Категория опубликована">
+                            <a class="button is-light is-small" title="Категория опубликована">
                                     <span class="icon has-text-success is-size-6">
                                             <i class="fa fa-check-circle-o" aria-hidden="true"></i>
                                         </span>
-                                </a>
-                        {% else %}
+                            </a>
+                            {% else %}
 
 
-                                <a class="button is-light is-small" title="Опубликовать ссылку для всеобщего доступа">
+                            <a class="button is-light is-small" title="Опубликовать ссылку для всеобщего доступа">
                                             <span class="icon has-text-danger is-size-6">
                                                 <i class="fa fa-check-circle-o" aria-hidden="true"></i>
                                             </span>
-                                </a>
-
-                        {% endif %}
-                            </div>
-      </div>
-    </div>
-
-
-
-                    <hr>
-                                <p class="subtitle is-7">
-                                    <span class="subtitle is-7"> {{ bookmark.created_at|naturaltime }}</span>
-                                </p>
-                    <p class="title is-3">
-                                    <a class="title is-size-3 is-size-5-mobile has-text-weight-bold"
-                                       href="{% url 'category' bookmark.category.id %}">
-                                        {{ bookmark.category.title }}
-                                    </a>
-                                </p>
-                                {% if bookmark.url_icon %}
-
-                                                <a class="icon-bookmark subtitle has-text-weight-bold" href="{{ bookmark.url }}"
-                                                   target="_blank">
-                                                </a>
-                                                <a href="{{ bookmark.url_icon }}" class="subtitle is-5 has-text-weight-bold"
-                                                   target="_blank">
-                                                    {{ bookmark.title }}
-                                                </a>
-
-                                {% else %}
-
-                                                <a class="icon-bookmark subtitle has-text-weight-bold" href="{{ bookmark.url }}"
-                                                   target="_blank">
-                                                    {{ bookmark.title }}
-                                                </a>
-
-
-                                {% endif %}
-<a href="{% url 'bookmark' bookmark.id %}">
-                                Просмотры :{{bookmark.total_views}}
                             </a>
-                                <p class="subtitle is-5 is-size-6-mobile">
-                                    {{ bookmark.body }}
-                                </p>
-                                {% for tag in bookmark.tags.all %}
-                                <a href="{% url 'tag_detail_url' tag.slug %}" class="is-6 has-text-info">
-                                    #{{ tag.name|truncatechars:25 }}
-                                </a>
-                                {% endfor %}
 
-                                <div class="spacer"></div>
-
-                                <div class="buttons">
-                                    {% if bookmark.published_date %}
-                                    {% else %}
-                                    {% if user.is_superuser %}
-                                    <a class="button is-link is-medium"
-                                       href="{% url 'bookmark_publish' bookmark.id  %}">
-                                        Опубликовать
-                                    </a>
-                                    {% else %}
-                                    {% if user == bookmark.user %}
-                                    <a class="button is-link is-medium"
-                                       href="https://yoomoney.ru/to/410019178238860">
-                                        Запуск
-                                    </a>
-                                     {% endif %}
-                                    {% endif %}
-
-                                    {% endif %}
-
-                                    {% if bookmark.url_icon %}
-
-                                        <a class="button is-link is-medium is-outlined "
-                                       href="{{ bookmark.url_icon }}" target="_blank">
-                                        <span class="forloop icon link is-size-7-mobile">
-                                            <i class="fa fa-external-link" aria-hidden="true"></i>
-                                        </span>
-                                        <span class="forloop is-size-7-mobile">
-                                            Перейти на сайт
-                                        </span>
-                                    </a>
-                                    {% else %}
-                                    <a class="button is-link is-medium is-outlined "
-                                       href="{{ bookmark.url }}" target="_blank">
-                                        <span class="forloop icon link is-size-7-mobile">
-                                            <i class="fa fa-external-link" aria-hidden="true"></i>
-                                        </span>
-                                        <span class="forloop is-size-7-mobile">
-                                            Перейти на сайт
-                                        </span>
-                                    </a>
-
-                                    {% endif %}
-
-
-                                    <a class='button is-link is-medium'>
-                                        <span class="forloop icon has-text-weight-bold is-size-7-mobile">
-                                         ☆
-                                        </span>
-                                        <span class="forloop is-size-7-mobile"> Проголосовать 98</span>
-
-                                    </a>
-
-                                </div>
-
-                                {% video bookmark.video '100%x300' %}
-
-
-
-
-                    <hr>
-                    {% if messages %}
-                    {% for message in messages %}
-                    <article class="message is-{{ message.tags }}">
-                        <div class="message-body">
-                            {{ message }}
+                            {% endif %}
                         </div>
-                    </article>
-                    {% endfor %}
+                    </div>
+                </div>
+
+
+                <hr>
+                <p class="subtitle is-7">
+                    <span class="subtitle is-7"> {{ bookmark.created_at|naturaltime }}</span>
+                </p>
+                <p class="title is-3">
+                    <a class="title is-size-3 is-size-5-mobile has-text-weight-bold"
+                       href="{% url 'category' bookmark.category.id %}">
+                        {{ bookmark.category.title }}
+                    </a>
+                </p>
+                {% if bookmark.affiliate_url %}
+                <a class="icon-bookmark subtitle has-text-weight-bold" href="{{ bookmark.url }}"
+                   target="_blank">
+                </a>
+                <a href="{{ bookmark.affiliate_url }}" class="subtitle is-5 has-text-weight-bold"
+                   target="_blank">
+                    {{ bookmark.title }}
+                </a>
+
+                {% else %}
+
+                <a class="icon-bookmark subtitle has-text-weight-bold" href="{{ bookmark.url }}"
+                   target="_blank">
+                    {{ bookmark.title }}
+                </a>
+
+
+                {% endif %}
+                <p class="subtitle is-5 is-size-6-mobile">
+                    {{ bookmark.body }}
+                </p>
+                {% for tag in bookmark.tags.all %}
+                <a href="{% url 'tag_detail_url' tag.slug %}" class="is-6 has-text-info">
+                    #{{ tag.name|truncatechars:25 }}
+                </a>
+                {% endfor %}
+
+                <div class="spacer"></div>
+
+                <div class="buttons">
+                    {% if bookmark.published_date %}
+                    {% else %}
+                    {% if user.is_superuser %}
+                    <a class="button is-link is-medium"
+                       href="{% url 'bookmark_publish' bookmark.id  %}">
+                        Опубликовать
+                    </a>
+                    {% else %}
+                    {% if user == bookmark.user %}
+                    <a class="button is-link is-medium"
+                       href="https://yoomoney.ru/to/410019178238860">
+                        Запуск
+                    </a>
+                    {% endif %}
+                    {% endif %}
+
+                    {% endif %}
+
+                    {% if bookmark.affiliate_url %}
+                    <a class="button is-link is-medium is-outlined "
+                       href="{{ bookmark.affiliate_url }}" target="_blank">
+                                        <span class="forloop icon link is-size-7-mobile">
+                                            <i class="fa fa-external-link" aria-hidden="true"></i>
+                                        </span>
+                        <span class="forloop is-size-7-mobile">
+                                            Перейти на сайт
+                                        </span>
+                    </a>
+                    {% else %}
+                    <a class="button is-link is-medium is-outlined "
+                       href="{{ bookmark.url }}" target="_blank">
+                                        <span class="forloop icon link is-size-7-mobile">
+                                            <i class="fa fa-external-link" aria-hidden="true"></i>
+                                        </span>
+                        <span class="forloop is-size-7-mobile">
+                                            Перейти на сайт
+                                        </span>
+                    </a>
+
                     {% endif %}
 
 
-                            {% if request.user.is_authenticated %}
-                            {% include 'feed/include/add_comment.html' %}
-                            {% else %}
+                    <a class='button is-link is-medium'>
+                                        <span class="forloop icon has-text-weight-bold is-size-7-mobile">
+                                         ☆
+                                        </span>
+                        <span class="forloop is-size-7-mobile"> Проголосовать 98</span>
 
-                            <div class="box has-text-centered">
-                                <p>Пожалуйста, войдите, чтоб прокомментировать!</p>
-                            </div>
-                            {% endif %}
-
-
-
-                        {% for comment in bookmark.comments.all %}
-
-                            <div class="box">
-                                <p>
-                                    <strong>{{ comment.user.username }}</strong> &bull;&nbsp;
-                                    <small>{{ comment.created_at|naturaltime }} </small><br>
-                                    {{ comment.body }}
-                                </p>
-                            </div>
-                            {% empty %}
-
-
-                                <div class="box has-text-centered">
-                                    <span>☹️</span>
-                                    <p class="subtitle is-6">
-                                        Пока без коментариев!
-                                    </p>
-                                </div>
-
-
-                        {% endfor %}
-
+                    </a>
 
                 </div>
+
+
             </div>
 
 
+            {% if messages %}
+            {% for message in messages %}
+            <article class="message is-{{ message.tags }}">
+                <div class="message-body">
+                    {{ message }}
+                </div>
+            </article>
+            {% endfor %}
+            {% endif %}
+
+            {% if request.user.is_authenticated %}
+            <div class="box">
+                <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="field has-addons">
+                    <div class="control is-expanded">
+                        {{ form.body }}
+                    </div>
+                    <div class="control">
+                        <button class="button is-outlined"
+                                type="submit">
+                            Отправить
+                        </button>
+                    </div>
+                </div>
+            </form>
+            </div>
+            {% else %}
+
+            <div class="box has-text-centered">
+                <p>Пожалуйста, войдите, чтоб прокомментировать!</p>
+            </div>
+            {% endif %}
+
+            <div class="box">
+            {% for comment in bookmark.comments.all %}
+
+
+                <p>
+                <strong>{{ comment.user.username }}</strong> &bull;&nbsp;
+                <small>{{ comment.created_at|naturaltime }} </small><br>
+                {{ comment.body }}
+            </p>
+
+            <br>
+            {% empty %}
+
+
+            <div class="has-text-centered">
+                <span>☹️</span>
+                <p class="subtitle is-6">
+                    Пока без коментариев!
+                </p>
+            </div>
+
+
+            {% endfor %}
+                </div>
+
+
+        </div>
+
+
     </div>
-</div>
+
+    </div>
+</section>
 
 
 <span class="toastbox" role="alert"></span>
@@ -292,6 +299,7 @@ $('.hero-btn').click(function(){
 });
 
 
+
 </script>
 <script>
  $("a.icon-bookmark[href^='http']").each(function() {
@@ -300,6 +308,7 @@ $('.hero-btn').click(function(){
         "background-size": "18px", "padding-left": "30px",
     });
 });
+
 
 
 
@@ -432,6 +441,7 @@ $('.hero-btn').click(function(){
   })();
 
   copyToClipboard.handleCopyIconClick();
+
 
 
 

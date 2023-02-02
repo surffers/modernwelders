@@ -85,3 +85,6 @@ slider.addEventListener('transitionend', function() {
 }, false);
 
 
+
+
+

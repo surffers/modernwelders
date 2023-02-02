@@ -29,7 +29,6 @@ urlpatterns = [
     path('category/<int:category_id>/delete/', category_delete, name='category_delete'),
     path('category/<int:category_id>/add_bookmark/', bookmark_add, name='bookmark_add'),
 
-
     path('delete_bookmark/<int:bookmark_id>/', bookmark_delete, name='bookmark_delete'),
     path('bookmark_edit/<int:bookmark_id>/', bookmark_edit, name='bookmark_edit'),
 
@@ -38,6 +37,7 @@ urlpatterns = [
     path('drafts/', drafts, name='drafts'),
     path('sponsors/', sponsors, name='sponsors'),
 
+    # path('create/', create, name='create'),
     # Tags
     path('tag/<str:slug>/', tag_detail, name='tag_detail_url'),
     # Comment

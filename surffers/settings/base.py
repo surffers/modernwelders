@@ -41,8 +41,6 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'taggit',
-    'embed_video',
-
 ]
 
 MIDDLEWARE = [

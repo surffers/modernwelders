@@ -37,6 +37,7 @@ def bookmark_detail(request, bookmark_id):
     else:
         Ip.objects.create(ip=ip)
         bookmark.views.add(Ip.objects.get(ip=ip))
+
     # Bookmark Edit
     if request.method == 'POST' and 'btnedit' in request.POST:
         BookmarkEdit = BookmarkForm(request.POST, request.FILES, instance=bookmark)
@@ -88,7 +89,7 @@ def tag_detail(request, slug):
 def category(request, category_id):
     category = Category.objects.get(pk=category_id)
     bookmarks = Bookmark.objects.filter(category_id=category_id).select_related('category', 'user')
-    b = Bookmark.objects.filter(category_id=category_id, published_date__lte=timezone.now()).select_related('category', 'user')
+    popular_bookmark = Bookmark.objects.filter(published_date__lte=timezone.now()).select_related('category', 'user')
 
     if request.method == 'POST':
         form = BookmarkForm(request.POST, request.FILES)
@@ -129,7 +130,7 @@ def category(request, category_id):
         'form': form,
         'FormEdit': FormEdit,
         'AddCategoryForm': AddCategoryForm,
-        'b': b,
+        'popular_bookmark': popular_bookmark,
     }
 
     return render(request, 'feed/category.html', context)
@@ -155,7 +156,7 @@ def category_add(request, category_id):
         'form': form,
     }
 
-    return render(request, 'feed/category_add.html', context)
+    return render(request, 'feed/add-category.html', context)
 
 
 @login_required
@@ -205,6 +206,7 @@ def get_client_ip(request):
 
 @login_required
 def bookmark_add(request, category_id):
+    b = Bookmark.objects.filter(published_date__lte=timezone.now()).select_related('category', 'user')
     if request.method == 'POST':
         form = BookmarkForm(request.POST, request.FILES)
         if form.is_valid():
@@ -219,6 +221,7 @@ def bookmark_add(request, category_id):
         form = BookmarkForm()
 
     context = {
+        'b': b,
         'form': form,
     }
 
@@ -255,11 +258,13 @@ def bookmark_edit(request, bookmark_id):
 
 
 @login_required
-def bookmark_delete(request, category_id, bookmark_id):
+def bookmark_delete(request, bookmark_id):
     bookmark = Bookmark.objects.filter(user=request.user).get(pk=bookmark_id)
     bookmark.delete(request.POST, request.FILES)
     messages.success(request, 'Ссылка удалена!')
-    return redirect('category', category_id=category_id)
+    return redirect('categories')
+
+
 
 
 @login_required

@@ -44,7 +44,9 @@
 #add-link {
     margin-right: 10px;
 }
-
+.profile-buttons {
+    margin-left: 10px;
+}
 .profile-user-links {
     display: flex;
 }

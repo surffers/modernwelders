@@ -4,135 +4,146 @@
 {% load account socialaccount %}
 
 {% block content %}
-
+<!--    Search Modal    -->
+<div class="search">
+    <div class="search__modal">
+        <div class="search__content form has-text-centered">
+            <h2 class="title is-4">Поиск</h2>
+            <p class="subtitle is-6">Введите ключевое слово и нажмите кнопку ввода, чтобы получить результат</p>
+            <form action="{% url 'search' %}" class="search-bar" method="get">
+                <input class="input" name="q" placeholder="Поиск" type="text">
+            </form>
+            <svg class="search__content__close" id="close_btn" viewBox="0 0 24 24">
+                <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"></path>
+            </svg>
+        </div>
+    </div>
+</div>
+<!--    End Search Modal    -->
 
 <!--    Navbar    -->
 <nav class="navbar is-fixed-top" id="navbar">
-
-        <div class="navbar-brand">
-
-              <a class="navbar-item logo" href="/">
-
-                <h1 class="navbar-item title-logo">Surffers</h1>
-            </a>
-
-          <div class="navbar-item">
-
-          </div>
-            <div class="navbar-burger burger" data-target="navMenubd-example">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
+    <div class="navbar-brand">
+        <a class="navbar-item logo" href="/">
+            <h1 class="navbar-item title-logo">Surffers</h1>
+        </a>
+        <div class="navbar-item is-hidden-desktop">
+            <svg class="header__search" id="search_btn" viewBox="0 0 24 24">
+                <path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z"></path>
+            </svg>
         </div>
-
-
+        <a class="navbar-item is-hidden-mobile">
+            <form action="{% url 'search' %}" class="search-bar" method="get">
+                <input class="input" name="q" placeholder="Поиск" type="text">
+            </form>
+        </a>
+        <div class="navbar-burger burger" data-target="navMenubd-example">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
 
     <div class="navbar-menu" id="navMenubd-example">
         <div class="navbar-start">
-            <a class="navbar-item">
-                <form method="get" action="{% url 'search' %}" class="search-bar">
-
-            <input class="input" type="text" placeholder="Поиск" name="q">
-
-        </form>
+            <a class="navbar-item" href="{% url 'categories' %}"> Категории </a>
+            <a class="navbar-item" href="{% url 'board' %}"> Ссылки </a>
+            <a class="navbar-item" href="#"> О нас </a>
+            <hr class="dropdown-divider">
+            {% if request.user.is_authenticated %}
+            <a class="navbar-item has-text-danger is-hidden-desktop" href="{% url 'account_logout' %}">
+                Выход
             </a>
-                                <a class="navbar-item" href="/"> Главная </a>
-                                <a class="navbar-item" href="{% url 'categories' %}"> Категории </a>
-                                <a href="{% url 'board' %}" class="navbar-item"> Ссылки </a>
-                            </div>
-
+            {% endif %}
+        </div>
         <div class="navbar-end">
             {% if request.user.is_authenticated %}
-                {% include 'feed/include/add-category.html' %}
+            {% include 'feed/include/add-category.html' %}
             {% endif %}
-
-
-{% if request.user.is_authenticated %}
-              <div class="navbar-item">
-        <div class="dropdown is-right">
-             <div class="dropdown-trigger">
-    <button class="button is-black is-small is-rounded is-outlined add-link-btn " aria-haspopup="true" aria-controls="dropdown-menu">
-      <span class="icon is-small">
-        <i class="fas fa-angle-down" aria-hidden="true"></i>
-      </span>
-    </button>
-  </div>
-
-            <div class="dropdown-menu" role="menu">
-                <div class="dropdown-content">
-                    <a class="dropdown-item" href="{% url 'profile' request.user.username %}">
-            <span class="icon-text">
-              <span class="icon has-text-link">
-                    <i class="fa fa-user-o" aria-hidden="true"></i>
-                </span>
-                <span>
-                    Профиль
-                </span>
-                   </span>
-                    </a>
-                    <a class="dropdown-item" href="{% url 'bookmark_favorite_lists' request.user.username %} ">
-               <span class="icon-text">
-              <span class="icon has-text-link">
-                  <i class="fa fa-heart-o" aria-hidden="true"></i>
-              </span>
-              <span>
-                  Избранное
-              </span>
-                   </span>
-          </a>
-                    <a class="dropdown-item" href="{% url 'categories' %}">
-            <span class="icon-text">
-              <span class="icon has-text-link">
-                  <i class="fa fa-folder-o" aria-hidden="true"></i>
-              </span>
-              <span>
-                  Категории
-              </span>
-              </span>
-                    </a>
-                    <a class="dropdown-item" href="{% url 'board' %}">
-                        <span class="icon-text">
-              <span class="icon has-text-link">
-                  <i class="fa fa-external-link" aria-hidden="true"></i>
-              </span>
-              <span>
-                  Ссылки
-              </span>
-                  </span>
-                    </a>
-                    <a class="dropdown-item" href="{% url 'tests' %}">
-                        <span class="icon-text">
-                  <span class="icon has-text-link">
-                    <i class="fa fa-thermometer-empty" aria-hidden="true"></i>
-                  </span>
-                  <span>Тесты</span>
-                </span>
-                    </a>
-                    <hr class="dropdown-divider">
-                    <a href="{% url 'account_logout' %}" class="dropdown-item has-text-danger">
-                        Выход
-                    </a>
+            {% if request.user.is_authenticated %}
+            <div class="navbar-item is-hidden-mobile">
+                <div class="dropdown is-right">
+                    <div class="dropdown-trigger">
+                        <button aria-controls="dropdown-menu"
+                                aria-haspopup="true"
+                                class="button is-black is-small is-rounded is-outlined add-link-btn ">
+                            <span class="icon is-small">
+                                <i aria-hidden="true" class="fas fa-angle-down"></i>
+                            </span>
+                        </button>
+                    </div>
+                    <div class="dropdown-menu" role="menu">
+                        <div class="dropdown-content">
+                            <a class="dropdown-item" href="{% url 'profile' request.user.username %}">
+                                <span class="icon-text">
+                                    <span class="icon has-text-link">
+                                        <i aria-hidden="true" class="fa fa-user-o"></i>
+                                    </span>
+                                    <span>
+                                        Профиль
+                                    </span>
+                                </span>
+                            </a>
+                            <a class="dropdown-item" href="{% url 'bookmark_favorite_lists' request.user.username %} ">
+                                <span class="icon-text">
+                                    <span class="icon has-text-link">
+                                        <i aria-hidden="true" class="fa fa-heart-o"></i>
+                                    </span>
+                                    <span>
+                                        Избранное
+                                    </span>
+                               </span>
+                            </a>
+                            <a class="dropdown-item" href="{% url 'categories' %}">
+                                <span class="icon-text">
+                                    <span class="icon has-text-link">
+                                        <i aria-hidden="true" class="fa fa-folder-o"></i>
+                                    </span>
+                                    <span>
+                                        Категории
+                                    </span>
+                                </span>
+                            </a>
+                            <a class="dropdown-item" href="{% url 'board' %}">
+                                <span class="icon-text">
+                                    <span class="icon has-text-link">
+                                        <i aria-hidden="true" class="fa fa-external-link"></i>
+                                    </span>
+                                    <span>
+                                        Ссылки
+                                    </span>
+                                </span>
+                            </a>
+                            <a class="dropdown-item" href="{% url 'tests' %}">
+                                <span class="icon-text">
+                                    <span class="icon has-text-link">
+                                        <i aria-hidden="true" class="fa fa-thermometer-empty"></i>
+                                    </span>
+                                    <span>
+                                        Тесты
+                                    </span>
+                                </span>
+                            </a>
+                            <hr class="dropdown-divider">
+                            <a class="dropdown-item has-text-danger" href="{% url 'account_logout' %}">
+                                Выход
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-
-{% else %}
-            <div class="buttons">
+            {% else %}
+            <div class="buttons navbar-item">
                 <a class="button is-black is-small is-rounded is-outlined" href="{% url 'account_login' %}">
                     Войти
                 </a>
-
                 <a class="button is-black is-small is-rounded" href="{% url 'account_signup' %}">
                     Регистрация
                 </a>
             </div>
             {% endif %}
         </div>
-
-        </div>
-
+    </div>
 </nav>
 <!--    End Navbar    -->
 
@@ -141,19 +152,15 @@
 {% block scripts %}
 
 <script>
-    window.onscroll = function() {scrollFunction()};
-
-function scrollFunction() {
-  if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
-    document.getElementById("navbar").style.boxShadow = "0 1em 1em rgb(0 0 0 / 10%)";
-    document.getElementById("navbar").style.borderBottom = "none";
-  } else {
-
-    document.getElementById("navbar").style.boxShadow = "none";
-    document.getElementById("navbar").style.borderBottom = "1px solid #D9E1EC";
-
-  }
-}
-
+window.onscroll = function() {scrollFunction()};
+    function scrollFunction() {
+      if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
+        document.getElementById("navbar").style.boxShadow = "0 1em 1em rgb(0 0 0 / 10%)";
+        document.getElementById("navbar").style.borderBottom = "none";
+      } else {
+        document.getElementById("navbar").style.boxShadow = "none";
+        document.getElementById("navbar").style.borderBottom = "1px solid #D9E1EC";
+      }
+    }
 </script>
 {% endblock %}

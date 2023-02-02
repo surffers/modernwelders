@@ -25,7 +25,7 @@
   position: relative;
   display: inline-block;
     box-shadow: 8px 8px 15px var(--shadowDark), -8px -8px 15px var(--shadowLight);
-  z-index: 100;
+
 }
 
 .stories .story-item:nth-child(1) {

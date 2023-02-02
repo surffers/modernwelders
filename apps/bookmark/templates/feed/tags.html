@@ -154,20 +154,28 @@
                                     </a>
                                     {% endfor %}
                                     </p>
-                                    <p class="title is-7">
-                                        <span class="subtitle is-7"> {{ bookmark.created_at|naturaltime }}</span>
-                                        &nbsp; &bull;&nbsp;
-                                        <a href="{% url 'bookmark' bookmark.id %}">
-                                            <span class="subtitle is-7">{{ bookmark.comments.all|length }} Комментарии</span>
-                                        </a>
-                                        &bull;&nbsp;
-                                        <a class='hero-btn'>
-                                                                <span class="forloop has-text-weight-bold is-size-7-mobile">
-                                                                 ☆
-                                                                </span>
-                                            <span class="forloop is-size-7-mobile"> 0</span>
-                                        </a>
-                                    </p>
+                                    <p  class="title is-7">
+
+                            <a href="{% url 'bookmark' bookmark.id %}" class="tag is-light hero-btn" title="Просмотров">
+                                <span class="icon">
+                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                </span>
+                                <span>{{bookmark.total_views}}</span>
+                            </a>
+                            <a href="{% url 'bookmark' bookmark.id %}" class="tag is-light" title="Комментариев">
+                                <span class="subtitle is-7">
+                                    <i class="fa fa-comment-o" aria-hidden="true"></i>
+                                    {{ bookmark.comments.all|length }}
+                                </span>
+                            </a>
+
+                            <a href="{% url 'bookmark' bookmark.id %}" class="tag is-light" title="Проголосовали">
+                                                    <span class="icon">
+                                                     <i class="fa fa-star-o" aria-hidden="true"></i>
+                                                    </span>
+                                <span> 0</span>
+                            </a>
+                        </p>
                                 <br>
                                 </div>
                 {% empty %}

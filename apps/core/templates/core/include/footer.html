@@ -5,30 +5,15 @@
 {% load account socialaccount %}
 
 {% block content %}
-<div class="box">
+
     <div>
-        <p class="title is-6">Получите лучшее от Surffers прямо в своем почтовом ящике.</p>
+        <p class="title is-6">Получите лучшее от Surffers прямо на почтовый ящик</p>
         {% contact_form %}
-
-        <p class="is-size-6 has-text-centered">&horbar;&horbar;&horbar; ИЛИ &horbar;&horbar;&horbar;</p>
-
-        <div class="button login is-medium" style="background: #0088CC; color: #fff; padding-top: 15px;">
-            <script src="//fbstore.sendpulse.com/loader.js" data-sp-widget-id="64be7b77-178e-4422-bf8c-5922f5e564d0" async></script>
-        </div>
-
-        <div class="button login is-medium" style="background: #0874D8; color: #fff;">
-            <i class="fab fa-vk"></i>
-            <!-- Senler.ru button code -->
-            <script src="https://senler.ru/dist/web/js/senler.js?9"></script>
-            <script>try {Senler.ButtonSubscribe("senlerBtn-1674535324");} catch (e) {console.log(e);}</script>
-            <div id="senlerBtn-1674535324" data-vk_group_id="209688786" data-subscription_id="1827898" data-text="Подписаться в ВКонтакте" data-alt_text=""></div>
-        </div>
     </div>
-</div>
-
+<hr>
 <iframe src="https://yoomoney.ru/quickpay/fundraise/widget?billNumber=oWRxUgEUpXw.230110&" width="100%" height="480"
         frameborder="0" allowtransparency="true" scrolling="no"></iframe>
-
+<hr>
 <div class="block">
     <a href="https://vc.ru/u/762241-surffers" class="has-text-black is-size-7">Блог</a>&nbsp; &bull;&nbsp;
     <a href="{% url 'contact' %}" class="has-text-black is-size-7">Контакт</a>&nbsp; &bull;&nbsp;

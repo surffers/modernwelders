@@ -27,7 +27,7 @@ class CategoryForm(ModelForm):
 class BookmarkForm(ModelForm):
     class Meta:
         model = Bookmark
-        fields = ['title', 'body', 'url', 'tags', 'video', 'url_icon']
+        fields = ['title', 'body', 'url', 'tags', 'affiliate_url']
 
     def __init__(self, *args, **kwargs):
         super(BookmarkForm, self).__init__(*args, **kwargs)
@@ -46,8 +46,8 @@ class BookmarkForm(ModelForm):
             })
         for field_name in self.fields:
             field = self.fields.get(field_name)
-            self.fields['url_icon'].widget.attrs.update({
-                "placeholder": "Url icon",
+            self.fields['affiliate_url'].widget.attrs.update({
+                "placeholder": "Партнерская ссылка",
                 'class': "input"
             })
         for field_name in self.fields:
@@ -60,12 +60,6 @@ class BookmarkForm(ModelForm):
             field = self.fields.get(field_name)
             self.fields['tags'].widget.attrs.update({
                 "placeholder": "Добавь теги",
-                'class': "input"
-            })
-        for field_name in self.fields:
-            field = self.fields.get(field_name)
-            self.fields['video'].widget.attrs.update({
-                "placeholder": "Добавь видео",
                 'class': "input"
             })
 
@@ -81,7 +75,7 @@ class CommentForm(forms.ModelForm):
             field = self.fields.get(field_name)
             self.fields['body'].widget.attrs.update({
                 "placeholder": "Написать комментарий",
-                'class': "textarea"
+                'class': "input"
         })
 
 

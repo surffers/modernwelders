@@ -2,23 +2,16 @@
 {% load humanize %}
 
 {% block content %}
-<div id="add-bookmark" class="buttons">
-
-    {% if request.user == user %}
-       <a @click="toggleDialog" class="button is-link">
-<span class="icon">
-                       <svg style="fill: currentColor; width: 1rem; height: 1rem;" version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
-                            <title>add</title>
-                            <path d="M16.943 0.943h-1.885v14.115h-14.115v1.885h14.115v14.115h1.885v-14.115h14.115v-1.885h-14.115v-14.115z">
-                            </path>
-                          </svg>
-                   </span>
-                                                   &nbsp;&nbsp;
-                                                   <span>Добавить ссылку</span>
+<div id="search" class="buttons">
 
 
-    </a>
-    {% endif %}
+<a class="navbar-item" @click="toggleDialog">
+                <form method="get" action="{% url 'search' %}" class="search-bar">
+
+            <input class="input" type="text" name="q">
+
+        </form>
+            </a>
 
   <!-- ModalDeletedCategory -->
     <div class="modal" v-bind:class="{ 'is-active': showDialog }">
@@ -61,12 +54,17 @@
                                <div class="field">
 <label class="label">Ссылка на партнёрку:</label>
   <div class="control">
-    {{ form.affiliate_url }}
+    {{ form.url_icon }}
   </div>
 </div>
                         {% endif %}
 
-
+                          <div class="field">
+<label class="label">Видео Url:</label>
+  <div class="control">
+    {{ form.video }}
+  </div>
+</div>
 
 
                           <div class="field">
@@ -87,24 +85,14 @@
 
  <div class="columns is-multiline is-mobile">
      <div class="column is-12">
-         <p class="title is-size-7 is-uppercase">Самые популярные веб-сайты этой недели</p>
+         <p class="title is-size-7 is-uppercase">Самые популярные веб-сайты</p>
          </div>
-                {% for bookmark in popular_bookmark %}
-                <div class="column is-4 is-hidden-mobile">
+                {% for bookmark in b %}
+                <div class="column is-4">
                         <div class="box is-unselectable has-text-centered">
                         <a class="icon-bookmark title is-capitalized " href="{{ bookmark.url }}"
-                               target="_blank" title="{{ bookmark.title }}">
-                        <p class="subtitle is-7">{{ bookmark.title|truncatechars:17 }}</p>
-                    </a>
-                   </div>
-                </div>
-                {% endfor %}
-                {% for bookmark in popular_bookmark %}
-                <div class="column is-6 is-hidden-desktop">
-                        <div class="box is-unselectable has-text-centered">
-                        <a class="icon-bookmark title is-capitalized " href="{{ bookmark.url }}"
-                               target="_blank" title="{{ bookmark.title }}">
-                        <p class="subtitle is-7">{{ bookmark.title|truncatechars:17 }}</p>
+                               target="_blank">
+                        <p class="subtitle is-7">{{ bookmark.title|truncatechars:40 }}</p>
                     </a>
                    </div>
                 </div>
@@ -129,7 +117,7 @@
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script type="text/javascript">
   new Vue({
-    el: '#add-bookmark',
+    el: '#search',
     delimiters: ['[[', ']]'],
     data() {
       return {

@@ -3,8 +3,6 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
 from taggit.managers import TaggableManager
-from embed_video.fields import EmbedVideoField
-from django.db.models import Sum, Case, When, Value
 
 
 class Category(models.Model):
@@ -39,9 +37,8 @@ class Bookmark(models.Model):
     title = models.CharField(max_length=255)
     body = models.TextField(max_length=555, blank=True, null=True)
     url = models.URLField()
-    url_icon = models.URLField(blank=True, null=True)
+    affiliate_url = models.URLField(blank=True, null=True)
     views = models.ManyToManyField(Ip, related_name="post_views", blank=True)
-    video = EmbedVideoField(blank=True, null=True)  # same like models.URLField()
     created_at = models.DateTimeField(auto_now_add=True)
     tags = TaggableManager(related_name='tags')
     favorite = models.ManyToManyField(User, related_name='favorite', blank=True)
@@ -76,7 +73,7 @@ class Vote(models.Model):
 
 class Comment(models.Model):
     bookmark = models.ForeignKey(Bookmark, related_name='comments', on_delete=models.CASCADE)
-    body = models.TextField()
+    body = models.CharField(max_length=255)
     user = models.ForeignKey(User, related_name='comments', on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
 

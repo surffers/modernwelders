@@ -110,63 +110,53 @@
                     <div class="columns is-multiline">
                         {% for category in page_obj %}
                         {% if category.published_date %}
-                        <div class="column is-4">
-                        <a href="{% url 'category' category.id %}">
-                            <div class="card category">
-                                <div class="card-content">
-                                    {% if category.published_date %}
-                                        <div class="dropdown is-hoverable is-pulled-right  is-right">
-                              <div class="dropdown-trigger">
-                                 <span class="icon is-pulled-right has-text-success">
-                                                    <i class="fa fa-check-circle-o" aria-hidden="true"></i>
-                                                </span>
-                              </div>
-                              <div class="dropdown-menu" role="menu">
-                                <div class="dropdown-content">
-                                  <div class="dropdown-item">
-                                    <p>Эта категория<strong> опубликована</strong>, её видно в ленте новостей.</p>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                                        {% else %}
-                                        <div class="dropdown is-hoverable is-pulled-right  is-right">
-                              <div class="dropdown-trigger">
-                                 <span class="icon is-pulled-right has-text-danger">
-                                                    <i class="fa fa-check-circle-o" aria-hidden="true"></i>
-                                                </span>
-                              </div>
-                              <div class="dropdown-menu" role="menu">
-                                <div class="dropdown-content">
-                                  <div class="dropdown-item">
-                                    <p>Хотите опубликовать свою категорию или ссылку, напишите нам.</p>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                                        {% endif %}
-                                    <p class="category-p has-text-dark title is-7">
-                                        Ссылки {{ category.bookmarks.all|length }}
-                                    </p>
-                                    <p class="title is-4 has-text-dark has-text-weight-bold">
-                                        {{ category.title|truncatechars:20 }}
-                                    </p>
-                                    <p class="subtitle is-7 has-text-weight-bold is-lowercase">
-                                            @{{ category.user.username|truncatechars:25 }}
+                        <div class="column is-one-fifth">
+                        <div class="story-item">
+                    <a href="{% url 'category' category.id %}">
+                        <div class="card profile">
+                            <div class="card-content">
+                                <p class="title is-4 has-text-weight-bold v">
+                                    {{ category.title|truncatechars:25 }}
+                                </p>
 
-                                    </p>
-                                    <p class="subtitle is-6 has-text-weight-normal">
+                                <div class="block-home-category">
+                                    <p class="title is-6 has-text-weight-normal title-body is-lowercase">
                                         {{ category.body|truncatechars:55 }}
                                     </p>
-                                     <p class="subtitle"></p>
-
-
-
+                                    <div class="media subtitle">
+                                        <div class="media-left">
+                                            <p class="subtitle is-size-7 is-lowercase has-text-weight-normal">
+                                                <span>{{ category.created_at|naturaltime }}</span>
+                                            </p>
+                                        </div>
+                                        <div class="media-content"></div>
+                                        <div class="media-right ">
+                                            {% if request.user == user %}
+                                             <div class="dropdown is-hoverable is-up is-right">
+                                                <div class="dropdown-trigger">
+                                                     <p class="is-size-6 is-lowercase has-text-weight-normal">
+                                                         <span class="has-text-success">
+                                                             <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                                                         </span>
+                                                    </p>
+                                                </div>
+                                                <div class="dropdown-menu" role="menu">
+                                                    <div class="dropdown-content">
+                                                        <div class="dropdown-item">
+                                                            <p class="is-size-7 ">Эта категория<strong> опубликована</strong>, её видно в
+                                                                ленте новостей.</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </a>
-
-
+                        </div>
+                    </a>
+                </div>
                         </div>
                         {% else %}
 

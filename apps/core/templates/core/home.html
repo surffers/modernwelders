@@ -6,13 +6,8 @@
 
 {% block content %}
 
-   {% include 'core/include/navbar.html' %}
-
-
+{% include 'core/include/navbar.html' %}
 <section class="hero home is-unselectable">
-
-
-
     <div class="hero-body">
         <div class="ld">
   <div class="inside-wrapper">
@@ -53,15 +48,13 @@
   </div>
 </div>
     </div>
-
 </section>
-<div class="spacer"></div>
 <section class="section home is-unselectable">
     <div class="container">
-        <div class="columns is-centered">
-            <div class="column is-5">
+            <div class="columns is-centered">
+            <div class="column is-6">
                 <p class="title has-text-weight-bold is-size-5 is-size-6-mobile">
-                    Новые продукты, сайты, сервисы и стартапы, которые помогут в работе и учёбе 👇
+                    Новые продукты, сайты, сервисы и стартапы, которые помогут в работе и учёбе 👇wwwwwwdddddd
                 </p>
                 <hr>
                 {% for bookmark in page_obj %}
@@ -77,13 +70,13 @@
                                             @{{ bookmark.user.username|truncatechars:25 }}
                                          </a>
                                     </p>
-                                {% if bookmark.url_icon %}
+                                {% if bookmark.affiliate_url %}
                                    <p class="subtitle is-5">
                                        <a class="icon-bookmark subtitle is-5 has-text-weight-bold is-size-6-mobile"
                                            href="{{ bookmark.url }}"
                                            target="_blank">
                                         </a>
-                                       <a href="{{ bookmark.url_icon }}" class="subtitle is-5 has-text-weight-bold"
+                                       <a href="{{ bookmark.affiliate_url }}" class="subtitle is-5 has-text-weight-bold"
                                        target="_blank">
                                         {{ bookmark.title|truncatechars:40 }}
                                            <span class="icon link is-size-6">
@@ -142,43 +135,13 @@
                 {% endfor %}
                 {% include 'core/include/pagination.html' %}
             </div>
-            <div class="column is-4 is-offset-1 is-unselectable">
-
-
-
+                <div class="border-right"></div>
+            <div class="column is-3 is-unselectable is-hidden-mobile">
                 <aside>
-                    <div class="box">
-                        <h1 class="title is-6">
-                            Последний комментарий
+                        <h1 class="title is-6 is-uppercase">
+                            облако тегов
                         </h1>
-                        <hr>
-                        {% for comment in comments.all %}
-                                <p class="subtitle is-6">
-                                    <strong>{{ comment.user.username }}</strong> &bull;&nbsp;
-                                    <small>{{ comment.created_at|naturaltime }} </small><br>
 
-                                </p>
-                        <p class="title is-6">
-                            {{ comment.body }}
-                        </p>
-                          <p class="subtitle is-5">
-                                       <a class="icon-bookmark subtitle is-5 has-text-weight-bold is-size-6-mobile"
-                                           href="{{ comment.bookmark.url }}"
-                                           target="_blank">
-                                        </a>
-                                       <a href="{% url 'bookmark' comment.bookmark.id %}" class="subtitle is-5 has-text-weight-bold"
-                                       target="_blank">
-                                        {{ comment.bookmark.title|truncatechars:40 }}
-                                    </a>
-                        </p>
-
-                        {% endfor %}
-                    </div>
-                    <div class="box">
-                        <h1 class="title is-6">
-                            Сегодняшнее облако тегов
-                        </h1>
-                        <hr>
                         <div class="tags">
                             {% for bookmark in page_obj %}
                             {% for tag in bookmark.tags.all %}
@@ -189,8 +152,7 @@
                             {% endfor %}
                             {% endfor %}
                         </div>
-                    </div>
-
+                 <hr>
 
                     {% include 'core/include/footer.html' %}
                 </aside>
@@ -205,11 +167,6 @@
 {% endblock %}
 
 {% block scripts %}
-
-<script>
-const randomColor = "#"+((1<<24)*Math.random()|0).toString(16);
-document.documentElement.style.setProperty('--main-bg-color', randomColor);
-</script>
 <script>
   var btn = $('#button');
   $(window).scroll(function () {
@@ -901,6 +858,7 @@ $(document).on("click", ".ld-lightbox__close, .ld-lightbox", function () {
 });
 </script>
 {% endblock %}
+
 
 
 

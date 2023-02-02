@@ -5,20 +5,15 @@
 
 
 {% block content %}
-
-
+<!--   Include Navbar    -->
 {% include 'core/include/navbar.html' %}
+<!--    End Include Navbar     -->
 
 <section class="hero">
-
     <div class="container profile">
-
         <div class="hero-body">
-
-
             <div class="columns">
                 <div class="column">
-
                     <div class="buttons">
                         {% if request.user == user %}
                         {% include 'profiles/include/add_link.html' %}
@@ -32,37 +27,39 @@
                         {% empty %}
                         <div class="box-tooltip arrow-left">
                             <p class="subtitle is-6 has-text-white">
-                                Add social media link
+                                Добавьте свои ссылки на соцсети
                             </p>
                         </div>
                         {% endfor %}
                     </div>
-
                 </div>
             </div>
 
             <div class="columns is-vcentered">
                 <div class="column">
                     <div class="is-flex is-vcentered">
-
                         <div class="block">
                             <p class="subtitle is-size-5 is-lowercase">
                                 @{{ user.username|truncatechars:25 }}
                             </p>
                         </div>
-
-
                         {% if request.user == user %}
                         {% include 'profiles/include/user-edit-profile.html' %}
                         {% else %}
-                        <div id="add-category">
+                        <div class="block profile-buttons">
                             <a class="button is-link is-small is-rounded">
                                 Подписаться
                             </a>
+                            <a href="mailto:{{ user.email }}" class="button is-link is-small is-rounded">
+                                <span class="icon">
+                                    <i aria-hidden="true" class="fa fa-envelope-o"></i>
+                                </span>
+                                <span>
+                                    Напишите нам
+                                </span>
+                            </a>
                         </div>
                         {% endif %}
-
-
                     </div>
                 </div>
             </div>
@@ -71,11 +68,10 @@
                 <div class="column is-6">
                     {% if user.profile.bio %}
                     <p class="subtitle bio">
-                         <span class="bio is-size-4-mobile">
-                        {{ user.profile.bio }}
-                    </span>
+                        <span class="bio is-size-4-mobile">
+                            {{ user.profile.bio }}
+                        </span>
                     </p>
-
                     {% else %}
                     {% endif %}
                     <nav class="level is-mobile title">
@@ -111,66 +107,55 @@
                                 </div>
                             </div>
                             {% endif %}
-
-
                         </div>
                     </nav>
-
+                    <!--  Share  -->
                     <div class="buttons">
                         <div class="block share has-text-centered">
-
-
                             <a class="button is-light" role="button" title="Копировать ссыылку">
-                                                <span class="copy-icon ">
-                                                    <i class="fas fa-link icon"></i>
-                                                </span>
+                                <span class="copy-icon ">
+                                    <i class="fas fa-link icon"></i>
+                                </span>
                             </a>
-
                             <a class="button is-light sharer" href="#" id="share-em" title="Отправить на почту">
-                                                <span>
-                                                    <i aria-hidden="true" class="fa fa-envelope-o"></i>
-                                                </span>
+                                <span>
+                                    <i aria-hidden="true" class="fa fa-envelope-o"></i>
+                                </span>
                             </a>
-
                             <a class="button is-light sharer" href="#" id="share-vk" title="Поделиться ВКонтакте">
-                                                <span>
-                                                    <i class="fab fa-vk"></i>
-                                                </span>
+                                <span>
+                                    <i class="fab fa-vk"></i>
+                                </span>
                             </a>
-
                             <a class="button is-light sharer" href="#" id="share-tg" title="Поделиться в Telegram">
-                                                <span>
-                                                    <i class="fab fa-telegram"></i>
-                                                </span>
+                                <span>
+                                    <i class="fab fa-telegram"></i>
+                                </span>
                             </a>
-
                             <a class="button is-light sharer" href="#" id="share-rt" title="Поделиться в Telegram">
-                                                <span>
-                                                    <i class="fab fa-reddit"></i>
-                                                </span>
+                                <span>
+                                    <i class="fab fa-reddit"></i>
+                                </span>
                             </a>
                         </div>
                     </div>
+                    <!--  End Share  -->
                 </div>
-
-
             </div>
         </div>
-
     </div>
 
-    <nav class="level is-mobile mobile">
-
-        <div class="level-item has-text-centered">
+    <nav class="level is-mobile mobile ">
+        <div class="level-item has-text-centered is-hidden-desktop">
             <div>
-                <p class="heading">Сурфы</p>
-                <p class="title is-5">3,456</p>
+                <p class="heading">Категории</p>
+                <p class="title is-5">{{ categories.all|length|intword }}</p>
             </div>
         </div>
         <div class="level-item has-text-centered">
             <div>
-                <p class="heading">Подписан</p>
-                <p class="title is-5">123</p>
+                <p class="heading">Ссылки</p>
+                <p class="title is-5">{{ user.bookmarks.all|length|intword }}</p>
             </div>
         </div>
         <div class="level-item has-text-centered">
@@ -179,10 +164,8 @@
                 <p class="title is-5">456K</p>
             </div>
         </div>
-
     </nav>
 </section>
-
 
 <div class="container">
     <section class="section">
@@ -195,9 +178,7 @@
         </article>
         {% endfor %}
         {% endif %}
-
-
-        <div class="columns is-multiline is-desktop is-hidden-mobile">
+        <div class="columns is-multiline is-desktop">
             {% for category in categories_public %}
             {% if category.published_date %}
             <div class="column is-one-fifth">
@@ -208,7 +189,6 @@
                                 <p class="title is-4 has-text-weight-bold v">
                                     {{ category.title|truncatechars:25 }}
                                 </p>
-
                                 <div class="block-home-category">
                                     <p class="title is-6 has-text-weight-normal title-body is-lowercase">
                                         {{ category.body|truncatechars:55 }}
@@ -224,7 +204,7 @@
                                             {% if request.user == user %}
                                             <div class="dropdown is-hoverable is-up is-right">
                                                 <div class="dropdown-trigger">
-                                                     <p class="is-size-6 is-lowercase has-text-weight-normal">
+                                                    <p class="is-size-6 is-lowercase has-text-weight-normal">
                                                          <span class="has-text-success">
                                                              <i class="fa fa-check-circle-o" aria-hidden="true"></i>
                                                          </span>
@@ -233,7 +213,8 @@
                                                 <div class="dropdown-menu" role="menu">
                                                     <div class="dropdown-content">
                                                         <div class="dropdown-item">
-                                                            <p class="is-size-7 ">Эта категория<strong> опубликована</strong>, её видно в
+                                                            <p class="is-size-7 ">Эта категория<strong>
+                                                                опубликована</strong>, её видно в
                                                                 ленте новостей.</p>
                                                         </div>
                                                     </div>
@@ -258,7 +239,6 @@
                                 <p class="title is-4 has-text-weight-bold v">
                                     {{ category.title|truncatechars:25 }}
                                 </p>
-
                                 <div class="block-home-category">
                                     <p class="title is-6 has-text-weight-normal title-body is-lowercase">
                                         {{ category.body|truncatechars:55 }}
@@ -274,7 +254,7 @@
                                             {% if request.user == user %}
                                             <div class="dropdown is-hoverable is-up is-right">
                                                 <div class="dropdown-trigger">
-                                                     <p class="is-size-6 is-lowercase has-text-weight-normal">
+                                                    <p class="is-size-6 is-lowercase has-text-weight-normal">
                                                          <span class="has-text-danger">
                                                              <i class="fa fa-check-circle-o" aria-hidden="true"></i>
                                                          </span>
@@ -301,128 +281,24 @@
             {% endif %}
             {% endfor %}
         </div>
-
-        <div class="columns is-multiline is-mobile is-hidden-desktop">
-            {% for category in categories_public %}
-            {% if category.published_date %}
-            <div class="column is-6">
-                    <a href="{% url 'category' category.id %}">
-                        <div class="card">
-                            <div class="card-content">
-                                <p class="title is-4 is-size-6-mobile has-text-weight-bold v">
-                                    {{ category.title|truncatechars:25 }}
-                                </p>
-
-
-                                    <p class="title is-6 is-size-7-mobile has-text-weight-normal title-body is-lowercase">
-                                        {{ category.body|truncatechars:55 }}
-                                    </p>
-                                <div class="media subtitle ">
-                                        <div class="media-left">
-                                            <p class="is-size-7 is-lowercase has-text-weight-normal">
-                                                <span>{{ category.created_at|naturaltime|truncatechars:15 }}</span>
-                                            </p>
-                                        </div>
-                                        <div class="media-content"></div>
-                                        <div class="media-right">
-                                            {% if request.user == user %}
-                                            <div class="dropdown is-hoverable is-up is-right">
-                                                <div class="dropdown-trigger">
-                                                     <p class="is-size-6 is-lowercase has-text-weight-normal">
-                                                         <span class="has-text-success">
-                                                             <i class="fa fa-check-circle-o" aria-hidden="true"></i>
-                                                         </span>
-                                                    </p>
-                                                </div>
-                                                <div class="dropdown-menu" role="menu">
-                                                    <div class="dropdown-content">
-                                                        <div class="dropdown-item">
-                                                            <p class="is-size-7 ">Эта категория<strong> опубликована</strong>, её видно в
-                                                                ленте новостей.</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                            </div>
-                        </div>
-                    </a>
-            </div>
-            {% else %}
-            {% if request.user == user %}
-            <div class="column is-6">
-                    <a href="{% url 'category' category.id %}">
-                        <div class="card">
-                            <div class="card-content">
-                                <p class="title is-4 is-size-6-mobile has-text-weight-bold v">
-                                    {{ category.title|truncatechars:25 }}
-                                </p>
-                                    <p class="title is-6 is-size-7-mobile has-text-weight-normal title-body is-lowercase">
-                                        {{ category.body|truncatechars:55 }}
-                                    </p>
-<div class="media subtitle">
-                                        <div class="media-left">
-                                            <p class="subtitle is-size-7 is-lowercase has-text-weight-normal">
-                                                <span>{{ category.created_at|naturaltime|truncatechars:15 }}</span>
-                                            </p>
-                                        </div>
-                                        <div class="media-content"></div>
-                                        <div class="media-right ">
-                                            {% if request.user == user %}
-                                            <div class="dropdown is-hoverable is-up is-right">
-                                                <div class="dropdown-trigger">
-                                                     <p class="is-size-6 is-lowercase has-text-weight-normal">
-                                                         <span class="has-text-danger">
-                                                             <i class="fa fa-check-circle-o" aria-hidden="true"></i>
-                                                         </span>
-                                                    </p>
-                                                </div>
-                                                <div class="dropdown-menu" role="menu">
-                                                    <div class="dropdown-content">
-                                                        <div class="dropdown-item">
-                                                            <p class="is-size-7">Эта категория не опубликованная</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                            </div>
-                        </div>
-                    </a>
-            </div>
-            {% endif %}
-            {% endif %}
-            {% endfor %}
-        </div>
-
-
-
     </section>
 </div>
 
 <span class="toastbox" role="alert"></span>
 
-
 {% endblock %}
 
 {% block scripts %}
-
-
 <script>
- $("a.icon-bookmark[href^='http']").each(function() {
+$("a.icon-bookmark[href^='http']").each(function() {
     $(this).css({
         background: "url(http://www.google.com/s2/favicons?domain=" + this.href + ") left center no-repeat",
         "background-size": "22px", "padding-left": "30px",
     });
-});
+    });
 </script>
-
 <script>
-  document.addEventListener("DOMContentLoaded", function (event) {
+document.addEventListener("DOMContentLoaded", function (event) {
 
     // Uses sharer.js
     //  https://ellisonleao.github.io/sharer.js/#twitter
@@ -550,6 +426,7 @@
   })();
 
   copyToClipboard.handleCopyIconClick();
+
 
 
 

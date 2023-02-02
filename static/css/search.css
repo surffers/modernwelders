@@ -7,7 +7,7 @@
     max-width: 600px;
 }
 .search-bar input.input {
-    border-radius: 50px;
+    border-radius: 5px;
 
   width: 100%;
   display: block;
@@ -19,4 +19,125 @@
   background-position: 25px 50%;
 
 }
+
+
+
+
+.header__search {
+  display: inline-block;
+  height: 30px;
+  width: 30px;
+  fill: #000;
+  cursor: pointer;
+  -webkit-animation: little-jump 0.8s 0.1s ease-out 3;
+          animation: little-jump 0.8s 0.1s ease-out 3;
+}
+
+
+@media all and (max-width: 700px) {
+  .content__paragraph {
+    -moz-column-count: 1;
+         column-count: 1;
+    text-align: center;
+  }
+}
+
+.search {
+  z-index: 10;
+  position: fixed;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  visibility: hidden;
+}
+.search__modal {
+  perspective: 1300px;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 300px;
+  width: 700px;
+  transform: translate(-50%, -50%);
+}
+@media all and (max-width: 750px) {
+  .search__modal {
+    width: 95%;
+  }
+}
+.search__content {
+  position: relative;
+  margin: 0 auto;
+  height: inherit;
+  width: inherit;
+  opacity: 0;
+  transition: all 0.5s ease;
+  transform-style: preserve-3d;
+  transform-origin: 0 100%;
+  transform: translateY(-100%) rotateX(-90deg);
+  background-color: #fff;
+  border-radius: 5px;
+}
+.search__content__close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  fill: #696969;
+  height: 40px;
+  width: 40px;
+  cursor: pointer;
+  transition: transform 0.4s ease;
+}
+.search__content__close:hover {
+  transform: rotate(180deg);
+}
+.search--active {
+  visibility: visible;
+}
+.search--active .search__content {
+  opacity: 1;
+  transform: translateY(0%) rotateX(0deg);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 50px 40px 0;
+}
+@media all and (max-width: 550px) {
+  .form {
+    padding: 50px 20px 0;
+  }
+}
+
+.form__input {
+  height: 50px;
+  width: 100%;
+  font-size: 1.1rem;
+  border: 2px solid #9c9c9c;
+  border-radius: 3px;
+  color: #9c9c9c;
+  margin-top: 2rem;
+  padding: 0 1rem;
+}
+.form__input ::-webkit-input-placeholder {
+  color: #A0A0A0;
+}
+.form__input ::-moz-placeholder {
+  color: #A0A0A0;
+}
+.form__input :-ms-input-placeholder {
+  color: #A0A0A0;
+}
+.form__input:focus {
+  border-color: #2196F3;
+  color: #6ab8f7;
+  -webkit-animation: focus 0.4s 0.1s ease-out;
+          animation: focus 0.4s 0.1s ease-out;
+}
+
+
 
