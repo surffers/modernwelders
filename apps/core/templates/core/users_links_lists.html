@@ -14,7 +14,7 @@
       <div class="media-left">
           {% if request.user.is_authenticated %}
           <a href="{% url 'profile' user.username %}">
-                <p class="subtitle is-size-6 is-size-7-mobile is-lowercase">@{{ user.username|truncatechars:25 }}</p>
+                <p class="subtitle is-size-4 is-size-5-mobile is-lowercase">@{{ user.username|truncatechars:25 }}</p>
           </a>
           {% endif %}
       </div>
@@ -24,7 +24,7 @@
 
             <a class="button is-light is-small" title="Количество ссылок">
                         <span class="icon">
-                            {{ user_bookmarks.all|length|intword }}
+                            {{ bookmarks.all|length|intword }}
                         </span>
                     </a>
 
@@ -72,12 +72,27 @@
       </div>
     </div>
         <hr>
-        <div class="columns">
-            <div class="column">
+        <div class="columns is-multiline is-variable is-1-mobile is-0-tablet is-3-desktop is-8-widescreen is-2-fullhd">
+            <div class="column is-9">
                 <h1 class="title home is-size-3-mobile">
             Все ссылки
         </h1>
                 </div>
+            <div class="column is-3">
+                {% block search %}
+                <div class="buttons has-addons">
+                    <a class="button" href="{% url 'bookmarks_filter' pk=1 %}">
+                        <span>Неделя</span>
+                    </a>
+                    <a class="button" href="{% url 'bookmarks_filter' pk=2 %}">
+                        <span>Месяц</span>
+                    </a>
+                    <a class="button" href="{% url 'bookmarks_filter' pk=3 %}">
+                        <span>Все</span>
+                    </a>
+                </div>
+                {% endblock search %}
+            </div>
         </div>
 
     <br>
@@ -90,11 +105,13 @@
         </article>
         {% endfor %}
         {% endif %}
+
+
              <div class="columns is-multiline is-variable is-1-mobile is-0-tablet is-3-desktop is-8-widescreen is-2-fullhd">
-                        {% for bookmark in page_obj  %}
+                        {% for bookmark in bookmarks %}
                             <div class="column is-4">
                                     <p class="title is-7 has-text-weight-bold is-uppercase">
-                                        <a href="{% url 'category'  bookmark.category.id  %}" class="has-text-black">
+                                        <a href="{% url 'category'  bookmark.category.slug bookmark.category.id  %}" class="has-text-black">
                                             {{ bookmark.category.title|truncatechars:100 }}
                                         </a>
 
@@ -104,10 +121,6 @@
                                             @{{ bookmark.user.username|truncatechars:25 }}
                                          </a>
                                     </p>
-
-
-
-
                                         {% if bookmark.url_icon %}
                                         <div class="subtitle is-5">
                                             <a class="icon-bookmark subtitle is-5 has-text-weight-bold is-capitalized"
@@ -168,17 +181,17 @@
                                         </div>
                                     {% endif %}
 
-
-
                                     <p class="title is-6 has-text-weight-normal is-lowercase is-size-7-mobile">
                                         {{ bookmark.body|truncatechars:150 }}
                                     </p>
                                     <p class="subtitle is-6 is-size-7-mobile">
                                         {% for tag in bookmark.tags.all %}
-                                        <a href="{% url 'tag_detail_url' tag.slug %}" class="has-text-info">
-                                        #{{ tag.name|truncatechars:25 }}
-                                    </a>
-                                    {% endfor %}
+                                            {% if forloop.counter <= 5 %}
+                                                <a href="{% url 'tag_detail_url' tag.slug %}" class="has-text-info">
+                                                #{{ tag.name|truncatechars:25 }}
+                                                </a>
+                                            {% endif %}
+                                        {% endfor %}
                                     </p>
                                     <p  class="title is-7">
 
@@ -199,14 +212,14 @@
                                                     <span class="icon">
                                                      <i class="fa fa-star-o" aria-hidden="true"></i>
                                                     </span>
-                                <span> 0</span>
+                                <span> {{ bookmark.number_of_votes }}</span>
                             </a>
                         </p>
-                                <br>
+<hr>
                                 </div>
                         {% endfor %}
                         </div>
-        <br>
+
         </div>
 </section>
 

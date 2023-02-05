@@ -17,22 +17,23 @@ Including another URLconf
 from django.urls import path
 
 from apps.bookmark.views import category, category_edit, category_delete, bookmark_add, bookmark_delete, bookmark_edit, \
-    tag_detail, drafts, category_publish, bookmark_detail, favorite_bookmark, bookmark_publish, sponsors
+    tag_detail, drafts, category_publish, bookmark_detail, favorite_bookmark, bookmark_publish, sponsors, vote
 
 
 urlpatterns = [
     #
     #
-    path('category/<int:category_id>/', category, name='category'),
-    path('category/<int:category_id>/publish/', category_publish, name='category_publish'),
-    path('category/<int:category_id>/edit/', category_edit, name='category_edit'),
-    path('category/<int:category_id>/delete/', category_delete, name='category_delete'),
-    path('category/<int:category_id>/add_bookmark/', bookmark_add, name='bookmark_add'),
+    path('category/<str:slug>-<int:category_id>/', category, name='category'),
+    path('category/<str:slug>-<int:category_id>/publish/', category_publish, name='category_publish'),
+    path('category/<str:slug>-<int:category_id>/edit/', category_edit, name='category_edit'),
+    path('category/<str:slug>-<int:category_id>/delete/', category_delete, name='category_delete'),
+    path('category/<str:slug>-<int:category_id>/add_bookmark/', bookmark_add, name='bookmark_add'),
 
     path('delete_bookmark/<int:bookmark_id>/', bookmark_delete, name='bookmark_delete'),
     path('bookmark_edit/<int:bookmark_id>/', bookmark_edit, name='bookmark_edit'),
 
     path('<int:bookmark_id>/', favorite_bookmark, name='favorite_bookmark'),
+    path('b/<int:bookmark_id>/vote/', vote, name='vote'),
 
     path('drafts/', drafts, name='drafts'),
     path('sponsors/', sponsors, name='sponsors'),

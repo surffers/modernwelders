@@ -47,9 +47,20 @@
                         {% include 'profiles/include/user-edit-profile.html' %}
                         {% else %}
                         <div class="block profile-buttons">
-                            <a class="button is-link is-small is-rounded">
+                            <div class="buttons">
+                                {% if request.user.profile in user.profile.followed_by.all %}
+                            <!-- Button-unfollow -->
+                            {% include 'profiles/include/button-unfollow.html' %}
+                            <!-- End-button-unfollow -->
+                            {% else %}
+                            {% if request.user.is_authenticated %}
+                            <a href="{% url 'follow_user' user.username %}" class="button is-link is-small is-rounded">
                                 Подписаться
                             </a>
+                            {% endif %}
+                            {% endif %}
+
+
                             <a href="mailto:{{ user.email }}" class="button is-link is-small is-rounded">
                                 <span class="icon">
                                     <i aria-hidden="true" class="fa fa-envelope-o"></i>
@@ -58,6 +69,7 @@
                                     Напишите нам
                                 </span>
                             </a>
+                            </div>
                         </div>
                         {% endif %}
                     </div>
@@ -69,7 +81,7 @@
                     {% if user.profile.bio %}
                     <p class="subtitle bio">
                         <span class="bio is-size-4-mobile">
-                            {{ user.profile.bio }}
+                            {{ user.profile.bio|truncatechars:55 }}
                         </span>
                     </p>
                     {% else %}
@@ -88,10 +100,29 @@
                                     </a>
                                 </div>
                             </div>
+                            <div class="level-item">
+                                <div>
+                                    <a href="№" class="subtitle is-6">
+                                        {{ user.profile.follows.count }} подписчика
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="level-item">
+                                <div>
+                                    <a href="{% url 'followers' user.username %}" class="subtitle is-6">
+                                        {{ user.profile.followed_by.count }} подписчиков
+                                    </a>
+                                </div>
+                            </div>
                             {% if request.user == user %}
                             <div class="level-item">
                                 <div>
                                     <a class="subtitle is-6">{{ categories_drafts.all|length|intword }} черновики</a>
+                                </div>
+                            </div>
+                            <div class="level-item">
+                                <div>
+                                    <a class="subtitle is-6">{{ user.votes.all|length|intword }} голосов</a>
                                 </div>
                             </div>
                             <div class="level-item">
@@ -132,11 +163,6 @@
                                     <i class="fab fa-telegram"></i>
                                 </span>
                             </a>
-                            <a class="button is-light sharer" href="#" id="share-rt" title="Поделиться в Telegram">
-                                <span>
-                                    <i class="fab fa-reddit"></i>
-                                </span>
-                            </a>
                         </div>
                     </div>
                     <!--  End Share  -->
@@ -160,8 +186,8 @@
         </div>
         <div class="level-item has-text-centered">
             <div>
-                <p class="heading">Подписчики</p>
-                <p class="title is-5">456K</p>
+                <p class="heading">Подписчиков</p>
+                <p class="title is-5">{{ user.profile.followed_by.count }}</p>
             </div>
         </div>
     </nav>
@@ -183,7 +209,7 @@
             {% if category.published_date %}
             <div class="column is-one-fifth">
                 <div class="story-item">
-                    <a href="{% url 'category' category.id %}">
+                    <a href="{% url 'category' category.slug category.id %}">
                         <div class="card profile">
                             <div class="card-content">
                                 <p class="title is-4 has-text-weight-bold v">
@@ -233,7 +259,7 @@
             {% if request.user == user %}
             <div class="column is-one-fifth">
                 <div class="story-item">
-                    <a href="{% url 'category' category.id %}">
+                    <a href="{% url 'category' category.slug category.id %}">
                         <div class="card profile">
                             <div class="card-content">
                                 <p class="title is-4 has-text-weight-bold v">

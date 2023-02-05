@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% load humanize %}
+
+{% block content %}
+    <div class="container">
+        <div class="columns">
+            <div class="column is-12">
+                <h1 class="title">Notifications</h1>
+
+                {% if not notifications %}
+                    <p>You have no notifications!</p>
+                {% endif %}
+
+                <div class="wrapper-oinks">
+                    {% for notification in notifications %}
+                        <article class="media">
+
+                            <div class="media-content">
+                                <div class="content">
+                                    <p>
+                                        {% if notification.notification_type == 'follower' %}
+                                            <a href="{% url 'notifications' %}?goto=profile&notification={{ notification.id }}">
+                                                <strong>{{ notification.created_by.username }}</strong> started following you<br>
+                                                <small>{{ notification.created_at|naturaltime }}</small>
+                                            </a>
+                                        {% endif %}
+                                    </p>
+                                </div>
+                            </div>
+                        </article>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

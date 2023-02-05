@@ -48,15 +48,7 @@
     transform: scale(1.05, 1.05);
 }
 
-.stories .story-item a {
-  width: 100%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  cursor: pointer;
 
-}
 
 .sts-wrapper {
   position: absolute;

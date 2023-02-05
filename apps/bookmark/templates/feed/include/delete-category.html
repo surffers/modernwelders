@@ -38,7 +38,7 @@
 
     </section>
     <footer class="modal-card-foot">
-<a href="{% url 'category_delete' category.id %}" class="card-footer-item has-text-danger" >ДА</a>
+<a href="{% url 'category_delete' category.slug category.id %}" class="card-footer-item has-text-danger" >ДА</a>
             <a class="card-footer-item has-text-black" @click="showDialog = !showDialog">
                 НЕТ
             </a>

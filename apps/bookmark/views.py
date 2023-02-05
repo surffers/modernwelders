@@ -10,7 +10,7 @@ import datetime
 
 from django.utils import timezone
 
-from .models import Category, Bookmark, Comment, Ip
+from .models import Category, Bookmark, Comment, Ip, Vote
 from apps.userprofiles.models import Profile
 from .forms import CategoryForm, BookmarkForm, CommentForm
 from taggit.models import Tag
@@ -75,7 +75,7 @@ def bookmark_detail(request, bookmark_id):
 
 
 def tag_detail(request, slug):
-    tag = Tag.objects.get(slug__iexact=slug)
+    tag = Tag.objects.get(slug=slug)
     # tag = get_object_or_404(Tag, slug__iexact=slug)
     bookmarks = Bookmark.objects.filter(tags=tag)
 
@@ -86,9 +86,10 @@ def tag_detail(request, slug):
     return render(request, 'feed/tags.html', context)
 
 
-def category(request, category_id):
+def category(request, slug, category_id):
     category = Category.objects.get(pk=category_id)
     bookmarks = Bookmark.objects.filter(category_id=category_id).select_related('category', 'user')
+    b = Bookmark.objects.filter(category_id=category_id, published_date__lte=timezone.now()).select_related('category', 'user')
     popular_bookmark = Bookmark.objects.filter(published_date__lte=timezone.now()).select_related('category', 'user')
 
     if request.method == 'POST':
@@ -100,18 +101,8 @@ def category(request, category_id):
             bookmark.save()
             messages.success(request, 'Ссылка добавлена!')
             form.save_m2m()
-            return redirect('category', category_id=category_id)
     else:
         form = BookmarkForm()
-
-    if request.method == 'POST' and 'btnedit' in request.POST:
-        FormEdit = CategoryForm(request.POST, request.FILES, instance=category)
-        if FormEdit.is_valid():
-            FormEdit.save()
-            messages.success(request, 'Изменения сохранены!')
-            return redirect('category', category_id=category_id)
-    else:
-        FormEdit = CategoryForm()
 
     if request.method == 'POST' and 'btnaddcategory' in request.POST:
         AddCategoryForm = CategoryForm(request.POST, request.FILES)
@@ -120,7 +111,7 @@ def category(request, category_id):
             category.user = request.user
             category.save()
             messages.success(request, 'Категория созданна!')
-            return redirect('category', category_id=category_id)
+
     else:
         AddCategoryForm = CategoryForm()
 
@@ -128,16 +119,17 @@ def category(request, category_id):
         'bookmarks': bookmarks,
         'category': category,
         'form': form,
-        'FormEdit': FormEdit,
         'AddCategoryForm': AddCategoryForm,
         'popular_bookmark': popular_bookmark,
+        'b': b,
     }
 
     return render(request, 'feed/category.html', context)
 
 
 @login_required
-def category_add(request, category_id):
+def category_add(request, slug, category_id):
+    category = Category.objects.get(pk=category_id)
     if request.method == 'POST':
         form = CategoryForm(request.POST, request.FILES)
 
@@ -154,20 +146,22 @@ def category_add(request, category_id):
 
     context = {
         'form': form,
+        'category': category,
     }
 
     return render(request, 'feed/add-category.html', context)
 
 
 @login_required
-def category_publish(request, category_id):
-    cat = get_object_or_404(Category, id=category_id)
+def category_publish(request, slug, category_id):
+    cat = get_object_or_404(Category, pk=category_id)
     cat.publish()
-    return redirect('category', category_id=category_id)
+    messages.success(request, 'Категория опубликована!')
+    return redirect('profile', username=request.user.username)
 
 
 @login_required
-def category_edit(request, category_id):
+def category_edit(request, slug, category_id):
     category = Category.objects.filter(user=request.user).get(pk=category_id)
 
     if request.method == 'POST':
@@ -175,7 +169,7 @@ def category_edit(request, category_id):
         if FormEdit.is_valid():
             FormEdit.save()
             messages.success(request, 'Изменения сохранены!')
-            return redirect('category', category_id=category_id)
+            return redirect('profile', username=request.user.username)
     else:
         FormEdit = CategoryForm(instance=category)
 
@@ -188,7 +182,7 @@ def category_edit(request, category_id):
 
 
 @login_required
-def category_delete(request, category_id):
+def category_delete(request, slug, category_id):
     category = Category.objects.filter(user=request.user).get(id=category_id)
     category.delete(request.POST, request.FILES)
     messages.success(request, 'Категория удалена!')
@@ -205,7 +199,7 @@ def get_client_ip(request):
 
 
 @login_required
-def bookmark_add(request, category_id):
+def bookmark_add(request, slug, category_id):
     b = Bookmark.objects.filter(published_date__lte=timezone.now()).select_related('category', 'user')
     if request.method == 'POST':
         form = BookmarkForm(request.POST, request.FILES)
@@ -262,7 +256,7 @@ def bookmark_delete(request, bookmark_id):
     bookmark = Bookmark.objects.filter(user=request.user).get(pk=bookmark_id)
     bookmark.delete(request.POST, request.FILES)
     messages.success(request, 'Ссылка удалена!')
-    return redirect('categories')
+    return redirect('profile', username=request.user.username)
 
 
 
@@ -317,3 +311,18 @@ def drafts(request):
         'AddCategoryForm': AddCategoryForm,
     }
     return render(request, 'core/draft_lists.html', context)
+
+
+@login_required
+def vote(request, bookmark_id):
+    bookmark = get_object_or_404(Bookmark, pk=bookmark_id)
+
+    next_page = request.GET.get('next_page', '')
+
+    if bookmark.user != request.user and not Vote.objects.filter(user=request.user, bookmark=bookmark):
+        vote = Vote.objects.create(bookmark=bookmark, user=request.user)
+
+    if next_page == 'bookmark':
+        return redirect('bookmark', bookmark_id=bookmark_id)
+    else:
+        return redirect('/')

@@ -4,7 +4,10 @@
 
 <head>
     <meta charset="utf-8">
+    <meta name="yandex-verification" content="47a9ebcf2fa7a04b" />
     <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta content="Организуйте все свои закладки с помощью Surffers. Найдите легко любую закладку с помощью удобного поиска и простой навигации. Сохраните ваши любимые ссылки и делитесь ими с друзьями. У нас есть все, что вам нужно, чтобы быть в курсе того, что развивается на вашем рабочем столе." name="description">
+
     <title>{% block title %}{% endblock %}</title>
 
     <link href="/static/img/surffers-logo.png" rel="icon" sizes="32x32" type="image/png">
@@ -45,6 +48,7 @@
 {% block content %}
 
 {% endblock %}
+{% include 'core/include/cookie.html' %}
  <!-- Button up -->
   <a id="button" class="button is-black " style="position: fixed;  right: 22px; bottom: 55px;">
       <span class="icon">
@@ -67,7 +71,30 @@
 <!-- End scripts -->
 
 {% block scripts %}
+<script>
+// COOKIE
+function getCookie(name) {
+    let matches = document.cookie.match(new RegExp(
+    "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+    ));
+    return matches ? decodeURIComponent(matches[1]) : undefined;
+  }
+  let cookiecook = getCookie("cookiecook"),
+  cookiewin = document.getElementsByClassName('cookie-banner')[0];
 
+  if (cookiecook != "no") {
+    // показываем
+    cookiewin.style.display="block";
+    // закрываем по клику
+    document.getElementById("cookie_close").addEventListener("click", function(){
+    cookiewin.style.display="none";
+
+    let date = new Date;
+    date.setDate(date.getDate() + 1);
+    document.cookie = "cookiecook=no; path=/; expires=" + date.toUTCString();
+    });
+  }
+</script>
 {% endblock %}
 <!-- End Scripts -->
 </body>

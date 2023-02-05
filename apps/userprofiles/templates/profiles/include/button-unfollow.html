@@ -1,0 +1,59 @@
+
+{% load static %}
+{% load humanize %}
+
+
+{% block content %}
+
+<div id="button-unfollow">
+    
+    <a @click="toggleDialog"  class="button is-link is-small is-rounded is-outlined">
+        <span>
+       
+            <i class="fas fa-check"></i>
+        </span>
+      </a>
+
+    <!-- ModalDeletedCategory -->
+<div class="modal" v-bind:class="{ 'is-active': showDialog }">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title">Are you sure?</p>
+            <button class="delete" aria-label="close" @click="showDialog = !showDialog"></button>
+        </header>
+        <section class="modal-card-body">
+            <!-- Их категории больше не будут отображаться в вашей ленте! -->
+            Отменить подписку на  {{ user.username }}?
+        </section>
+        <footer class="modal-card-foot">
+            <a href="{% url 'unfollow_user' user.username %}" class="card-footer-item has-text-danger" >Unfollow</a>
+            <a class="card-footer-item has-text-light" @click="showDialog = !showDialog">Cancel</a>
+        </footer>
+    </div>
+</div>
+<!-- EndModalDeletedCategory -->
+</div>
+
+
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    new Vue({
+        el: '#button-unfollow',
+        delimiters: ['[[', ']]'],
+        data() {
+            return {
+                showDialog: false,
+            }
+        },
+        methods: {
+            toggleDialog() {
+                this.showDialog = true
+            },
+        }
+    })
+</script>
+{% endblock %}

@@ -10,6 +10,8 @@ from apps.bookmark.models import Category, Bookmark
 from .forms import ProfileForm, LinkForm
 from apps.bookmark.forms import CategoryForm
 
+from apps.notification.utilities import create_notification
+
 
 @login_required
 def user_links(request, username):
@@ -56,7 +58,7 @@ def profile(request, username):
         category = AddCategoryForm.save(commit=False)
         category.user = request.user
         category.save()
-        return redirect('category', category_id=category.id)
+        return redirect('profile', username=request.user.username)
 
     if request.method == 'POST':
         UserEditForm = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
@@ -152,3 +154,36 @@ def bookmark_favorite_lists(request, username):
         'categories': categories,
     }
     return render(request, 'profiles/favorite_profile.html', context)
+
+
+@login_required
+def follow_user(request, username):
+    user = get_object_or_404(User, username=username)
+    request.user.profile.follows.add(user.profile)
+
+    create_notification(request, user, 'follower')
+
+    return redirect('profile', username=username)
+
+
+@login_required
+def unfollow_user(request, username):
+    user = get_object_or_404(User, username=username)
+
+    request.user.profile.follows.remove(user.profile)
+
+    return redirect('profile', username=username)
+
+
+def followers(request, username):
+    user = get_object_or_404(User, username=username)
+    # bookmarks = user.bookmarks.all().order_by("-created_at")[0:10]
+
+    return render(request, 'profiles/followers.html', {'user': user})
+
+
+def follows(request, username):
+    user = get_object_or_404(User, username=username)
+    bookmarks = user.bookmarks.all().order_by("-created_at")[0:10]
+
+    return render(request, 'profiles/follows.html', {'user': user, 'bookmarks': bookmarks})

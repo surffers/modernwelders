@@ -8,8 +8,7 @@
 
 {% include 'core/include/navbar.html' %}
 <section class="section">
-
-        <div class="container">
+    <div class="container">
     <div class="columns bookmark__detail is-centered">
         <div class="column is-8">
             <div class="box is-unselectable">
@@ -45,6 +44,7 @@
                                             <span class="icon is-size-6">
                                                 <i class="fa fa-heart" aria-hidden="true"></i>
                                             </span>
+
                             </a>
                             {% else %}
                             <a href="{% url 'favorite_bookmark' bookmark.id %}"
@@ -123,15 +123,15 @@
                 </p>
                 <p class="title is-3">
                     <a class="title is-size-3 is-size-5-mobile has-text-weight-bold"
-                       href="{% url 'category' bookmark.category.id %}">
+                       href="{% url 'category' bookmark.category.slug bookmark.category.id %}">
                         {{ bookmark.category.title }}
                     </a>
                 </p>
-                {% if bookmark.affiliate_url %}
+                {% if bookmark.url_icon %}
                 <a class="icon-bookmark subtitle has-text-weight-bold" href="{{ bookmark.url }}"
                    target="_blank">
                 </a>
-                <a href="{{ bookmark.affiliate_url }}" class="subtitle is-5 has-text-weight-bold"
+                <a href="{{ bookmark.url_icon }}" class="subtitle is-5 has-text-weight-bold"
                    target="_blank">
                     {{ bookmark.title }}
                 </a>
@@ -175,9 +175,9 @@
 
                     {% endif %}
 
-                    {% if bookmark.affiliate_url %}
+                    {% if bookmark.url_icon %}
                     <a class="button is-link is-medium is-outlined "
-                       href="{{ bookmark.affiliate_url }}" target="_blank">
+                       href="{{ bookmark.url_icon }}" target="_blank">
                                         <span class="forloop icon link is-size-7-mobile">
                                             <i class="fa fa-external-link" aria-hidden="true"></i>
                                         </span>
@@ -198,14 +198,15 @@
 
                     {% endif %}
 
-
-                    <a class='button is-link is-medium'>
+                    {% if not bookmark.user == request.user %}
+                    <a href="{% url 'vote' bookmark.id %}?next_page=bookmark" class='button is-link is-medium'>
                                         <span class="forloop icon has-text-weight-bold is-size-7-mobile">
                                          ☆
                                         </span>
-                        <span class="forloop is-size-7-mobile"> Проголосовать 98</span>
+                        <span class="forloop is-size-7-mobile"> Проголосовать {{ bookmark.number_of_votes }}</span>
 
                     </a>
+                    {% endif %}
 
                 </div>
 
@@ -232,7 +233,7 @@
                         {{ form.body }}
                     </div>
                     <div class="control">
-                        <button class="button is-outlined"
+                        <button class="button  is-outlined"
                                 type="submit">
                             Отправить
                         </button>

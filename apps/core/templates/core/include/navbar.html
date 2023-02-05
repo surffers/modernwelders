@@ -51,6 +51,7 @@
             <a class="navbar-item" href="#"> О нас </a>
             <hr class="dropdown-divider">
             {% if request.user.is_authenticated %}
+
             <a class="navbar-item has-text-danger is-hidden-desktop" href="{% url 'account_logout' %}">
                 Выход
             </a>
@@ -150,7 +151,8 @@
 {% endblock %}
 
 {% block scripts %}
-
+<!-- Scripts -->
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script>
 window.onscroll = function() {scrollFunction()};
     function scrollFunction() {

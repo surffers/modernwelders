@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth import views
 import debug_toolbar
+from apps.notification.views import notifications
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -13,6 +14,9 @@ urlpatterns = [
     #
     # Accounts
     path('accounts/', include('allauth.urls')),
+    #
+    # Notifications
+    path('notifications/', notifications, name='notifications'),
     #
     # Core
     path('', include('apps.core.urls')),
@@ -26,6 +30,7 @@ urlpatterns = [
     #
     # Profiles
     path('', include('apps.userprofiles.urls')),
+
 
 
 

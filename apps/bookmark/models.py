@@ -3,18 +3,26 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
 from taggit.managers import TaggableManager
+from django.db.models import Sum, Case, When, Value
+from django.utils.text import slugify
 
 
 class Category(models.Model):
     title = models.CharField(max_length=100)
     body = models.TextField(max_length=255, blank=True, null=True)
     user = models.ForeignKey(User, related_name='categories', on_delete=models.CASCADE)
+    slug = models.SlugField(max_length=100, unique=True, db_index=True, verbose_name="slug", blank=True, null=True)
     created_at = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null=True)
 
     def publish(self):
         self.published_date = timezone.now()
         self.save()
+
+    def save(self, *args, **kwargs):
+        value = self.title
+        self.slug = slugify(value, allow_unicode=True)
+        super().save(*args, **kwargs)
 
     class Meta:
         ordering = ('-created_at',)
@@ -37,7 +45,7 @@ class Bookmark(models.Model):
     title = models.CharField(max_length=255)
     body = models.TextField(max_length=555, blank=True, null=True)
     url = models.URLField()
-    affiliate_url = models.URLField(blank=True, null=True)
+    url_icon = models.URLField(blank=True, null=True)
     views = models.ManyToManyField(Ip, related_name="post_views", blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     tags = TaggableManager(related_name='tags')

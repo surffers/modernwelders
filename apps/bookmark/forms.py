@@ -27,7 +27,7 @@ class CategoryForm(ModelForm):
 class BookmarkForm(ModelForm):
     class Meta:
         model = Bookmark
-        fields = ['title', 'body', 'url', 'tags', 'affiliate_url']
+        fields = ['title', 'body', 'url', 'tags', 'url_icon']
 
     def __init__(self, *args, **kwargs):
         super(BookmarkForm, self).__init__(*args, **kwargs)
@@ -46,8 +46,8 @@ class BookmarkForm(ModelForm):
             })
         for field_name in self.fields:
             field = self.fields.get(field_name)
-            self.fields['affiliate_url'].widget.attrs.update({
-                "placeholder": "Партнерская ссылка",
+            self.fields['url_icon'].widget.attrs.update({
+                "placeholder": "Ссылка га партнёрку",
                 'class': "input"
             })
         for field_name in self.fields:

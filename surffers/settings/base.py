@@ -31,10 +31,11 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'apps.bookmark',
     'apps.contact',
     'apps.core',
     'apps.document',
-    'apps.bookmark',
+    'apps.notification',
     'apps.userprofiles',
     'allauth',
     'allauth.account',
@@ -68,6 +69,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'apps.notification.context_processors.notifications'
             ],
         },
     },
@@ -129,7 +131,7 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 
-
+TAGGIT_CASE_INSENSITIVE = True
 
 # Allauth
 SITE_ID = 2
