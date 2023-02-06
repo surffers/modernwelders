@@ -100,7 +100,7 @@
                         {% for bookmark in page_obj  %}
                             <div class="column is-4">
                                     <p class="subtitle is-7 has-text-weight-bold is-uppercase">
-                                        <a href="{% url 'category'  bookmark.category.id  %}" class="has-text-black">
+                                        <a href="{% url 'category'  bookmark.category.slug bookmark.category.id  %}" class="has-text-black">
                                             {{ bookmark.category.title|truncatechars:100 }}
                                         </a>
                                     </p>

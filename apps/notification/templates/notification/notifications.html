@@ -3,35 +3,77 @@
 {% load humanize %}
 
 {% block content %}
-    <div class="container">
-        <div class="columns">
-            <div class="column is-12">
-                <h1 class="title">Notifications</h1>
 
-                {% if not notifications %}
-                    <p>You have no notifications!</p>
-                {% endif %}
+{% include 'core/include/navbar.html' %}
 
-                <div class="wrapper-oinks">
-                    {% for notification in notifications %}
-                        <article class="media">
+<section class="section">
+    <div class="box container category">
+    <div class="media">
+      <div class="media-left">
+          <a href="{% url 'profile' user.username %}">
+        <p class="subtitle is-size-4 is-size-5-mobile is-lowercase">@{{ user.username|truncatechars:25 }}</p>
+              </a>
+      </div>
+    <div class="media-content"></div>
+    </div>
+        <hr>
+            <div class="title has-text-weight-bold is-size-2 is-size-5-mobile">
+            <a class="has-text-black">
+                Уведомления
+            </a>
+        </div>
 
-                            <div class="media-content">
-                                <div class="content">
-                                    <p>
-                                        {% if notification.notification_type == 'follower' %}
+        <hr>
+        {% if messages %}
+        {% for message in messages %}
+        <article class="message is-{{ message.tags }}">
+            <div class="message-body">
+                {{ message }}
+            </div>
+        </article>
+        {% endfor %}
+        {% endif %}
+
+
+        <div class="columns is-multiline is-variable is-1-mobile is-0-tablet is-3-desktop is-8-widescreen is-2-fullhd">
+                 {% for notification in notifications %}
+            <div class="column is-4">
+                    <div class="box-link is-unselectable">
+                          {% if notification.notification_type == 'follower' %}
                                             <a href="{% url 'notifications' %}?goto=profile&notification={{ notification.id }}">
                                                 <strong>{{ notification.created_by.username }}</strong> started following you<br>
                                                 <small>{{ notification.created_at|naturaltime }}</small>
                                             </a>
+                                        {% elif notification.notification_type == 'vote' %}
+                                            <a href="{% url 'notifications' %}?goto=profile&notification={{ notification.id }}">
+                                                <strong>{{ notification.created_by.username }}</strong> Проголосовал<br>
+                                                <small>{{ notification.created_at|naturaltime }}</small>
+                                            </a>
                                         {% endif %}
-                                    </p>
-                                </div>
-                            </div>
-                        </article>
-                    {% endfor %}
+                    </div>
+                    <br>
                 </div>
+                    {% endfor %}
+
+
+            {% if not notifications %}
+            <div class="column is-4 has-text-centered">
+                <div class="box">
+                    <span>☹️</span>
+
+                    <p>У вас нет уведомлений!</p>
+
+                </div>
+            {% endif %}
+
             </div>
+
         </div>
-    </div>
+
+</div>
+
+</section>
+
+
+
 {% endblock %}

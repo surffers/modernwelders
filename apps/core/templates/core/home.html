@@ -26,7 +26,7 @@
                                             {% for bookmark in category.bookmarks.all  %}
                                         {% if bookmark.published_date %}
                                         {% if forloop.counter <= 5 %}
-                                            <a class="icon-category-bookmark" href="{{ bookmark.url }}" target="_blank"></a>
+                                            <a class="icon-bookmark" href="{{ bookmark.url }}" target="_blank"></a>
 
                                         {% endif %}
 
@@ -147,7 +147,6 @@
                 <hr>
                 {% endfor %}
 
-                <br>
 
                 {% include 'core/include/pagination.html' %}
             </div>
@@ -158,13 +157,13 @@
                             облако тегов
                         </h1>
 
-                        <div class="tags">
-                            {% for tag in tags.all %}
-                            <a href="{% url 'tag_detail_url' tag.slug %}" class="tag is-light">
-                                #{{ tag.name|truncatechars:25 }}
-                            </a>
-                            {% endfor %}
-                        </div>
+
+                                        {% for tag in tags.all %}
+                                            <a href="{% url 'tag_detail_url' tag.slug %}" class="tag is-light">
+                                                #{{ tag.name|truncatechars:25 }}
+                                            </a>
+                                        {% endfor %}
+
                  <hr>
 
                     {% include 'core/include/footer.html' %}
@@ -201,7 +200,7 @@
  $("a.icon-category-bookmark[href^='http']").each(function() {
     $(this).css({
         background: "url(http://www.google.com/s2/favicons?domain=" + this.href + ") left center no-repeat",
-        "background-size": "22px", "padding-left": "30px", "pointer-events": "none", "cursor": "default", "text-decoration": "none"
+        "background-size": "22px", "padding-left": "30px", "pointer-events": "none", "cursor": "default"
     });
 });
 </script>

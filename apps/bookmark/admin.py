@@ -11,7 +11,7 @@ class CategoryAdmin(admin.ModelAdmin):
         'id',
         'user',
     )
-    prepopulated_fields = {'slug': ('title',)}
+    prepopulated_fields = {"slug": ("title",)}
     search_fields = (
         'title',
     )
@@ -52,6 +52,6 @@ class CommentAdmin(admin.ModelAdmin):
 admin.site.register(Comment, CommentAdmin)
 
 
-    
+
 
     

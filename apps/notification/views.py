@@ -19,7 +19,7 @@ def notifications(request):
         elif notification.notification_type == Notification.FOLLOWER:
             return redirect('profile', username=notification.created_by.username)
         elif notification.notification_type == Notification.VOTE:
-            return redirect('profile', username=notification.to_user.username)
+            return redirect('profile', username=notification.created_by.username)
         elif notification.notification_type == Notification.MENTION:
             return redirect('profile', username=notification.created_by.username)
 

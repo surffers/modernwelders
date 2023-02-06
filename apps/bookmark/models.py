@@ -5,13 +5,14 @@ from django.urls import reverse
 from taggit.managers import TaggableManager
 from django.db.models import Sum, Case, When, Value
 from django.utils.text import slugify
+from pytils.translit import slugify
 
 
 class Category(models.Model):
     title = models.CharField(max_length=100)
     body = models.TextField(max_length=255, blank=True, null=True)
     user = models.ForeignKey(User, related_name='categories', on_delete=models.CASCADE)
-    slug = models.SlugField(max_length=100, unique=True, db_index=True, verbose_name="slug", blank=True, null=True)
+    slug = models.SlugField(max_length=100, blank=True, null=True)
     created_at = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null=True)
 
@@ -20,8 +21,7 @@ class Category(models.Model):
         self.save()
 
     def save(self, *args, **kwargs):
-        value = self.title
-        self.slug = slugify(value, allow_unicode=True)
+        self.slug = slugify(self.title)
         super().save(*args, **kwargs)
 
     class Meta:

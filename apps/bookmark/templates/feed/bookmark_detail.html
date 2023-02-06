@@ -15,9 +15,7 @@
                 <div class="media">
                     <div class="media-left">
                         <a href="{% url 'profile' bookmark.user.username %}">
-                            <p class="title is-size-6 is-size-7-mobile">
-                            </p>
-                            <p class="subtitle is-size-6 is-lowercase">@{{ bookmark.user.username|truncatechars:25 }}</p>
+                            <p class="subtitle is-size-4 is-size-5-mobile is-lowercase">@{{ bookmark.user.username|truncatechars:25 }}</p>
                         </a>
                     </div>
                     <div class="media-content"></div>
@@ -118,9 +116,7 @@
 
 
                 <hr>
-                <p class="subtitle is-7">
-                    <span class="subtitle is-7"> {{ bookmark.created_at|naturaltime }}</span>
-                </p>
+
                 <p class="title is-3">
                     <a class="title is-size-3 is-size-5-mobile has-text-weight-bold"
                        href="{% url 'category' bookmark.category.slug bookmark.category.id %}">
@@ -145,16 +141,21 @@
 
 
                 {% endif %}
-                <p class="subtitle is-5 is-size-6-mobile">
+                <p class="subtitle is-6 is-size-6-mobile">
                     {{ bookmark.body }}
                 </p>
-                {% for tag in bookmark.tags.all %}
-                <a href="{% url 'tag_detail_url' tag.slug %}" class="is-6 has-text-info">
+                <p class="title is-6">
+                    {% for tag in bookmark.tags.all %}
+                <a href="{% url 'tag_detail_url' tag.slug %}" class="has-text-info">
                     #{{ tag.name|truncatechars:25 }}
                 </a>
                 {% endfor %}
+                </p>
+                <p class="subtitle is-7">
+                    <span class="subtitle is-7"> {{ bookmark.created_at|naturaltime }}</span>
+                </p>
 
-                <div class="spacer"></div>
+                <hr>
 
                 <div class="buttons">
                     {% if bookmark.published_date %}
@@ -166,7 +167,7 @@
                     </a>
                     {% else %}
                     {% if user == bookmark.user %}
-                    <a class="button is-link is-medium"
+                    <a class="button is-link"
                        href="https://yoomoney.ru/to/410019178238860">
                         Запуск
                     </a>
@@ -176,7 +177,7 @@
                     {% endif %}
 
                     {% if bookmark.url_icon %}
-                    <a class="button is-link is-medium is-outlined "
+                    <a class="button is-link is-outlined "
                        href="{{ bookmark.url_icon }}" target="_blank">
                                         <span class="forloop icon link is-size-7-mobile">
                                             <i class="fa fa-external-link" aria-hidden="true"></i>
@@ -186,7 +187,7 @@
                                         </span>
                     </a>
                     {% else %}
-                    <a class="button is-link is-medium is-outlined "
+                    <a class="button is-link is-outlined"
                        href="{{ bookmark.url }}" target="_blank">
                                         <span class="forloop icon link is-size-7-mobile">
                                             <i class="fa fa-external-link" aria-hidden="true"></i>
@@ -199,7 +200,7 @@
                     {% endif %}
 
                     {% if not bookmark.user == request.user %}
-                    <a href="{% url 'vote' bookmark.id %}?next_page=bookmark" class='button is-link is-medium'>
+                    <a href="{% url 'vote' bookmark.id %}?next_page=bookmark" class='button is-link'>
                                         <span class="forloop icon has-text-weight-bold is-size-7-mobile">
                                          ☆
                                         </span>

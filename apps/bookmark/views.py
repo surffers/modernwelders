@@ -19,6 +19,8 @@ from django.urls import reverse
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
+from apps.notification.utilities import create_notification
+
 
 def sponsors(request):
     return render(request, 'feed/include/sponsors.html')
@@ -75,8 +77,8 @@ def bookmark_detail(request, bookmark_id):
 
 
 def tag_detail(request, slug):
-    tag = Tag.objects.get(slug=slug)
-    # tag = get_object_or_404(Tag, slug__iexact=slug)
+    # tag = Tag.objects.get(slug=slug)
+    tag = get_object_or_404(Tag, slug__iexact=slug)
     bookmarks = Bookmark.objects.filter(tags=tag)
 
     context = {
@@ -316,7 +318,7 @@ def drafts(request):
 @login_required
 def vote(request, bookmark_id):
     bookmark = get_object_or_404(Bookmark, pk=bookmark_id)
-
+    create_notification(request, bookmark.user, 'vote')
     next_page = request.GET.get('next_page', '')
 
     if bookmark.user != request.user and not Vote.objects.filter(user=request.user, bookmark=bookmark):

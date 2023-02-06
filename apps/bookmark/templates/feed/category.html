@@ -120,10 +120,10 @@
                         {% endif %}
         </div>
         <div class="column is-9 category-body">
-        <p class="subtitle is-5 is-size-6-mobile">
+        <p class="subtitle is-size-6">
             {{ category.body }}
         </p>
-        <p  class="title is-6 is-size-7-mobile">
+        <p  class="title is-size-7">
             <span>{{ category.created_at|naturaltime }}</span>
 
         </p>
@@ -135,13 +135,13 @@
          {% if category.published_date %}
                                     {% else %}
                                     {% if user.is_superuser %}
-                                    <a class="button is-link is-medium"
+                                    <a class="button is-link is-outlined"
                                        href="{% url 'category_publish' category.id  %}">
                                         Опубликовать
                                     </a>
                                     {% else %}
                                     {% if user == bookmark.user %}
-                                    <a class="button is-link is-medium"
+                                    <a class="button is-link is-outlined"
                                        href="https://yoomoney.ru/to/410019178238860">
                                         Запуск
                                     </a>
@@ -467,7 +467,7 @@
     <div class="media">
       <div class="media-left">
           <a href="{% url 'profile' category.user.username %}">
-        <p class="subtitle is-size-6 is-size-7-mobile is-lowercase">@{{ category.user.username|truncatechars:25 }}</p>
+        <p class="subtitle is-size-4 is-size-5-mobile is-lowercase">@{{ category.user.username|truncatechars:25 }}</p>
               </a>
       </div>
     <div class="media-content"></div>
@@ -554,10 +554,10 @@
                 {{ category.title }}
         </div>
         <div class="column is-9 category-body">
-        <p class="subtitle is-5 is-size-6-mobile">
+        <p class="subtitle is-size-6">
             {{ category.body }}
         </p>
-        <p  class="title is-6 is-size-7-mobile has-text-weight-normal">
+        <p  class="title is-size-7 has-text-weight-normal">
             <span>{{ category.created_at|naturaltime }}</span>
 
         </p>
@@ -569,7 +569,7 @@
         {% if category.published_date %}
                                     {% else %}
                                     {% if user.is_superuser %}
-                                    <a class="button is-link"
+                                    <a class="button is-link is-outlined"
                                        href="{% url 'category_publish' category.slug category.id  %}">
                                         Опубликовать
                                     </a>
