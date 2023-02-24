@@ -6,11 +6,27 @@ from apps.notification.views import notifications
 from django.conf import settings
 from django.conf.urls.static import static
 
+from apps.bookmark.sitemap import CategorySitemap, BookmarkSitemap
+from apps.core.sitemap import StaticSitemap
+from django.contrib.sitemaps.views import sitemap
+from django.views.generic import TemplateView
+
+
+sitemaps = {
+    'categories': CategorySitemap,
+    'bookmarks': BookmarkSitemap,
+    'static': StaticSitemap,
+    }
+
 
 urlpatterns = [
     #
     # Admin
-    path('admin/', admin.site.urls),#hc81inkjyp1h&wgk3s83
+    path('hc81inkjy/', include('admin_honeypot.urls', namespace='admin_honeypot')),
+    path('hc81inkjyp1h&wgk3s83/', admin.site.urls),#hc81inkjyp1h&wgk3s83
+
+    path('robots.txt', TemplateView.as_view(template_name="robots.txt", content_type='text/plain')),
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
     #
     # Accounts
     path('accounts/', include('allauth.urls')),
@@ -30,6 +46,7 @@ urlpatterns = [
     #
     # Profiles
     path('', include('apps.userprofiles.urls')),
+
 
 
 

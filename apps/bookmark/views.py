@@ -57,8 +57,9 @@ def bookmark_detail(request, bookmark_id):
         if form.is_valid():
             comment = form.save(commit=False)
             comment.user = request.user
+            if request.POST.get("parent", None):
+                form.parent_id = int(request.POST.get("parent"))
             comment.bookmark_id = bookmark_id
-
             comment.save()
 
             return redirect('bookmark', bookmark_id=bookmark_id)
@@ -89,10 +90,12 @@ def tag_detail(request, slug):
 
 
 def category(request, slug, category_id):
+    date_from = datetime.datetime.now() - datetime.timedelta(days=7)
     category = Category.objects.get(pk=category_id)
     bookmarks = Bookmark.objects.filter(category_id=category_id).select_related('category', 'user')
+    bookmarks_publish = Bookmark.objects.filter(category_id=category_id).select_related('category', 'user')
     b = Bookmark.objects.filter(category_id=category_id, published_date__lte=timezone.now()).select_related('category', 'user')
-    popular_bookmark = Bookmark.objects.filter(published_date__lte=timezone.now()).select_related('category', 'user')
+    popular_bookmark = Bookmark.objects.filter(published_date__lte=timezone.now(), created_at__gte=date_from).select_related('category', 'user')
 
     if request.method == 'POST':
         form = BookmarkForm(request.POST, request.FILES)
@@ -117,7 +120,23 @@ def category(request, slug, category_id):
     else:
         AddCategoryForm = CategoryForm()
 
+    paginator = Paginator(bookmarks, 15)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    paginator = Paginator(bookmarks_publish, 15)
+    page_number = request.GET.get('page')
+    page_object = paginator.get_page(page_number)
+
+    paginator = Paginator(b, 15)
+    page_number = request.GET.get('page')
+    page_objb = paginator.get_page(page_number)
+
     context = {
+        'page_objb': page_objb,
+        'page_obj': page_obj,
+        'page_object': page_object,
+        'bookmarks_publish': bookmarks_publish,
         'bookmarks': bookmarks,
         'category': category,
         'form': form,

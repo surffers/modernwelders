@@ -6,14 +6,20 @@
     <meta charset="utf-8">
     <meta name="yandex-verification" content="47a9ebcf2fa7a04b" />
     <meta content="width=device-width, initial-scale=1" name="viewport">
-    <meta content="Организуйте все свои закладки с помощью Surffers. Найдите легко любую закладку с помощью удобного поиска и простой навигации.
-    Сохраните ваши любимые ссылки и делитесь ими с друзьями. У нас есть все, что вам нужно, чтобы быть в курсе того, что развивается на вашем рабочем столе." name="description">
+    <meta content="Создавайте свои подборки с помощью Surffers. Найдите легко, любую закладку с помощью удобного поиска и простой навигации. Сохраните ваши любимые веб-сайты и делитесь ими с друзьями." name="description">
 
     <title>{% block title %}{% endblock %}</title>
 
-    <link href="/static/img/surffers-logo.png" rel="icon" sizes="32x32" type="image/png">
-    <script crossorigin="anonymous" src="https://kit.fontawesome.com/691d19bd0b.js"></script>
+    <link rel="icon" href="https://surffers.ru/favicon.ico" type="image/png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/img/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/img/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/img/favicons/favicon-16x16.png">
+    <link rel="manifest" href="/static/img/favicons/site.webmanifest">
+    <link rel="mask-icon" href="/static/img/favicons/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#2d89ef">
+    <meta name="theme-color" content="#ffffff">
 
+    <script crossorigin="anonymous" src="https://kit.fontawesome.com/691d19bd0b.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
@@ -41,12 +47,29 @@
     <noscript><div><img src="https://mc.yandex.ru/watch/92292364" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
     <!-- /Yandex.Metrika counter -->
 
+    <!-- Top.Mail.Ru counter -->
+    <script type="text/javascript">
+    var _tmr = window._tmr || (window._tmr = []);
+    _tmr.push({id: "3296312", type: "pageView", start: (new Date()).getTime()});
+    (function (d, w, id) {
+      if (d.getElementById(id)) return;
+      var ts = d.createElement("script"); ts.type = "text/javascript"; ts.async = true; ts.id = id;
+      ts.src = "https://top-fwz1.mail.ru/js/code.js";
+      var f = function () {var s = d.getElementsByTagName("script")[0]; s.parentNode.insertBefore(ts, s);};
+      if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); }
+    })(document, window, "tmr-code");
+    </script>
+    <noscript><div><img src="https://top-fwz1.mail.ru/counter?id=3296312;js=na" style="position:absolute;left:-9999px;" alt="Top.Mail.Ru" /></div></noscript>
+    <!-- /Top.Mail.Ru counter -->
+
 </head>
 
 <body>
 
 
 {% block content %}
+
+
 
 {% endblock %}
 {% include 'core/include/cookie.html' %}
@@ -56,8 +79,6 @@
         <i class="fas fa-arrow-up"></i>
       </span>
   </a>
-
-
 
 <!-- Scripts -->
 <script type="module" src="{% static 'js/scripts.js' %}"></script>
@@ -73,28 +94,7 @@
 
 {% block scripts %}
 <script>
-// COOKIE
-function getCookie(name) {
-    let matches = document.cookie.match(new RegExp(
-    "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
-    ));
-    return matches ? decodeURIComponent(matches[1]) : undefined;
-  }
-  let cookiecook = getCookie("cookiecook"),
-  cookiewin = document.getElementsByClassName('cookie-banner')[0];
 
-  if (cookiecook != "no") {
-    // показываем
-    cookiewin.style.display="block";
-    // закрываем по клику
-    document.getElementById("cookie_close").addEventListener("click", function(){
-    cookiewin.style.display="none";
-
-    let date = new Date;
-    date.setDate(date.getDate() + 1);
-    document.cookie = "cookiecook=no; path=/; expires=" + date.toUTCString();
-    });
-  }
 </script>
 {% endblock %}
 <!-- End Scripts -->

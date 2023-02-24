@@ -9,9 +9,8 @@
 {% include 'core/include/navbar.html' %}
 <!--    End Include Navbar     -->
 
-<section class="hero">
+<section class="section">
     <div class="container profile">
-        <div class="hero-body">
             <div class="columns">
                 <div class="column">
                     <div class="buttons">
@@ -25,52 +24,42 @@
                             </a>
                         </p>
                         {% empty %}
+                        {% if request.user == user %}
                         <div class="box-tooltip arrow-left">
                             <p class="subtitle is-6 has-text-white">
                                 Добавьте свои ссылки на соцсети
                             </p>
                         </div>
+                        {% endif %}
                         {% endfor %}
                     </div>
                 </div>
             </div>
 
-            <div class="columns is-vcentered">
+            <div class="columns">
                 <div class="column">
-                    <div class="is-flex is-vcentered">
-                        <div class="block">
-                            <p class="subtitle is-size-5 is-lowercase">
-                                @{{ user.username|truncatechars:25 }}
-                            </p>
-                        </div>
+
+                    <div class="is-flex-desktop">
+                            <h1 class="title is-size-5 has-text-weight-bold profile-username">
+                                {{ user.username|truncatechars:25 }}
+                            </h1>
                         {% if request.user == user %}
                         {% include 'profiles/include/user-edit-profile.html' %}
                         {% else %}
-                        <div class="block profile-buttons">
-                            <div class="buttons">
+
+                            <div class="block is-flex">
                                 {% if request.user.profile in user.profile.followed_by.all %}
                             <!-- Button-unfollow -->
                             {% include 'profiles/include/button-unfollow.html' %}
                             <!-- End-button-unfollow -->
                             {% else %}
-                            {% if request.user.is_authenticated %}
-                            <a href="{% url 'follow_user' user.username %}" class="button is-link is-small is-rounded">
+                            <a href="{% url 'follow_user' user.username %}" class="button is-link is-small is-rounded is-outlined mr-10">
                                 Подписаться
                             </a>
                             {% endif %}
-                            {% endif %}
 
-
-                            <a href="mailto:{{ user.email }}" class="button is-link is-small is-rounded">
-                                <span class="icon">
-                                    <i aria-hidden="true" class="fa fa-envelope-o"></i>
-                                </span>
-                                <span>
-                                    Напишите нам
-                                </span>
-                            </a>
                             </div>
-                        </div>
+
                         {% endif %}
                     </div>
                 </div>
@@ -79,11 +68,11 @@
             <div class="columns">
                 <div class="column is-6">
                     {% if user.profile.bio %}
-                    <p class="subtitle bio">
+                    <h1 class="subtitle bio">
                         <span class="bio is-size-4-mobile">
                             {{ user.profile.bio }}
                         </span>
-                    </p>
+                    </h1>
                     {% else %}
                     {% endif %}
                     <nav class="level is-mobile title">
@@ -102,15 +91,15 @@
                             </div>
                             <div class="level-item">
                                 <div>
-                                    <a href="№" class="subtitle is-6">
-                                        {{ user.profile.follows.count }} подписчика
+                                    <a href="{% url 'followers' user.username %}" class="subtitle is-6">
+                                        {{ user.profile.followed_by.count }} подписчики
                                     </a>
                                 </div>
                             </div>
                             <div class="level-item">
                                 <div>
-                                    <a href="{% url 'followers' user.username %}" class="subtitle is-6">
-                                        {{ user.profile.followed_by.count }} подписчиков
+                                    <a href="{% url 'follows' user.username %}" class="subtitle is-6">
+                                        {{ user.profile.follows.count }} подписки
                                     </a>
                                 </div>
                             </div>
@@ -168,10 +157,10 @@
                     <!--  End Share  -->
                 </div>
             </div>
-        </div>
     </div>
+</section>
 
-    <nav class="level is-mobile mobile ">
+<nav class="level is-mobile mobile ">
         <div class="level-item has-text-centered is-hidden-desktop">
             <div>
                 <p class="heading">Категории</p>
@@ -180,21 +169,19 @@
         </div>
         <div class="level-item has-text-centered">
             <div>
-                <p class="heading">Ссылки</p>
-                <p class="title is-5">{{ user.bookmarks.all|length|intword }}</p>
+                <p class="heading">Подписки</p>
+                <p class="title is-5">{{ user.profile.follows.count }}</p>
             </div>
         </div>
         <div class="level-item has-text-centered">
             <div>
-                <p class="heading">Подписчиков</p>
+                <p class="heading">Подписчики</p>
                 <p class="title is-5">{{ user.profile.followed_by.count }}</p>
             </div>
         </div>
     </nav>
-</section>
-
-<div class="container">
     <section class="section">
+        <div class="container">
         {% if messages %}
         {% for message in messages %}
         <article class="message is-{{ message.tags }}">
@@ -204,111 +191,109 @@
         </article>
         {% endfor %}
         {% endif %}
-        <div class="columns is-multiline is-desktop">
+        <div class="columns is-multiline">
             {% for category in categories_public %}
             {% if category.published_date %}
             <div class="column is-one-fifth">
-                <div class="story-item">
                     <a href="{% url 'category' category.slug category.id %}">
                         <div class="card profile">
                             <div class="card-content">
-                                <p class="title is-4 has-text-weight-bold v">
-                                    {{ category.title|truncatechars:25 }}
-                                </p>
+                                <h1 class="title is-4 has-text-weight-bold">
+                                        {{ category.title|truncatechars:33 }}
+                                    </h1>
+
                                 <div class="block-home-category">
                                     <p class="title is-6 has-text-weight-normal title-body is-lowercase">
-                                        {{ category.body|truncatechars:55 }}
+                                        {{ category.body|truncatechars:50 }}
                                     </p>
                                     <div class="media subtitle ">
                                         <div class="media-left">
-                                            <p class="is-size-7 is-lowercase has-text-weight-normal">
-                                                <span>{{ category.created_at|naturaltime }}</span>
-                                            </p>
+                                            {% if request.user == user %}
+                                                <div class="tag is-white is-size-7 is-lowercase has-text-weight-bold">
+                                                    <span class="has-text-success">
+                                                             <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                                                         </span>
+                                                    <span class="tag is-white is-size-7 is-lowercase has-text-weight-normal">
+                                                        опубликованно
+                                                    </span>
+                                                </div>
+                                            {% else %}
+                                                <span class="tag is-white is-size-7 is-lowercase has-text-weight-normal">{{ category.created_at|naturaltime }}</span>
+                                            {% endif %}
+
                                         </div>
                                         <div class="media-content"></div>
                                         <div class="media-right">
-                                            {% if request.user == user %}
-                                            <div class="dropdown is-hoverable is-up is-right">
-                                                <div class="dropdown-trigger">
-                                                    <p class="is-size-6 is-lowercase has-text-weight-normal">
-                                                         <span class="has-text-success">
-                                                             <i class="fa fa-check-circle-o" aria-hidden="true"></i>
-                                                         </span>
-                                                    </p>
-                                                </div>
-                                                <div class="dropdown-menu" role="menu">
-                                                    <div class="dropdown-content">
-                                                        <div class="dropdown-item">
-                                                            <p class="is-size-7 ">Эта категория<strong>
-                                                                опубликована</strong>, её видно в
-                                                                ленте новостей.</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            {% endif %}
+                                            <span class="tag is-light is-size-7" title="Количество ссылок">
+                                                {{ category.bookmarks.all|length|intword }}
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </a>
-                </div>
             </div>
             {% else %}
             {% if request.user == user %}
             <div class="column is-one-fifth">
-                <div class="story-item">
                     <a href="{% url 'category' category.slug category.id %}">
                         <div class="card profile">
                             <div class="card-content">
-                                <p class="title is-4 has-text-weight-bold v">
-                                    {{ category.title|truncatechars:25 }}
-                                </p>
+                                <h1 class="title is-4 has-text-weight-bold">
+                                        {{ category.title|truncatechars:33 }}
+                                    </h1>
                                 <div class="block-home-category">
                                     <p class="title is-6 has-text-weight-normal title-body is-lowercase">
-                                        {{ category.body|truncatechars:55 }}
+                                        {{ category.body|truncatechars:50 }}
                                     </p>
                                     <div class="media subtitle">
                                         <div class="media-left">
-                                            <p class="subtitle is-size-7 is-lowercase has-text-weight-normal">
-                                                <span>{{ category.created_at|naturaltime }}</span>
-                                            </p>
-                                        </div>
-                                        <div class="media-content"></div>
-                                        <div class="media-right ">
                                             {% if request.user == user %}
-                                            <div class="dropdown is-hoverable is-up is-right">
-                                                <div class="dropdown-trigger">
-                                                    <p class="is-size-6 is-lowercase has-text-weight-normal">
-                                                         <span class="has-text-danger">
+                                                <div class="tag is-white is-size-7 is-lowercase has-text-weight-bold">
+                                                    <span class="has-text-danger">
                                                              <i class="fa fa-check-circle-o" aria-hidden="true"></i>
                                                          </span>
-                                                    </p>
+                                                    <span class="tag is-white is-size-7 is-lowercase has-text-weight-normal">
+                                                        черновик
+                                                    </span>
                                                 </div>
-                                                <div class="dropdown-menu" role="menu">
-                                                    <div class="dropdown-content">
-                                                        <div class="dropdown-item">
-                                                            <p class="is-size-7">Эта категория не опубликованная</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
                                             {% endif %}
+                                        </div>
+                                        <div class="media-content"></div>
+                                        <div class="media-right">
+
+                                            <span class="tag is-light is-size-7" title="Количество ссылок">
+                                                {{ category.bookmarks.all|length|intword }}
+                                            </span>
+
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </a>
-                </div>
             </div>
             {% endif %}
             {% endif %}
+            {% empty %}
+            <div class="column is-4 has-text-centered">
+
+               <div class="box">
+                    <span>👋</span>
+                    <p class="subtitle is-6">
+                        Вы ещё не создали категорию <br>для коллекции ссылок
+                    </p>
+                </div>
+
+            </div>
+
+
             {% endfor %}
         </div>
+            </div>
     </section>
-</div>
+
 
 <span class="toastbox" role="alert"></span>
 

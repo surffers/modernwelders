@@ -1,3 +1,8 @@
+.image-home img  {
+    width: 420px;
+    float: right;
+}
+
 
 /* Accordion */
 .accordion .accordion-item {
@@ -21,11 +26,11 @@
 }
 .accordion button:hover, .accordion button:focus {
   cursor: pointer;
-  color: #03b5d2;
+  color: #276CDA;
 }
 .accordion button:hover::after, .accordion button:focus::after {
   cursor: pointer;
-  color: #03b5d2;
+  color: #276CDA;
   border: 1px solid #03b5d2;
 }
 .accordion button .accordion-title {
@@ -62,14 +67,14 @@
   background: currentColor;
 }
 .accordion button[aria-expanded=true] {
-  color: #03b5d2;
+  color: #276CDA;
 }
 .accordion button[aria-expanded=true] .icon::after {
   width: 0;
 }
 .accordion button[aria-expanded=true] + .accordion-content {
   opacity: 1;
-  max-height: 9em;
+  max-height: 100%;
   transition: all 200ms linear;
   will-change: opacity, max-height;
 }
@@ -85,3 +90,9 @@
   font-weight: 300;
   margin: 2em 0;
 }
+
+.section.about {
+    background: #F5F5F5;
+}
+
+

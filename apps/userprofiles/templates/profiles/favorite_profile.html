@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}{{ user.username }}{% endblock %}
+{% block title %}{{ user.username }} - избранное | Surffers{% endblock %}
 {% load static %}
 {% load humanize %}
 
@@ -7,89 +7,200 @@
 {% block content %}
 
  {% include 'core/include/navbar.html' %}
+<section class="hero">
+    <div class="container profile">
+        <div class="hero-body">
+            <div class="columns">
+                <div class="column">
+                    <div class="buttons">
+                        {% if request.user == user %}
+                        {% include 'profiles/include/add_link.html' %}
+                        {% endif %}
 
-<section class="section">
-<div class="box container category">
-     <div class="media">
-      <div class="media-left">
-          <a href="{% url 'profile' request.user.username %}">
-        <p class="subtitle is-size-6 is-size-7-mobile is-lowercase">@{{ request.user.username|truncatechars:25 }}</p>
-              </a>
-      </div>
-    <div class="media-content"></div>
-      <div class="media-right">
-        <div class="buttons">
-            <a class="button is-light is-small" title="Количество ссылок">
-                        <span class="icon">
-                            {{ user.favorite.all|length|intword }}
-                        </span>
-                    </a>
-                    <!--  Share  -->
-                    <div class="dropdown is-hoverable is-right">
-                        <div class="dropdown-trigger button is-light is-small">
-                            <div title="Поделиться">
-                            <span class="icon is-size-7">
-                              <i class="fa fa-share-square-o" aria-hidden="true"></i>
-                            </span>
-                            </div>
+                        {% for link in links %}
+                        <p class="u-links">
+                            <a class="icon-bookmark" href="{{ link.url }}" target="_blank" title="{{ link.title }}">
+                            </a>
+                        </p>
+                        {% empty %}
+                        {% if request.user == user %}
+                        <div class="box-tooltip arrow-left">
+                            <p class="subtitle is-6 has-text-white">
+                                Добавьте свои ссылки на соцсети
+                            </p>
                         </div>
-                        <div class="dropdown-menu" role="menu">
-                            <div class="dropdown-content">
-                                <a class="dropdown-item sharer" role="button">
-                                    <span class="copy-icon">
-                                        <i class="fas fa-link icon"></i>
-                                        Копировать ссылку
-                                    </span>
-                                </a>
-                                <a class="dropdown-item sharer" href="#" id="share-vk"
-                                   title="Share VK">
-                                    <span class="icon" style="color: #0071F2;">
-                                        <i class="fab fa-vk"></i>
-                                    </span>
-                                    ВКонтакте
-                                </a>
-                                <a class="dropdown-item sharer" href="#" id="share-tg">
-                                    <span class="icon" style="color: #27A0DF;">
-                                        <i class="fab fa-telegram"></i>
-                                    </span>
-                                    Telegram
-                                </a>
-                                <a class="dropdown-item sharer" href="#" id="share-em">
-                                    <span class="icon">
-                                        <i aria-hidden="true" class="fa fa-envelope-o"></i>
-                                    </span>
-                                    Отправить на почту
-                                </a>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="columns">
+                <div class="column">
+
+                    <div class="is-flex-desktop">
+                            <h1 class="title is-size-5 has-text-weight-bold profile-username">
+                                {{ user.username|truncatechars:25 }}
+                            </h1>
+                        {% if request.user == user %}
+                        {% include 'profiles/include/user-edit-profile.html' %}
+                        {% else %}
+
+                            <div class="block is-flex">
+                                {% if request.user.profile in user.profile.followed_by.all %}
+                            <!-- Button-unfollow -->
+                            {% include 'profiles/include/button-unfollow.html' %}
+                            <!-- End-button-unfollow -->
+                            {% else %}
+                            <a href="{% url 'follow_user' user.username %}" class="button is-link is-small is-rounded is-outlined mr-10">
+                                Подписаться
+                            </a>
+                            {% endif %}
+
+
+                            <a href="mailto:{{ user.email }}" class="button is-link is-small is-rounded">
+                                <span class="icon">
+                                    <i aria-hidden="true" class="fa fa-envelope-o"></i>
+                                </span>
+                                <span>
+                                    Напишите нам
+                                </span>
+                            </a>
                             </div>
+
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="columns">
+                <div class="column is-6">
+                    {% if user.profile.bio %}
+                    <h1 class="subtitle bio">
+                        <span class="bio is-size-4-mobile">
+                            {{ user.profile.bio }}
+                        </span>
+                    </h1>
+                    {% else %}
+                    {% endif %}
+                    <nav class="level is-mobile title">
+                        <div class="level-left">
+                            <div class="level-item">
+                                <div>
+                                    <a href="{% url 'profile' user.username %}" class="subtitle is-6">{{ categories.all|length|intword }} категории</a>
+                                </div>
+                            </div>
+                            <div class="level-item">
+                                <div>
+                                    <a href="{% url 'user_links' user.username %} " class="subtitle is-6">
+                                        {{ user.bookmarks.all|length|intword }} ссылки
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="level-item">
+                                <div>
+                                    <a href="{% url 'followers' user.username %}" class="subtitle is-6">
+                                        {{ user.profile.followed_by.count }} подписчики
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="level-item">
+                                <div>
+                                    <a href="{% url 'follows' user.username %}" class="subtitle is-6">
+                                        {{ user.profile.follows.count }} подписки
+                                    </a>
+                                </div>
+                            </div>
+                            {% if request.user == user %}
+                            <div class="level-item">
+                                <div>
+                                    <a class="subtitle is-6">{{ categories_drafts.all|length|intword }} черновики</a>
+                                </div>
+                            </div>
+                            <div class="level-item">
+                                <div>
+                                    <a class="subtitle is-6">{{ user.votes.all|length|intword }} голосов</a>
+                                </div>
+                            </div>
+                            <div class="level-item">
+                                <div>
+                                    <a class="subtitle is-6">{{ user.comments.all|length|intword }} комментарии</a>
+                                </div>
+                            </div>
+                            <div class="level-item">
+                                <div>
+                                    <a href="{% url 'bookmark_favorite_lists' user.username %} " class="subtitle is-6">
+                                        {{ user.favorite.all|length|intword }} избранное
+                                    </a>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </nav>
+                    <!--  Share  -->
+                    <div class="buttons">
+                        <div class="block share has-text-centered">
+                            <a class="button is-light" role="button" title="Копировать ссыылку">
+                                <span class="copy-icon ">
+                                    <i class="fas fa-link icon"></i>
+                                </span>
+                            </a>
+                            <a class="button is-light sharer" href="#" id="share-em" title="Отправить на почту">
+                                <span>
+                                    <i aria-hidden="true" class="fa fa-envelope-o"></i>
+                                </span>
+                            </a>
+                            <a class="button is-light sharer" href="#" id="share-vk" title="Поделиться ВКонтакте">
+                                <span>
+                                    <i class="fab fa-vk"></i>
+                                </span>
+                            </a>
+                            <a class="button is-light sharer" href="#" id="share-tg" title="Поделиться в Telegram">
+                                <span>
+                                    <i class="fab fa-telegram"></i>
+                                </span>
+                            </a>
                         </div>
                     </div>
                     <!--  End Share  -->
                 </div>
-      </div>
+            </div>
+        </div>
     </div>
 
-    <hr>
+    <nav class="level is-mobile mobile ">
+        <div class="level-item has-text-centered is-hidden-desktop">
+            <div>
+                <p class="heading">Категории</p>
+                <p class="title is-5">{{ categories.all|length|intword }}</p>
+            </div>
+        </div>
+        <div class="level-item has-text-centered">
+            <div>
+                <p class="heading">Подписки</p>
+                <p class="title is-5">{{ user.profile.follows.count }}</p>
+            </div>
+        </div>
+        <div class="level-item has-text-centered">
+            <div>
+                <p class="heading">Подписчики</p>
+                <p class="title is-5">{{ user.profile.followed_by.count }}</p>
+            </div>
+        </div>
+    </nav>
+</section>
 
 
-                          <div class="subtitle">
-                                <a class="category-list title category is-size-4-mobile">
-                                Избранное
-                        </a>
-
-                          </div>
-
+<div class="container">
+    <section class="section">
+<div class="box">
                  <br>
-
-
-
-
-
 
         <div class="columns is-multiline is-variable is-1-mobile is-0-tablet is-3-desktop is-8-widescreen is-2-fullhd">
             {% for bookmark in favorite_bookmarks %}
              <div class="column is-4">
                                     <p class="title is-7 has-text-weight-bold is-uppercase">
-                                        <a href="{% url 'category'  bookmark.category.id  %}" class="has-text-black">
+                                        <a href="{% url 'category'  bookmark.category.slug bookmark.category.id  %}" class="has-text-black">
                                             {{ bookmark.category.title|truncatechars:100 }}
                                         </a>
 
@@ -99,84 +210,134 @@
                                             @{{ bookmark.user.username|truncatechars:25 }}
                                          </a>
                                     </p>
+                                    <div class="box-link is-unselectable">
+                        {% if bookmark.url_icon %}
+                        <div class="title is-5">
+                            <a class="icon-bookmark subtitle is-5 has-text-weight-bold is-capitalized"
+                               href="{{ bookmark.url }}"
+                               target="_blank">
+                            </a>
+                            <a class="subtitle is-5 has-text-weight-bold is-capitalized"
+                               href="{{ bookmark.url_icon }}"
+                               target="_blank">
+                                {{ bookmark.title|truncatechars:40 }}
 
-
-
-
-                                        {% if bookmark.url_icon %}
-                                        <div class="subtitle is-5">
-                                            <a class="icon-bookmark subtitle is-5 has-text-weight-bold is-capitalized"
-                                               href="{{ bookmark.url }}"
-                                               target="_blank">
-                                            </a>
-                                            <a class="subtitle is-5 has-text-weight-bold is-capitalized"
-                                               href="{{ bookmark.url_icon }}"
-                                               target="_blank">
-                                                {{ bookmark.title|truncatechars:40 }}
-                                            </a>
-                                            {% if bookmark.published_date %}
-                                                <div class="dropdown is-hoverable">
-                                                    <div class="dropdown-trigger">
-                                                    <span class="icon has-text-success is-size-6 is-size-6-mobile">
-                                                        <i class="fa fa-check-circle-o" aria-hidden="true"></i>
-                                                    </span>
-                                                    </div>
-                                                    <div class="dropdown-menu" role="menu">
-                                                        <div class="dropdown-content">
-                                                            <div class="dropdown-item">
-                                                                <p>Этой ссылке можно <b>доверять</b>, проверенно нашей командой.
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                {% else %}
-
-                                                {% endif %}
+                                <span class="icon link is-size-6 is-size-6-mobile">
+                                    <svg height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(3.5 6.5)"><path d="m0 8v-2c0-1.65685425 1.34314575-3 3-3h8"/><path d="m7.999 6 3.001-3-3.001-3"/><path d="m10.999 6 3.001-3-3.001-3"/></g></svg>
+                                </span>
+                            </a>
+                            {% if user == bookmark.user %}
+                                {% if bookmark.published_date %}
+                                    <div class="dropdown is-hoverable is-pulled-right">
+                                    <div class="dropdown-trigger">
+                                    <span class="icon has-text-success is-size-6 is-size-6-mobile">
+                                        <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                                    </span>
+                                    </div>
+                                    <div class="dropdown-menu" role="menu">
+                                        <div class="dropdown-content">
+                                            <div class="dropdown-item">
+                                                <p>
+                                                    Эта ссылка опубликована
+                                                </p>
+                                            </div>
                                         </div>
-                                    {% else %}
-                                        <div class="subtitle is-5">
-                                            <a class="icon-bookmark subtitle is-5 has-text-weight-bold is-capitalized"
-                                               href="{{ bookmark.url }}"
-                                               target="_blank">
-                                                {{ bookmark.title|truncatechars:40 }}
-                                            </a>
-                                            {% if bookmark.published_date %}
-                                                <div class="dropdown is-hoverable">
-                                                    <div class="dropdown-trigger">
-                                                    <span class="icon has-text-success is-size-6 is-size-6-mobile">
-                                                        <i class="fa fa-check-circle-o" aria-hidden="true"></i>
-                                                    </span>
-                                                    </div>
-                                                    <div class="dropdown-menu" role="menu">
-                                                        <div class="dropdown-content">
-                                                            <div class="dropdown-item">
-                                                                <p>Эта ссылка<strong> опубликована</strong>, её видно в ленте новостей.
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                {% else %}
-
-                                                {% endif %}
+                                    </div>
+                                </div>
+                                {% else %}
+                                    <div class="dropdown is-hoverable is-pulled-right">
+                                    <div class="dropdown-trigger">
+                                    <span class="icon has-text-danger is-size-6 is-size-6-mobile">
+                                        <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                                    </span>
+                                    </div>
+                                    <div class="dropdown-menu" role="menu">
+                                        <div class="dropdown-content">
+                                            <div class="dropdown-item">
+                                                <p>
+                                                    Эта ссылка не опубликована
+                                                </p>
+                                            </div>
                                         </div>
-                                    {% endif %}
+                                    </div>
+                                </div>
+                                {% endif %}
+                                {% endif %}
+
+                        </div>
+                        {% else %}
+                        <div class="title is-5">
+                            <a class="icon-bookmark subtitle is-5 has-text-weight-bold is-capitalized"
+                               href="{{ bookmark.url }}"
+                               target="_blank">
+                                {{ bookmark.title|truncatechars:40 }}
+                                <span class="icon link is-size-6 is-size-6-mobile">
+                                    <svg height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(3.5 6.5)"><path d="m0 8v-2c0-1.65685425 1.34314575-3 3-3h8"/><path d="m7.999 6 3.001-3-3.001-3"/><path d="m10.999 6 3.001-3-3.001-3"/></g></svg>
+                                </span>
+                            </a>
+                            {% if user == bookmark.user %}
+                                {% if bookmark.published_date %}
+                                    <div class="dropdown is-hoverable is-pulled-right">
+                                    <div class="dropdown-trigger">
+                                    <span class="icon has-text-success is-size-6 is-size-6-mobile">
+                                        <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                                    </span>
+                                    </div>
+                                    <div class="dropdown-menu" role="menu">
+                                        <div class="dropdown-content">
+                                            <div class="dropdown-item">
+                                                <p>
+                                                    Эта ссылка опубликована
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% else %}
+                                    <div class="dropdown is-hoverable is-pulled-right">
+                                    <div class="dropdown-trigger">
+                                    <span class="icon has-text-danger is-size-6 is-size-6-mobile">
+                                        <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                                    </span>
+                                    </div>
+                                    <div class="dropdown-menu" role="menu">
+                                        <div class="dropdown-content">
+                                            <div class="dropdown-item">
+                                                <p>
+                                                    Эта ссылка не опубликована
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                {% endif %}
+                        </div>
+                        {% endif %}
 
 
 
-                                    <p class="title is-6 has-text-weight-normal is-lowercase is-size-7-mobile">
-                                        {{ bookmark.body|truncatechars:150 }}
-                                    </p>
-                                    <p class="subtitle is-6 is-size-7-mobile">
-                                        {% for tag in bookmark.tags.all %}
-                                        <a href="{% url 'tag_detail_url' tag.slug %}" class="has-text-info">
-                                        #{{ tag.name|truncatechars:25 }}
-                                    </a>
-                                    {% endfor %}
-                                    </p>
-                                    <p  class="subtitle is-7">
-
+                        <p class="subtitle is-6 has-text-weight-normal is-lowercase">
+                            {{ bookmark.body|truncatechars:150 }}
+                        </p>
+                        <p class="title is-6 is-size-7-mobile">
+                                            {% for tag in bookmark.tags.all %}
+                                                {% if forloop.counter <= 5 %}
+                                                <a href="{% url 'tag_detail_url' tag.slug %}" class="has-text-info">
+                                                    #{{ tag.name|truncatechars:25 }}
+                                                </a>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </p>
+                        <p  class="subtitle is-7">
+                            <!--  Like  -->
+                            <a href="{% url 'bookmark' bookmark.id %}" class="tag is-light hero-btn" title="В избранном">
+                                <span class="icon is-size-6">
+                                                <i class="fa fa-heart-o" aria-hidden="true"></i>
+                                            </span>
+                                <span>{{ bookmark.favorite.all|length|intword }}</span>
+                            </a>
+                            <!--  End Like  -->
                             <a href="{% url 'bookmark' bookmark.id %}" class="tag is-light hero-btn" title="Просмотров">
                                 <span class="icon">
                                     <i class="fa fa-eye" aria-hidden="true"></i>
@@ -194,10 +355,11 @@
                                                     <span class="icon">
                                                      <i class="fa fa-star-o" aria-hidden="true"></i>
                                                     </span>
-                                <span> 0</span>
+                                <span> {{ bookmark.number_of_votes }}</span>
                             </a>
                         </p>
-                                <br>
+                    </div>
+                    <hr>
                                 </div>
             {% empty %}
             <div class="column is-4 has-text-black has-text-centered">
@@ -213,6 +375,7 @@
         </div>
 </div>
     </section>
+</div>
 
 
 

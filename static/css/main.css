@@ -5,10 +5,9 @@
 @import "/static/css/home.css";
 @import "/static/css/contact.css";
 @import "/static/css/button-share.css";
-
+@import "/static/css/about.css";
 @import "/static/css/navbar.css";
 
-@import "/static/css/blog.css";
 @import "/static/css/login.css";
 
 @import "/static/css/search.css";
@@ -38,6 +37,13 @@ a {
   --background: #E4E9F2;
   --shadowLight: #EFF5FE;
   --main-bg-color: brown;
+}
+
+.ml {
+    margin-left: 20px;
+}
+.icon-mr {
+    margin-right: 10px;
 }
 
 .card {

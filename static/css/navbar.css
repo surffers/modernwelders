@@ -10,6 +10,21 @@
     font-size: 28px;
     font-weight: 900;
 }
+.notifications.tag {
+    position: absolute;
+    left: 25px;
+    background: #276CDA;
+    width: 15px;
+    height: 15px;
+    font-size: 14px;
+    color: #fff;
+}
+/* Centered Menu */
+.navbar.has-centered-menu .navbar-start {
+  flex-grow: 1;
+  justify-content: center;
+}
+
 
 
 

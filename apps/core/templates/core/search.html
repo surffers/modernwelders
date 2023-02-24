@@ -20,7 +20,7 @@
                 {% for bookmark in page_obj %}
                 <div class="box-home box-link">
                                     <p class="title is-7 has-text-weight-bold is-uppercase">
-                                        <a href="{% url 'category'  bookmark.category.id  %}" class="has-text-black">
+                                        <a href="{% url 'category' bookmark.category.slug bookmark.category.id  %}" class="has-text-black">
                                             {{ bookmark.category.title|truncatechars:100 }}
                                         </a>
 
@@ -109,18 +109,11 @@
                         </h1>
 
                         <div class="tags">
-                            {% for bookmark in page_obj %}
-                            {% for tag in bookmark.tags.all %}
-
-                            <a href="{% url 'tag_detail_url' tag.slug %}" class="tag is-light">
-                                #{{ tag.name|truncatechars:25 }}
-                            </a>
-                            {% endfor %}
-                            {% empty %}
-                                    <p class="subtitle is-6 tag">
-                                        Ничего не найденно!
-                                    </p>
-                            {% endfor %}
+                            {% for tag in tags.all %}
+                                            <a href="{% url 'tag_detail_url' tag.slug %}" class="tag is-light">
+                                                #{{ tag.name|truncatechars:25 }}
+                                            </a>
+                                        {% endfor %}
                         </div>
                     <hr>
 

@@ -5,33 +5,37 @@
 {% load humanize %}
 {% block content %}
 
-        {% include 'core/include/navbar.html' %}
-                <section class="hero category">
-                    <div class="container category">
-                        <div class="hero-body">
-                            <div class="media">
-      <div class="media-left">
-         <p class="title profile category is-size-4-mobile">
-                                    Категории
-                                </p>
-      </div>
-    <div class="media-content"></div>
-      <div class="media-right">
-        <div class="buttons">
-
-
-            <a class="button is-light is-small" title="Количество ссылок">
+{% include 'core/include/navbar.html' %}
+<section class="section">
+    <div class="container category">
+        <div class="media">
+            <div class="media-left">
+                {% if request.user.is_authenticated %}
+                <a href="{% url 'profile' user.username %}">
+                    <p class="subtitle is-size-4 is-size-5-mobile is-lowercase">
+                        @{{ user.username|truncatechars:25 }}
+                    </p>
+                </a>
+                {% else %}
+                <h1 class="title home is-size-3-mobile">
+                    Все категории
+                </h1>
+                {% endif %}
+            </div>
+            <div class="media-content"></div>
+            <div class="media-right">
+                <div class="buttons">
+                    <a class="button is-light is-small" title="Количество ссылок">
                         <span class="icon">
                             {{ published_categories.all|length|intword }}
                         </span>
                     </a>
-
                     <!--  Share  -->
                     <div class="dropdown is-hoverable is-right">
                         <div class="dropdown-trigger button is-light is-small">
                             <div title="Поделиться">
                             <span class="icon is-size-7">
-                              <i class="fa fa-share-square-o" aria-hidden="true"></i>
+                              <svg height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(4 2)"><path d="m8.5 2.5-1.978-2-2.022 2"/><path d="m6.5.5v9"/><path d="m3.5 4.5h-1c-1.1045695 0-2 .8954305-2 2v7c0 1.1045695.8954305 2 2 2h8c1.1045695 0 2-.8954305 2-2v-7c0-1.1045695-.8954305-2-2-2h-1"/></g></svg>
                             </span>
                             </div>
                         </div>
@@ -66,124 +70,82 @@
                         </div>
                     </div>
                     <!--  End Share  -->
-
                 </div>
-      </div>
-    </div>
-
-
-
-
-                        <div class="columns is-vcentered">
-                            <div class="column is-10">
-
-                                <p class="subtitle is-6">
-                                    Собирайте ссылки в одну категорию и делитесь одной ссылкой везде
-                                </p>
-
-                            </div>
-
-
-                             <div class="column is-2">
-
-                             </div>
-
-
-                        </div>
-
-
-                    </div>
-                    </div>
-                </section>
-
-            <div class="container">
-                <section class="section">
-                    {% if messages %}
-                        {% for message in messages %}
-                            <article class="message is-{{ message.tags }}">
-                                <div class="message-body">
-                                    {{ message }}
-                                </div>
-                            </article>
-                        {% endfor %}
-                    {% endif %}
-                    <div class="columns is-multiline">
-                        {% for category in page_obj %}
-                        {% if category.published_date %}
-                        <div class="column is-one-fifth">
-                        <div class="story-item">
-                    <a href="{% url 'category' category.id %}">
-                        <div class="card profile">
-                            <div class="card-content">
-                                <p class="title is-4 has-text-weight-bold v">
-                                    {{ category.title|truncatechars:25 }}
-                                </p>
-
-                                <div class="block-home-category">
-                                    <p class="title is-6 has-text-weight-normal title-body is-lowercase">
-                                        {{ category.body|truncatechars:55 }}
-                                    </p>
-                                    <div class="media subtitle">
-                                        <div class="media-left">
-                                            <p class="subtitle is-size-7 is-lowercase has-text-weight-normal">
-                                                <span>{{ category.created_at|naturaltime }}</span>
-                                            </p>
-                                        </div>
-                                        <div class="media-content"></div>
-                                        <div class="media-right ">
-                                            {% if request.user == user %}
-                                             <div class="dropdown is-hoverable is-up is-right">
-                                                <div class="dropdown-trigger">
-                                                     <p class="is-size-6 is-lowercase has-text-weight-normal">
-                                                         <span class="has-text-success">
-                                                             <i class="fa fa-check-circle-o" aria-hidden="true"></i>
-                                                         </span>
-                                                    </p>
-                                                </div>
-                                                <div class="dropdown-menu" role="menu">
-                                                    <div class="dropdown-content">
-                                                        <div class="dropdown-item">
-                                                            <p class="is-size-7 ">Эта категория<strong> опубликована</strong>, её видно в
-                                                                ленте новостей.</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="columns is-vcentered">
+            {% if request.user.is_authenticated %}
+            <div class="column is-four-fifths">
+                <h1 class="title home is-size-3-mobile">
+                    Все категории
+                </h1>
+            </div>
+            {% endif %}
+        </div>
+        <br>
+        <div class="container is-unselectable">
+            {% if messages %}
+            {% for message in messages %}
+            <article class="message is-{{ message.tags }}">
+                <div class="message-body">
+                    {{ message }}
+                </div>
+            </article>
+            {% endfor %}
+            {% endif %}
+            <div class="columns is-multiline">
+                {% for category in page_obj %}
+                {% if category.published_date %}
+                <div class="column is-one-fifth">
+                    <div class="story-item">
+                        <a href="{% url 'category' category.slug category.id %}">
+                            <div class="card profile">
+                                <div class="card-content">
+                                    <h1 class="title is-4 has-text-weight-bold">
+                                        {{ category.title|truncatechars:33 }}
+                                    </h1>
+                                    <div class="block-home-category">
+                                        <p class="title is-6 has-text-weight-normal title-body is-lowercase">
+                                            {{ category.body|truncatechars:50}}
+                                        </p>
+                                        <div class="media subtitle">
+                                            <div class="media-left">
+                                                    <span class="tag is-white is-size-7 is-lowercase has-text-weight-bold">@{{ category.user.username|truncatechars:25 }}</span>
                                             </div>
-                                            {% endif %}
+                                            <div class="media-content"></div>
+                                            <div class="media-right">
+                                                    <span class="tag is-light is-size-7" title="Количество ссылок">
+                                                        {{ category.bookmarks.all|length|intword }}
+                                                    </span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
+                    </div>
                 </div>
-                        </div>
-                        {% else %}
-
-                        {% endif %}
-                        {% empty %}
-                        </div>
-                        <div class="columns is-centered">
-                                <div class="column is-4 has-text-centered">
-                               <div class="box">
-                                   <span>☝️</span>
-                                    Вы ещё не создали категорию
-                               </div>
-                            </div>
-                        <div class="spacer"></div>
-                            </div>
-
-                        {% endfor %}
-
-                </section>
+                {% else %}
+                {% endif %}
+                {% empty %}
             </div>
-            {% include 'core/include/pagination.html' %}
+            <div class="columns is-centered">
+                <div class="column is-4 has-text-centered">
+                    <div class="box">
+                        <span>☝️</span>
+                        Вы ещё не создали категорию
+                    </div>
+                </div>
+                <div class="spacer"></div>
+            </div>
+            {% endfor %}
+        </div>
 
-
-
-
-
-    <span class="toastbox" role="alert"></span>
+    </div>
+</section>
+{% include 'core/include/pagination.html' %}
+<span class="toastbox" role="alert"></span>
 
 {% endblock %}
 
@@ -195,6 +157,7 @@
         "background-size": "22px", "padding-left": "30px",
     });
 });
+
 
 
 </script>
@@ -318,5 +281,6 @@
   })();
 
   copyToClipboard.handleCopyIconClick();
+
 </script>
 {% endblock %}

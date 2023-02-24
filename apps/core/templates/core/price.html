@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}Surffers | Обратная связь {% endblock %}
+{% block title %}Тарифы | Surffers{% endblock %}
 {% load static %}
 {% load humanize %}
 {% block content %}
@@ -9,11 +9,8 @@
      <div class="container profile">
         <div class="hero-body has-text-centered">
 			<h1 class="title is-1 has-text-weight-bold">
-			Your top tweeting assistant ever
-		</h1>
-			<p class="subtitle">
-				Price in USD. Subscription is tied to one Twitter account. Unsubscribe anytime. No questions asked.
-			</p>
+			Выберите тариф для себя
+			</h1>
 			</div>
 		 </div>
 	  </section>
@@ -36,6 +33,9 @@
 				<div class="features">
 					<p>Добавлять в избранное</p>
 					<p>Комментировать</p>
+					<p>Голосовать</p>
+					<p>5 Категорий</p>
+					<p>50 Закладок</p>
 				</div>
 				<div class="spacer"></div>
 					 <a href="#!" class="button is-dark paddle_button" data-theme="none" data-product="{{ 744394 }}" data-email="{{ user.email }}">
@@ -54,25 +54,15 @@
 				</div>
 				<div class="spacer"></div>
 				<div class="features has-text-link">
+					<p>Добавлять в избранное</p>
+					<p>Комментировать</p>
+					<p>Голосовать</p>
 					<p>50 Категорий</p>
 					<p>500 Закладок</p>
 				</div>
 				<div class="spacer"></div>
 
-<link rel="stylesheet" href="https://yookassa.ru/integration/simplepay/css/yookassa_construct_form.css">
-<form action="https://yookassa.ru/integration/simplepay/payment" method="post" accept-charset="utf-8" >
-    <input name="customerNumber" type="hidden" value="После оплаты, вам на email почту прийдёт письмо для входа на сайт.">
-    <div class="ym-payment-btn-block">
-        <div class="ym-input-icon-rub ym-display-none">
-            <input name="sum" placeholder="0.00" class="ym-input ym-sum-input ym-required-input" type="number" step="any" value="500">
-        </div>
-        <button data-text="Оплатить" class="button is-link"><span class="ym-text-crop">Оплатить</span></button>
-      <lineargradient id="paint0_linear" x1="57.3564" y1="0" x2="57.3564" y2="63" gradientunits="userSpaceOnUse"><stop stop-color="#0160D1"><stop offset="1" stop-color="#00479C"></stop></stop></lineargradient>
-<lineargradient id="paint1_linear" x1="12.8472" y1="9.35889" x2="12.8472" y2="55.2393" gradientunits="userSpaceOnUse"><stop stop-color="#0160D1"><stop offset="1" stop-color="#00479C"></stop></stop></lineargradient>
-
-    </div>
-<input name="shopId" type="hidden" value="927262"></form>
-<script src="https://yookassa.ru/integration/simplepay/js/yookassa_construct_form.js"></script>
+<iframe src="https://yoomoney.ru/quickpay/fundraise/button?billNumber=2LYXyQIIX9Y.230209&" width="100%" height="50" frameborder="0" allowtransparency="true" scrolling="no"></iframe>​
 
                 </div>
 
@@ -86,47 +76,21 @@
 				</div>
 				<div class="spacer"></div>
 				<div class="features">
-					<p>5 Категорий</p>
-					<p>50 Закладок</p>
+					<p>Добавлять в избранное</p>
+					<p>Комментировать</p>
+					<p>Голосовать</p>
+					<p>25 Категорий</p>
+					<p>250 Закладок</p>
 				</div>
 				<div class="spacer"></div>
-					 <a href="#!" class="button is-dark paddle_button" data-theme="none" data-product="{{ 744394 }}" data-email="{{ user.email }}">
-                           Оплатить
-                       </a>
-
+			<iframe src="https://yoomoney.ru/quickpay/fundraise/button?billNumber=Tcq20gIJIfg.230209&" width="100%" height="50" frameborder="0" allowtransparency="true" scrolling="no"></iframe>​
                 </div>
 			</div>
 		</div>
             </div>
         </div>
 	</div>
-
-         <div class="container has-text-centered">
-             <div class="spacer"></div>
-                <div class="footer-payment">
-                    <ul>
-                      <li>
-                        <img alt="Яндекс" src="/static/img/pay_img/yandex-logo.png">
-                      </li>
-                        <li>
-                        <img alt="Mastercard" src="/static/img/pay_img/mastercard-logo.png">
-                      </li>
-                        <li>
-                        <img alt="Mastercard" src="/static/img/pay_img/pci-dss-logo.png">
-                      </li>
-                    </ul>
-                  </div>
-         </div>
 </section>
-
-
-
-
-
-
-
-
-
 {% endblock %}
 {% block scripts %}
 

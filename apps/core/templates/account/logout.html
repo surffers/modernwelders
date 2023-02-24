@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Surffers | Мы будем скучать по тебе{% endblock %}
+{% block title %}Мы будем скучать по тебе | Surffers{% endblock %}
 {% load i18n %}
 
 {% block head_title %}{% trans "Logout" %}{% endblock %}
@@ -17,7 +17,7 @@
         <div class="column is-4">
             <div class="box login">
                 <div class="card-content">
-                    <p class="title is-4 has-text-centered">{% trans 'Вы уверены, что хотите выйти?' %}</p>
+                    <h1 class="title is-4 has-text-centered">{% trans 'Вы уверены, что хотите выйти?' %}</h1>
                     <form method="post" action="{% url 'account_logout' %}">
                         {% csrf_token %}
                         {% if redirect_field_value %}

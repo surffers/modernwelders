@@ -4,22 +4,20 @@
 
 {% block content %}
 
-<div id="add-category" class="navbar-item is-hidden-mobile">
+<div id="add-category" class="is-flex">
 
-         <a class="button is-link"  @click="toggleDialog" >
-                   <span class="icon">
-                       <svg style="fill: currentColor; width: 0.7rem; height: 0.7rem;" version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
-                            <title>add</title>
-                            <path d="M16.943 0.943h-1.885v14.115h-14.115v1.885h14.115v14.115h1.885v-14.115h14.115v-1.885h-14.115v-14.115z">
-                            </path>
-                          </svg>
-                   </span>
-                    <span>
-                        Создать категорию
-                    </span>
-                </a>
-
-
+         <a @click="toggleDialog" class="navbar-item" title="Создать категорию">
+             <span class="icon-text is-flex">
+                 <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-logout" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#000" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <line x1="12" y1="5" x2="12" y2="19" />
+              <line x1="5" y1="12" x2="19" y2="12" />
+            </svg>
+             <span class="is-hidden-desktop ml">
+                 Создать категорию
+             </span>
+             </span>
+         </a>
 
     <!-- ModalDeletedCategory -->
     <div class="modal" v-bind:class="{ 'is-active': showDialog }">
@@ -44,7 +42,7 @@
 
 
                                 <div class="field">
-                                    <label class="label">Название</label>
+                                    <label class="label">Название <span class="has-text-danger">*</span></label>
                                     <div class="control">
                                         {{ AddCategoryForm.title }}
                                     </div>
@@ -55,7 +53,7 @@
                                 </div>
 
                                 <div class="field">
-                                    <label class="label">Описание:</label>
+                                    <label class="label">Описание</label>
                                     <div class="control">
                                         {{ AddCategoryForm.body }}
                                     </div>
@@ -77,6 +75,7 @@
                                     </div>
                                 </div>
 
+                        <span class="has-text-danger">*</span> обязательно к заполнению
 
                     </form>
 

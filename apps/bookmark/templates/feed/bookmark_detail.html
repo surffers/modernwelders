@@ -2,6 +2,7 @@
 {% block title %}Surffers | {{ bookmark.title|truncatechars:40 }}{% endblock %}
 {% load static %}
 {% load humanize %}
+{% load embed_video_tags %}
 
 {% block content %}
 
@@ -52,13 +53,13 @@
                                             </span>
                             </a>
                             {% endif %}
-                            <div class="is-pulled-right">
+
                                 <div class="dropdown is-hoverable is-right">
                                     <div class="dropdown-trigger">
                                         <button class="button is-light is-small"
                                                 title="Поделиться">
                                 <span class="icon is-size-6">
-                                  <i class="fa fa-share-square-o" aria-hidden="true"></i>
+                                  <svg height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(4 2)"><path d="m8.5 2.5-1.978-2-2.022 2"/><path d="m6.5.5v9"/><path d="m3.5 4.5h-1c-1.1045695 0-2 .8954305-2 2v7c0 1.1045695.8954305 2 2 2h8c1.1045695 0 2-.8954305 2-2v-7c0-1.1045695-.8954305-2-2-2h-1"/></g></svg>
                                 </span>
                                         </button>
                                     </div>
@@ -92,24 +93,6 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            {% if bookmark.published_date %}
-
-                            <a class="button is-light is-small" title="Категория опубликована">
-                                    <span class="icon has-text-success is-size-6">
-                                            <i class="fa fa-check-circle-o" aria-hidden="true"></i>
-                                        </span>
-                            </a>
-                            {% else %}
-
-
-                            <a class="button is-light is-small" title="Опубликовать ссылку для всеобщего доступа">
-                                            <span class="icon has-text-danger is-size-6">
-                                                <i class="fa fa-check-circle-o" aria-hidden="true"></i>
-                                            </span>
-                            </a>
-
-                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -123,6 +106,8 @@
                         {{ bookmark.category.title }}
                     </a>
                 </p>
+                <div class="columns">
+                    <div class="column">
                 {% if bookmark.url_icon %}
                 <a class="icon-bookmark subtitle has-text-weight-bold" href="{{ bookmark.url }}"
                    target="_blank">
@@ -131,6 +116,43 @@
                    target="_blank">
                     {{ bookmark.title }}
                 </a>
+                {% if user == bookmark.user %}
+                                {% if bookmark.published_date %}
+                                    <div class="dropdown is-hoverable">
+                                    <div class="dropdown-trigger">
+                                    <span class="icon has-text-success is-size-6 is-size-6-mobile">
+                                        <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                                    </span>
+                                    </div>
+                                    <div class="dropdown-menu" role="menu">
+                                        <div class="dropdown-content">
+                                            <div class="dropdown-item">
+                                                <p>
+                                                    Эта ссылка опубликована
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% else %}
+                                    <div class="dropdown is-hoverable">
+                                    <div class="dropdown-trigger">
+                                    <span class="icon has-text-danger is-size-6 is-size-6-mobile">
+                                        <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                                    </span>
+                                    </div>
+                                    <div class="dropdown-menu" role="menu">
+                                        <div class="dropdown-content">
+                                            <div class="dropdown-item">
+                                                <p>
+                                                    Эта ссылка не опубликована
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                {% endif %}
 
                 {% else %}
 
@@ -138,7 +160,43 @@
                    target="_blank">
                     {{ bookmark.title }}
                 </a>
-
+                                {% if user == bookmark.user %}
+                                {% if bookmark.published_date %}
+                                    <div class="dropdown is-hoverable">
+                                    <div class="dropdown-trigger">
+                                    <span class="icon has-text-success is-size-6 is-size-6-mobile">
+                                        <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                                    </span>
+                                    </div>
+                                    <div class="dropdown-menu" role="menu">
+                                        <div class="dropdown-content">
+                                            <div class="dropdown-item">
+                                                <p>
+                                                    Эта ссылка опубликована
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% else %}
+                                    <div class="dropdown is-hoverable">
+                                    <div class="dropdown-trigger">
+                                    <span class="icon has-text-danger is-size-6 is-size-6-mobile">
+                                        <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                                    </span>
+                                    </div>
+                                    <div class="dropdown-menu" role="menu">
+                                        <div class="dropdown-content">
+                                            <div class="dropdown-item">
+                                                <p>
+                                                    Эта ссылка не опубликована
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                {% endif %}
 
                 {% endif %}
                 <p class="subtitle is-6 is-size-6-mobile">
@@ -154,24 +212,24 @@
                 <p class="subtitle is-7">
                     <span class="subtitle is-7"> {{ bookmark.created_at|naturaltime }}</span>
                 </p>
+                    </div>
+                    {% if bookmark.video %}
+                    <div class="column is-offset-1">
+                        {% video bookmark.video '100% x 200' %}
+                    </div>
+                    {% endif %}
+                </div>
 
                 <hr>
 
                 <div class="buttons">
                     {% if bookmark.published_date %}
                     {% else %}
-                    {% if user.is_superuser %}
+                    {% if user == bookmark.user %}
                     <a class="button is-link is-medium"
                        href="{% url 'bookmark_publish' bookmark.id  %}">
                         Опубликовать
                     </a>
-                    {% else %}
-                    {% if user == bookmark.user %}
-                    <a class="button is-link"
-                       href="https://yoomoney.ru/to/410019178238860">
-                        Запуск
-                    </a>
-                    {% endif %}
                     {% endif %}
 
                     {% endif %}
@@ -227,8 +285,9 @@
 
             {% if request.user.is_authenticated %}
             <div class="box">
-                <form method="post" enctype="multipart/form-data">
+                <form method="post" enctype="multipart/form-data" id="formReview">
                 {% csrf_token %}
+                    <input type="hidden" name="parent" id="contactparent" value="">
                 <div class="field has-addons">
                     <div class="control is-expanded">
                         {{ form.body }}
@@ -258,8 +317,10 @@
                 <small>{{ comment.created_at|naturaltime }} </small><br>
                 {{ comment.body }}
             </p>
+                <a href="#formReview"
+                       onclick="addReview('{{ comment.user.username }}', '{{ comment.id }}')">Ответить</a>
 
-            <br>
+                    <br>
             {% empty %}
 
 
@@ -289,7 +350,13 @@
 
 
 {% block scripts %}
+<script>
+        function addReview(user.username, id) {
+            document.getElementById("contactparent").value = id;
+            document.getElementById("contactcomment").innerText = `${user.username}, `
+        }
 
+    </script>
 <script>
 $('.hero-btn').click(function(){
   if(!$('.hero-btn').parent().hasClass('active')){

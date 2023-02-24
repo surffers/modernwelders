@@ -15,20 +15,58 @@ from apps.notification.utilities import create_notification
 
 @login_required
 def user_links(request, username):
-    all_categories = Category.objects.all().select_related('user')
-    userids = [request.user.id]
-    bookmarks = Bookmark.objects.filter(user_id__in=userids).select_related('category')
-    categories = Category.objects.all()
+    user = get_object_or_404(User, username=username)
+    links = Link.objects.filter(user=user)
+    bookmarks = Bookmark.objects.filter(user=user).select_related('category', 'user')
+    categories = Category.objects.filter(user=user, published_date__lte=timezone.now()).order_by("created_at")
+    categories_public = Category.objects.filter(user=user).select_related('user')
+    categories_drafts = Category.objects.filter(user=user, published_date__isnull=True)
+    favorite_bookmarks = user.favorite.all()
 
-    paginator = Paginator(bookmarks, 99)
+    # Add link
+    if request.method == 'POST' and 'btnlink' in request.POST:
+        AddLinkForm = LinkForm(request.POST)
+        if AddLinkForm.is_valid():
+            link = AddLinkForm.save(commit=False)
+            link.user = request.user
+            link.save()
+            return redirect('profile', username=request.user.username)
+    else:
+        AddLinkForm = LinkForm()
+
+    AddCategoryForm = CategoryForm(request.POST, request.FILES)
+    if AddCategoryForm.is_valid():
+        category = AddCategoryForm.save(commit=False)
+        category.user = request.user
+        category.save()
+        return redirect('profile', username=request.user.username)
+
+    if request.method == 'POST':
+        UserEditForm = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
+
+        if UserEditForm.is_valid():
+            UserEditForm.save()
+            messages.success(request, 'Изменения сохранены!')
+            return redirect('profile', username=request.user.username)
+    else:
+        UserEditForm = ProfileForm(instance=user.profile)
+
+    paginator = Paginator(bookmarks, 9)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
     context = {
-        'bookmarks': bookmarks,
-        'all_categories': all_categories,
+        'user': user,
         'page_obj': page_obj,
+        'links': links,
+        'bookmarks': bookmarks,
         'categories': categories,
+        'categories_drafts': categories_drafts,
+        'categories_public': categories_public,
+        'AddLinkForm': AddLinkForm,
+        'UserEditForm': UserEditForm,
+        'AddCategoryForm': AddCategoryForm,
+        'favorite_bookmarks': favorite_bookmarks,
     }
     return render(request, 'profiles/user_links.html', context)
 
@@ -141,17 +179,48 @@ def edit_profile(request):
 
 @login_required
 def bookmark_favorite_lists(request, username):
-    user = request.user
-    favorite_bookmarks = user.favorite.all().select_related('category', 'user')
+    user = get_object_or_404(User, username=username)
     links = Link.objects.filter(user=user)
+    favorite_bookmarks = user.favorite.all().select_related('category', 'user')
     bookmarks = Bookmark.objects.all().select_related('category', 'user')
-    categories = Category.objects.filter(user=user).select_related('bookmark', 'user')
+    categories = Category.objects.filter(user=user).select_related('user')
+
+    # Add link
+    if request.method == 'POST' and 'btnlink' in request.POST:
+        AddLinkForm = LinkForm(request.POST)
+        if AddLinkForm.is_valid():
+            link = AddLinkForm.save(commit=False)
+            link.user = request.user
+            link.save()
+            return redirect('profile', username=request.user.username)
+    else:
+        AddLinkForm = LinkForm()
+
+    AddCategoryForm = CategoryForm(request.POST, request.FILES)
+    if AddCategoryForm.is_valid():
+        category = AddCategoryForm.save(commit=False)
+        category.user = request.user
+        category.save()
+        return redirect('profile', username=request.user.username)
+
+    if request.method == 'POST':
+        UserEditForm = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
+
+        if UserEditForm.is_valid():
+            UserEditForm.save()
+            messages.success(request, 'Изменения сохранены!')
+            return redirect('profile', username=request.user.username)
+    else:
+        UserEditForm = ProfileForm(instance=user.profile)
 
     context = {
         'favorite_bookmarks': favorite_bookmarks,
         'links': links,
         'bookmarks': bookmarks,
         'categories': categories,
+        'AddLinkForm': AddLinkForm,
+        'UserEditForm': UserEditForm,
+        'AddCategoryForm': AddCategoryForm,
     }
     return render(request, 'profiles/favorite_profile.html', context)
 
@@ -177,13 +246,97 @@ def unfollow_user(request, username):
 
 def followers(request, username):
     user = get_object_or_404(User, username=username)
-    # bookmarks = user.bookmarks.all().order_by("-created_at")[0:10]
+    links = Link.objects.filter(user=user)
+    favorite_bookmarks = user.favorite.all().select_related('category', 'user')
+    bookmarks = Bookmark.objects.all().select_related('category', 'user')
+    categories = Category.objects.filter(user=user).select_related('user')
 
-    return render(request, 'profiles/followers.html', {'user': user})
+    # Add link
+    if request.method == 'POST' and 'btnlink' in request.POST:
+        AddLinkForm = LinkForm(request.POST)
+        if AddLinkForm.is_valid():
+            link = AddLinkForm.save(commit=False)
+            link.user = request.user
+            link.save()
+            return redirect('profile', username=request.user.username)
+    else:
+        AddLinkForm = LinkForm()
+
+    AddCategoryForm = CategoryForm(request.POST, request.FILES)
+    if AddCategoryForm.is_valid():
+        category = AddCategoryForm.save(commit=False)
+        category.user = request.user
+        category.save()
+        return redirect('profile', username=request.user.username)
+
+    if request.method == 'POST':
+        UserEditForm = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
+
+        if UserEditForm.is_valid():
+            UserEditForm.save()
+            messages.success(request, 'Изменения сохранены!')
+            return redirect('profile', username=request.user.username)
+    else:
+        UserEditForm = ProfileForm(instance=user.profile)
+
+    context = {
+        'user': user,
+        'favorite_bookmarks': favorite_bookmarks,
+        'links': links,
+        'bookmarks': bookmarks,
+        'categories': categories,
+        'AddLinkForm': AddLinkForm,
+        'UserEditForm': UserEditForm,
+        'AddCategoryForm': AddCategoryForm,
+    }
+
+    return render(request, 'profiles/followers.html', context)
 
 
 def follows(request, username):
     user = get_object_or_404(User, username=username)
-    bookmarks = user.bookmarks.all().order_by("-created_at")[0:10]
+    links = Link.objects.filter(user=user)
+    favorite_bookmarks = user.favorite.all().select_related('category', 'user')
+    bookmarks = Bookmark.objects.all().select_related('category', 'user')
+    categories = Category.objects.filter(user=user).select_related('user')
 
-    return render(request, 'profiles/follows.html', {'user': user, 'bookmarks': bookmarks})
+    # Add link
+    if request.method == 'POST' and 'btnlink' in request.POST:
+        AddLinkForm = LinkForm(request.POST)
+        if AddLinkForm.is_valid():
+            link = AddLinkForm.save(commit=False)
+            link.user = request.user
+            link.save()
+            return redirect('profile', username=request.user.username)
+    else:
+        AddLinkForm = LinkForm()
+
+    AddCategoryForm = CategoryForm(request.POST, request.FILES)
+    if AddCategoryForm.is_valid():
+        category = AddCategoryForm.save(commit=False)
+        category.user = request.user
+        category.save()
+        return redirect('profile', username=request.user.username)
+
+    if request.method == 'POST':
+        UserEditForm = ProfileForm(request.POST, request.FILES, instance=request.user.profile)
+
+        if UserEditForm.is_valid():
+            UserEditForm.save()
+            messages.success(request, 'Изменения сохранены!')
+            return redirect('profile', username=request.user.username)
+    else:
+        UserEditForm = ProfileForm(instance=user.profile)
+
+    context = {
+        'user': user,
+        'favorite_bookmarks': favorite_bookmarks,
+        'links': links,
+        'bookmarks': bookmarks,
+        'categories': categories,
+        'AddLinkForm': AddLinkForm,
+        'UserEditForm': UserEditForm,
+        'AddCategoryForm': AddCategoryForm,
+    }
+
+    return render(request, 'profiles/follows.html', context)

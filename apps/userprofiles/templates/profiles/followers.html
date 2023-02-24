@@ -1,55 +1,258 @@
 {% extends 'base.html' %}
 {% block title %}
 
-{{ user.username }}
-
--
-SURFFERS
+{{ user.username }} - подписчики | Surffers
 
 {% endblock %}
 {% load static %}
 {% load humanize %}
 
 {% block content %}
+ {% include 'core/include/navbar.html' %}
+<section class="hero">
+    <div class="container profile">
+        <div class="hero-body">
+            <div class="columns">
+                <div class="column">
+                    <div class="buttons">
+                        {% if request.user == user %}
+                        {% include 'profiles/include/add_link.html' %}
+                        {% endif %}
+
+                        {% for link in links %}
+                        <p class="u-links">
+                            <a class="icon-bookmark" href="{{ link.url }}" target="_blank" title="{{ link.title }}">
+                            </a>
+                        </p>
+                        {% empty %}
+                        {% if request.user == user %}
+                        <div class="box-tooltip arrow-left">
+                            <p class="subtitle is-6 has-text-white">
+                                Добавьте свои ссылки на соцсети
+                            </p>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="columns">
+                <div class="column">
+
+                    <div class="is-flex-desktop">
+                            <h1 class="title is-size-5 has-text-weight-bold profile-username">
+                                {{ user.username|truncatechars:25 }}
+                            </h1>
+                        {% if request.user == user %}
+                        {% include 'profiles/include/user-edit-profile.html' %}
+                        {% else %}
+
+                            <div class="block is-flex">
+                                {% if request.user.profile in user.profile.followed_by.all %}
+                            <!-- Button-unfollow -->
+                            {% include 'profiles/include/button-unfollow.html' %}
+                            <!-- End-button-unfollow -->
+                            {% else %}
+                            <a href="{% url 'follow_user' user.username %}" class="button is-link is-small is-rounded is-outlined mr-10">
+                                Подписаться
+                            </a>
+                            {% endif %}
 
 
-          {% for followers in user.profile.followed_by.all %}
-          <div class="card">
+                            <a href="mailto:{{ user.email }}" class="button is-link is-small is-rounded">
+                                <span class="icon">
+                                    <i aria-hidden="true" class="fa fa-envelope-o"></i>
+                                </span>
+                                <span>
+                                    Напишите нам
+                                </span>
+                            </a>
+                            </div>
+
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="columns">
+                <div class="column is-6">
+                    {% if user.profile.bio %}
+                    <h1 class="subtitle bio">
+                        <span class="bio is-size-4-mobile">
+                            {{ user.profile.bio }}
+                        </span>
+                    </h1>
+                    {% else %}
+                    {% endif %}
+                    <nav class="level is-mobile title">
+                        <div class="level-left">
+                            <div class="level-item">
+                                <div>
+                                    <a href="{% url 'profile' user.username %}"  class="subtitle is-6">{{ categories.all|length|intword }} категории</a>
+                                </div>
+                            </div>
+                            <div class="level-item">
+                                <div>
+                                    <a href="{% url 'user_links' user.username %} " class="subtitle is-6">
+                                        {{ user.bookmarks.all|length|intword }} ссылки
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="level-item">
+                                <div>
+                                    <a href="{% url 'followers' user.username %}" class="subtitle is-6">
+                                        {{ user.profile.followed_by.count }} подписчики
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="level-item">
+                                <div>
+                                    <a href="{% url 'follows' user.username %}" class="subtitle is-6">
+                                        {{ user.profile.follows.count }} подписки
+                                    </a>
+                                </div>
+                            </div>
+                            {% if request.user == user %}
+                            <div class="level-item">
+                                <div>
+                                    <a class="subtitle is-6">{{ categories_drafts.all|length|intword }} черновики</a>
+                                </div>
+                            </div>
+                            <div class="level-item">
+                                <div>
+                                    <a class="subtitle is-6">{{ user.votes.all|length|intword }} голосов</a>
+                                </div>
+                            </div>
+                            <div class="level-item">
+                                <div>
+                                    <a class="subtitle is-6">{{ user.comments.all|length|intword }} комментарии</a>
+                                </div>
+                            </div>
+                            <div class="level-item">
+                                <div>
+                                    <a href="{% url 'bookmark_favorite_lists' user.username %} " class="subtitle is-6">
+                                        {{ user.favorite.all|length|intword }} избранное
+                                    </a>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </nav>
+                    <!--  Share  -->
+                    <div class="buttons">
+                        <div class="block share has-text-centered">
+                            <a class="button is-light" role="button" title="Копировать ссыылку">
+                                <span class="copy-icon ">
+                                    <i class="fas fa-link icon"></i>
+                                </span>
+                            </a>
+                            <a class="button is-light sharer" href="#" id="share-em" title="Отправить на почту">
+                                <span>
+                                    <i aria-hidden="true" class="fa fa-envelope-o"></i>
+                                </span>
+                            </a>
+                            <a class="button is-light sharer" href="#" id="share-vk" title="Поделиться ВКонтакте">
+                                <span>
+                                    <i class="fab fa-vk"></i>
+                                </span>
+                            </a>
+                            <a class="button is-light sharer" href="#" id="share-tg" title="Поделиться в Telegram">
+                                <span>
+                                    <i class="fab fa-telegram"></i>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                    <!--  End Share  -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <nav class="level is-mobile mobile ">
+        <div class="level-item has-text-centered is-hidden-desktop">
+            <div>
+                <p class="heading">Категории</p>
+                <p class="title is-5">{{ categories.all|length|intword }}</p>
+            </div>
+        </div>
+        <div class="level-item has-text-centered">
+            <div>
+                <p class="heading">Подписки</p>
+                <p class="title is-5">{{ user.profile.follows.count }}</p>
+            </div>
+        </div>
+        <div class="level-item has-text-centered">
+            <div>
+                <p class="heading">Подписчики</p>
+                <p class="title is-5">{{ user.profile.followed_by.count }}</p>
+            </div>
+        </div>
+    </nav>
+</section>
+
+
+<div class="container">
+    <section class="section">
+            <div class="columns is-multiline">
+            {% for followers in user.profile.followed_by.all %}
+          <div class="column is-4">
+              <div class="card">
             <a href="{% url 'profile' followers.user.username %}">
               <div class="card-content">
                 <div class="media">
                   <div class="media-left">
-                    <img class="user-img" src="{{ followers.user.profile.avatar.url }}" alt="Avatar">
                   </div>
                   <div class="media-content">
-                    <p class="title is-4">{{ followers.user.username }}</p>
+                    <p class="title is-4">@{{ followers.user.username }}</p>
+                      <p class="subtitle is-6">
+                                    <span>
+                                        {{ followers.user.categories.all|length|intword }} категории
+                                    </span>&nbsp;
+                                    <span>
+                                        {{ followers.user.bookmarks.all|length|intword }} ссылки
+                                    </span>
+                                </p>
                     {% if followers.user.profile.bio %}
                     <p class="subtitle is-6">
                       {{ followers.user.profile.bio|truncatechars:200 }}
-    
-                      <!-- <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time> -->
                     </p>
                     {% endif %}
                   </div>
                 </div>
-               
+
               </div>
             </a>
           </div>
+          </div>
           <br>
           {% empty %}
-          {% if request.user == user %}
-          <div class="column">
-            <h2 class="title is-4 has-text-centered">Sorry? you don't have any followers!</h2>
-          </div>
-          {% else %}
-          <div class="column">
-            <h2 class="title is-4 has-text-centered">{{ user.username }} doesn't have any followers!</h2>
-          </div>
-          {% endif %}
+
+              {% if request.user == user %}
+                    <div class="column is-4 has-text-black has-text-centered">
+                        <div class="box">
+                            <span>😳</span>
+                            <p class="title is-6">
+                                У вас нет подписчиков!
+                            </p>
+                        </div>
+                    </div>
+                  {% else %}
+                    <div class="column is-4 has-text-black has-text-centered">
+                        <div class="box">
+                            <span>😳</span>
+                            <p class="title is-6">
+                                {{ user.username }} не имеет подписчиков!
+                            </p>
+                        </div>
+                    </div>
+                  {% endif %}
+
           {% endfor %}
-
-
+            </div>
+    </section>
+</div>
 
 
     <span class="toastbox" role="alert"></span>
@@ -59,98 +262,19 @@ SURFFERS
 {% endblock %}
 
 {% block scripts %}
-
 <script>
-  // Get all the dropdown from document
-  document.querySelectorAll('.dropdown-toggle').forEach(dropDownFunc);
-
-  // Dropdown Open and Close function
-  function dropDownFunc(dropDown) {
-    console.log(dropDown.classList.contains('click-dropdown'));
-
-    if (dropDown.classList.contains('click-dropdown') === true) {
-      dropDown.addEventListener('click', function (e) {
-        e.preventDefault();
-
-        if (this.nextElementSibling.classList.contains('dropdown-active') === true) {
-          // Close the clicked dropdown
-          this.parentElement.classList.remove('dropdown-open');
-          this.nextElementSibling.classList.remove('dropdown-active');
-
-        } else {
-          // Close the opend dropdown
-          closeDropdown();
-
-          // add the open and active class(Opening the DropDown)
-          this.parentElement.classList.add('dropdown-open');
-          this.nextElementSibling.classList.add('dropdown-active');
-        }
-      });
-    }
-
-    if (dropDown.classList.contains('hover-dropdown') === true) {
-
-      dropDown.onmouseover = dropDown.onmouseout = dropdownHover;
-
-      function dropdownHover(e) {
-        if (e.type == 'mouseover') {
-          // Close the opend dropdowns
-          closeDropdown();
-
-          // add the open and active class(Opening the DropDown)
-          this.parentElement.classList.add('dropdown-open');
-          this.nextElementSibling.classList.add('dropdown-active');
-
-        }
-
-        // if(e.type == 'mouseout'){
-        //     // close the dropdown after user leave the list
-        //     e.target.nextElementSibling.onmouseleave = closeDropdown;
-        // }
-      }
-    }
-
-  };
-
-
-  // Listen to the doc click
-  window.addEventListener('click', function (e) {
-
-    // Close the menu if click happen outside menu
-    if (e.target.closest('.dropdown-container') === null) {
-      // Close the opend dropdown
-      closeDropdown();
-    }
-
-  });
-
-
-  // Close the openend Dropdowns
-  function closeDropdown() {
-    console.log('run');
-
-    // remove the open and active class from other opened Dropdown (Closing the opend DropDown)
-    document.querySelectorAll('.dropdown-container').forEach(function (container) {
-      container.classList.remove('dropdown-open')
+$("a.icon-bookmark[href^='http']").each(function() {
+    $(this).css({
+        background: "url(http://www.google.com/s2/favicons?domain=" + this.href + ") left center no-repeat",
+        "background-size": "22px", "padding-left": "30px",
     });
-
-    document.querySelectorAll('.dropdown-menu').forEach(function (menu) {
-      menu.classList.remove('dropdown-active');
     });
-  }
-
-  // close the dropdown on mouse out from the dropdown list
-  document.querySelectorAll('.dropdown-menu').forEach(function (dropDownList) {
-    // close the dropdown after user leave the list
-    dropDownList.onmouseleave = closeDropdown;
-  });
 </script>
-
 <script>
-  document.addEventListener("DOMContentLoaded", function (event) {
+document.addEventListener("DOMContentLoaded", function (event) {
 
-    // Uses sharer.js 
-    //  https://ellisonleao.github.io/sharer.js/#twitter	
+    // Uses sharer.js
+    //  https://ellisonleao.github.io/sharer.js/#twitter
     var url = window.location.href;
     var title = document.title;
     var subject = "Read this good article";
@@ -158,16 +282,16 @@ SURFFERS
     //console.log( url );
     //console.log( title );
 
-    //whatsapp
-    $('#share-wa').attr('data-url', url).attr('data-title', title).attr('data-sharer', 'whatsapp');
     //facebook
     $('#share-fb').attr('data-url', url).attr('data-sharer', 'facebook');
-    //telegram
-    $('#share-tg').attr('data-url', url).attr('data-sharer', 'telegram');
     //vk
     $('#share-vk').attr('data-url', url).attr('data-sharer', 'vk');
-    //vk
+    //reddit
     $('#share-rt').attr('data-url', url).attr('data-sharer', 'reddit');
+    // pinterest
+    $('#share-pn').attr('data-url', url).attr('data-title', title).attr('data-sharer', 'pinterest');
+    // telegram
+    $('#share-tg').attr('data-url', url).attr('data-title', title).attr('data-sharer', 'telegram');
     //twitter
     $('#share-tw').attr('data-url', url).attr('data-title', title).attr('data-via', via).attr('data-sharer',
       'twitter');
@@ -185,7 +309,7 @@ SURFFERS
     });
 
 
-    // only show whatsapp on mobile devices  
+    // only show whatsapp on mobile devices
     var isMobile = false; //initiate as false
     // device detection
     if (
@@ -214,7 +338,7 @@ SURFFERS
     var toastBox = document.querySelector(".toastbox");
     var pageUrl = window.location.href;
 
-    function isCopying(string) { // text to copy 
+    function isCopying(string) { // text to copy
       var textarea, result;
       try {
         textarea = document.createElement('textarea');
@@ -264,7 +388,7 @@ SURFFERS
 
     function handleCopyIconClick() {
       copyIcon.addEventListener("click", function () {
-        showToastBox(isCopying(pageUrl) ? "Link copied successfully" : "Unable to copy");
+        showToastBox(isCopying(pageUrl) ? "Ссылка успешно скопирована" : "Unable to copy");
       })
     }
 
@@ -275,25 +399,16 @@ SURFFERS
   })();
 
   copyToClipboard.handleCopyIconClick();
-</script>
 
-<script>
-  var messageBox = document.querySelector('.js-message');
-  var btn = document.querySelector('.js-message-btn');
-  var card = document.querySelector('.js-profile-card');
-  var closeBtn = document.querySelectorAll('.js-message-close');
 
-  btn.addEventListener('click', function (e) {
-    e.preventDefault();
-    card.classList.add('active');
-  });
 
-  closeBtn.forEach(function (element, index) {
-    console.log(element);
-    element.addEventListener('click', function (e) {
-      e.preventDefault();
-      card.classList.remove('active');
-    });
-  });
+
+
+
+
+
+
+
+
 </script>
 {% endblock %}

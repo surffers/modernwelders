@@ -2,25 +2,26 @@
 {% load humanize %}
 
 {% block content %}
-<div id="add-bookmark" class="buttons">
+<div id="add-bookmark" class="block is-flex">
 
     {% if request.user == user %}
-       <a @click="toggleDialog" class="button is-link">
+    <a @click="toggleDialog" class="button is-link">
 <span class="icon">
-                       <svg style="fill: currentColor; width: 1rem; height: 1rem;" version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+                       <svg style="fill: currentColor; width: 1rem; height: 1rem;" version="1.1"
+                            xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
                             <title>add</title>
                             <path d="M16.943 0.943h-1.885v14.115h-14.115v1.885h14.115v14.115h1.885v-14.115h14.115v-1.885h-14.115v-14.115z">
                             </path>
                           </svg>
                    </span>
-                                                   &nbsp;&nbsp;
-                                                   <span>Добавить ссылку</span>
+        &nbsp;&nbsp;
+        <span>Добавить ссылку</span>
 
 
     </a>
     {% endif %}
 
-  <!-- ModalDeletedCategory -->
+    <!-- ModalDeletedCategory -->
     <div class="modal" v-bind:class="{ 'is-active': showDialog }">
         <div class="modal-background"></div>
         <div class="modal-card">
@@ -33,84 +34,89 @@
                     <form action="" class="form-add-category" enctype="multipart/form-data" id="bookmark-form"
                           method="post" role="form">
                         {% csrf_token %}
-<div class="field">
-  <label class="label">Название:</label>
-  <div class="control">
-    {{ form.title }}
-  </div>
-</div>
+                        <div class="field">
+                            <label class="label">Название <span class="has-text-danger">*</span></label>
+                            <div class="control">
+                                {{ form.title }}
+                            </div>
+                        </div>
 
                         <div class="field">
- <label class="label">Описание:</label>
-  <div class="control">
-    {{ form.body }}
-  </div>
-</div>
+                            <label class="label">Описание</label>
+                            <div class="control">
+                                {{ form.body }}
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="label">Видео Url</label>
+                            <div class="control">
+                                {{ form.video }}
+                            </div>
+                        </div>
 
-
-
-
-                                   <div class="field">
-<label class="label">Url:</label>
-  <div class="control">
-    {{ form.url }}
-  </div>
-</div>
+                        <div class="field">
+                            <label class="label">Url <span class="has-text-danger">*</span></label>
+                            <div class="control">
+                                {{ form.url }}
+                            </div>
+                        </div>
 
                         {% if user.is_superuser %}
-                               <div class="field">
-<label class="label">Ссылка на партнёрку:</label>
-  <div class="control">
-    {{ form.url_icon }}
-  </div>
-</div>
+                        <div class="field">
+                            <label class="label">Ссылка на партнёрку</label>
+                            <div class="control">
+                                {{ form.url_icon }}
+                            </div>
+                        </div>
                         {% endif %}
 
 
-
-
-                          <div class="field">
-  <label class="label">Теги:</label>
-  <div class="control">
-    {{ form.tags }}
-  </div>
-</div>
+                        <div class="field">
+                            <label class="label">Теги <span class="has-text-danger">*</span></label>
+                            <div class="control">
+                                {{ form.tags }}
+                            </div>
+                        </div>
                         <br>
-<button class="button is-link has-text-weight-bold " type="submit">
-                                                Сохранить
-                                            </button>
-      <button class="button has-text-weight-bold" @click="showDialog = !showDialog" aria-label="close">Отменить</button>
- </form>
+                        <button class="button is-link has-text-weight-bold " type="submit">
+                            Сохранить
+                        </button>
+                        <button class="button has-text-weight-bold" @click="showDialog = !showDialog"
+                                aria-label="close">Отменить
+                        </button>
+                        <br>
+                        <span class="has-text-danger">*</span> обязательно к заполнению
+                    </form>
 
                 </div>
                 <hr>
 
- <div class="columns is-multiline is-mobile">
-     <div class="column is-12">
-         <p class="title is-size-7 is-uppercase">Самые популярные веб-сайты этой недели</p>
-         </div>
-                {% for bookmark in popular_bookmark %}
-                <div class="column is-4 is-hidden-mobile">
+                <div class="columns is-multiline is-mobile">
+                    <div class="column is-12">
+                        <p class="title is-size-7 is-uppercase">Самые популярные веб-сайты этой недели</p>
+                    </div>
+                    {% for bookmark in popular_bookmark %}
+                    <div class="column is-4 is-hidden-mobile">
                         <div class="box is-unselectable has-text-centered">
-                        <a class="icon-bookmark title is-capitalized " href="{{ bookmark.url }}"
+                            <a class="icon-bookmark title is-capitalized " href="{{ bookmark.url }}"
                                target="_blank" title="{{ bookmark.title }}">
-                        <p class="subtitle is-7">{{ bookmark.title|truncatechars:17 }}</p>
-                    </a>
-                   </div>
-                </div>
-                {% endfor %}
-                {% for bookmark in popular_bookmark %}
-                <div class="column is-6 is-hidden-desktop">
+                                <p class="subtitle is-7">{{ bookmark.title|truncatechars:17 }}</p>
+                            </a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% for bookmark in popular_bookmark %}
+                    <div class="column is-6 is-hidden-desktop">
                         <div class="box is-unselectable has-text-centered">
-                        <a class="icon-bookmark title is-capitalized " href="{{ bookmark.url }}"
+                            <a class="icon-bookmark title is-capitalized " href="{{ bookmark.url }}"
                                target="_blank" title="{{ bookmark.title }}">
-                        <p class="subtitle is-7">{{ bookmark.title|truncatechars:17 }}</p>
-                    </a>
-                   </div>
-                </div>
-                {% endfor %}
+                                <p class="subtitle is-7">{{ bookmark.title|truncatechars:17 }}</p>
+                            </a>
+                        </div>
+                    </div>
+                    {% endfor %}
 
-            </div>
+                </div>
             </section>
 
         </div>
@@ -142,6 +148,7 @@
       },
     }
   })
+
 
 </script>
 <script>
@@ -242,6 +249,7 @@ function storeBookmarks(bookmarks = []) {
 }
 bookmarkForm.addEventListener('submit', createBookmark);
 bookmarksList.addEventListener('click', removeBookmark);
+
 
 </script>
 {% endblock %}

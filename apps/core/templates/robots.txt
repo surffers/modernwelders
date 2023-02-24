@@ -1,0 +1,4 @@
+User-agent: *
+
+Sitemap: http://surffers.ru/sitemap.xml
+Allow: /sitemap.xml

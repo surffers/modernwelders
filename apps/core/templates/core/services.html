@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+{% block title %}Услуги, создание сайтов, таргет в ВК, контекстная реклама, маркетинг. | Surffers{% endblock %}
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+
+{% include 'core/include/navbar.html' %}
+<section class="section hero is-light">
+    <div class="container">
+        <div class="hero-body slider-text">
+            <div class="text rellaxHero" data-rellax-speed="-3">
+                <span class="subheading">👋 Привет</span>
+                <h1 class="mb-3"><span>Я</span> А<span>ле</span>кс.</h1>
+                <div class="row justify-content-end">
+                    <div class="col-lg-9">
+                        <h2 class="title is-4">Я блогер &amp; Веб-разработчик 👨‍💻 </h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section ">
+    <div class="container">
+        <div class="columns">
+            <div class="column is-6">
+                <div class="hero is-light">
+                    <div class="hero-body">
+                        <aside class="menu has-text-black">
+                            <p class="menu-label is-size-4">
+                                Какие услуги я предоставляю
+                            </p>
+                            <ul class="menu-list">
+                                <li><a>Создание сайтов</a></li>
+                                <li>
+                                    <ul>
+                                        <li><a>Landing page от 20 000 рублей</a></li>
+                                        <li><a>Сайт-визитка от 30 000 рублей</a></li>
+                                        <li><a>SEO сайты от 150 000 рублей </a></li>
+                                    </ul>
+                                </li>
+                                <li><a>Яндекс Директ от 10 000 рублей/месяц</a></li>
+                                <li><a>Настройка таргетированной рекламы от 10 000 рублей/месяц</a></li>
+                                <li><a>Создание и оформление группы ВК от 5 000 рублей</a></li>
+                            </ul>
+                        </aside>
+                    </div>
+                </div>
+
+            </div>
+            <div class="column is-6">
+                <div class="hero is-light">
+                    <div class="hero-body">
+                        <div class="hero is-light">
+                      <div class="hero-body">
+                          <h1 class="title is-4">Связаться со мной</h1>
+                            <div class="social-media">
+                                <a href="https://t.me/aleksandrkarpuk" target="_blank" class="button is-light icon-bookmark"></a>
+                                <a class="button is-light icon-bookmark" href="https://vk.com/karpukalexandr" target="_blank"></a>
+                                <a href="https://vc.ru/u/762241-surffers" target="_blank" class="button is-light icon-bookmark"></a>
+                                <a href="https://tenchat.ru/surffers" target="_blank" class="button is-light icon-bookmark"></a>
+                                <a href="https://ok.ru/profile/588387222066" target="_blank" class="button is-light icon-bookmark"></a>
+                                <a href="https://dzen.ru/surffers" target="_blank" class="button is-light icon-bookmark"></a>
+                                <a href="https://github.com/surffers" target="_blank" class="button is-light icon-bookmark"></a>
+                            </div>
+                      </div>
+                    </div>
+<!--                        <div class="field">-->
+<!--                            <label class="label">Ваше имя</label>-->
+<!--                            <div class="control">-->
+<!--                                <input class="input" type="text" placeholder="Введите текст">-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="field">-->
+<!--                            <label class="label">Email</label>-->
+<!--                            <div class="control has-icons-left has-icons-right">-->
+<!--                                <input class="input" type="email" placeholder="Введите Email">-->
+<!--                                <span class="icon is-small is-left">-->
+<!--                                  <i class="fas fa-envelope"></i>-->
+<!--                                </span>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="field">-->
+<!--                            <label class="label">Услуги</label>-->
+<!--                            <div class="control">-->
+<!--                                <div class="select">-->
+<!--                                    <select>-->
+<!--                                        <option>Выберите услугу</option>-->
+<!--                                        <option>With options</option>-->
+<!--                                    </select>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="field">-->
+<!--                            <label class="label">Сообщение</label>-->
+<!--                            <div class="control">-->
+<!--                                <textarea class="textarea" placeholder="Опишите ваш проект"></textarea>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="field is-grouped">-->
+<!--                            <div class="control">-->
+<!--                                <button class="button is-link">Отправить</button>-->
+<!--                            </div>-->
+<!--                        </div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+  $("a.icon-bookmark[href^='http']").each(function() {
+    $(this).css({
+        background: "url(http://www.google.com/s2/favicons?domain=" + this.href + ") left center no-repeat",
+        "background-size": "22px",
+    });
+});
+</script>
+{% endblock %}

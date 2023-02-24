@@ -6,11 +6,12 @@ from taggit.managers import TaggableManager
 from django.db.models import Sum, Case, When, Value
 from django.utils.text import slugify
 from pytils.translit import slugify
+from embed_video.fields import EmbedVideoField
 
 
 class Category(models.Model):
     title = models.CharField(max_length=100)
-    body = models.TextField(max_length=255, blank=True, null=True)
+    body = models.TextField(max_length=555, blank=True, null=True)
     user = models.ForeignKey(User, related_name='categories', on_delete=models.CASCADE)
     slug = models.SlugField(max_length=100, blank=True, null=True)
     created_at = models.DateTimeField(default=timezone.now)
@@ -31,6 +32,9 @@ class Category(models.Model):
     def __str__(self):
         return self.title
 
+    def get_absolute_url(self):
+        return reverse('category', kwargs={'slug': self.slug, 'category_id': self.id})
+
 
 class Ip(models.Model): # наша таблица где будут айпи адреса
     ip = models.CharField(max_length=100)
@@ -44,6 +48,7 @@ class Bookmark(models.Model):
     category = models.ForeignKey(Category, related_name='bookmarks', on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     body = models.TextField(max_length=555, blank=True, null=True)
+    video = EmbedVideoField(blank=True, null=True)
     url = models.URLField()
     url_icon = models.URLField(blank=True, null=True)
     views = models.ManyToManyField(Ip, related_name="post_views", blank=True)
@@ -67,6 +72,9 @@ class Bookmark(models.Model):
     def __str__(self):
         return self.title
 
+    def get_absolute_url(self):
+        return reverse('bookmark', kwargs={'bookmark_id': self.id})
+
 
 class Vote(models.Model):
     bookmark = models.ForeignKey(Bookmark, related_name='votes', on_delete=models.CASCADE)
@@ -83,6 +91,9 @@ class Comment(models.Model):
     bookmark = models.ForeignKey(Bookmark, related_name='comments', on_delete=models.CASCADE)
     body = models.CharField(max_length=255)
     user = models.ForeignKey(User, related_name='comments', on_delete=models.CASCADE)
+    parent = models.ForeignKey(
+        'self', verbose_name="Parent", on_delete=models.SET_NULL, blank=True, null=True
+    )
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:

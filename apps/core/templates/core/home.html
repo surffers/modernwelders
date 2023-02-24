@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}Surffers - для сёрфинга в интернете и запусков ваших онлайн проектов{% endblock %}
+{% block title %}Surffers - создавайте свои подборки веб-сайтов и делитесь ими с друзьями{% endblock %}
 {% load static %}
 {% load contact_tags %}
 {% load humanize %}
@@ -8,121 +8,313 @@
 
 {% include 'core/include/navbar.html' %}
 <section class="hero home is-unselectable">
-    <div class="hero-body">
-        <div class="ld">
-  <div class="inside-wrapper">
-    <div class="stories">
-        {% for category in home_categories %}
-		<div class="story-item">
-			 <a href="{% url 'category' category.slug category.id %}">
-                            <div class="card slider">
-                                <div class="card-content">
-
-                                    <p class="title is-4 has-text-weight-bold">
-                                        {{ category.title|truncatechars:21 }}
+    <div class="ld">
+        <div class="inside-wrapper">
+            <div class="stories">
+                {% for category in categories %}
+                <div class="story-item">
+                    <a href="{% url 'category' category.slug category.id %}">
+                        <div class="card slider">
+                            <div class="card-content">
+                                <h1 class="title is-4 has-text-weight-bold">
+                                    {{ category.title|truncatechars:33 }}
+                                </h1>
+                                <div class="block-home-category">
+                                    <p class="title is-6 has-text-weight-normal title-body is-lowercase">
+                                        {{ category.body|truncatechars:50 }}
                                     </p>
-
-                                        <div class="block-home-bookmark">
-                                            {% for bookmark in category.bookmarks.all  %}
-                                        {% if bookmark.published_date %}
-                                        {% if forloop.counter <= 5 %}
-                                            <a class="icon-bookmark" href="{{ bookmark.url }}" target="_blank"></a>
-
-                                        {% endif %}
-
-
-                                        {% endif %}
-                                    {% endfor %}
+                                    <div class="media subtitle">
+                                        <div class="media-left">
+                                            <span class="tag is-white is-size-7 is-lowercase has-text-weight-bold">@{{ category.user.username|truncatechars:25 }}</span>
                                         </div>
-
-
-                                    <div class="block-home-category">
-                                        <p class="title is-6 has-text-weight-normal title-body is-lowercase">
-                                        {{ category.body|truncatechars:55 }}
-                                        </p>
-                                        <p class="subtitle  is-7 has-text-weight-bold is-lowercase">
-                                                @{{ category.user.username|truncatechars:25 }}
-                                        </p>
+                                        <div class="media-content"></div>
+                                        <div class="media-right">
+                                                    <span class="tag is-light is-size-7" title="Количество ссылок">
+                                                        {{ category.bookmarks.all|length|intword }}
+                                                    </span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </a>
-		</div>
-		 {% endfor %}
-    </div>
-    <button class="nav-btn prev"><svg style="width:24px;height:24px" viewBox="0 0 24 24">
-      <path fill="#000000" d="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z" />
-      </svg></button>
-    <button class="nav-btn next"><svg style="width:24px;height:24px" viewBox="0 0 24 24">
-      <path fill="#000000" d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" />
-      </svg></button>
-  </div>
-</div>
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+            <button class="nav-btn prev">
+                <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+                    <path fill="#000000" d="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z"/>
+                </svg>
+            </button>
+            <button class="nav-btn next">
+                <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+                    <path fill="#000000" d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"/>
+                </svg>
+            </button>
+        </div>
     </div>
 </section>
+<div class="spacer"></div>
 <section class="section home is-unselectable">
     <div class="container">
-            <div class="columns is-centered">
-            <div class="column is-6">
-                <p class="title has-text-weight-bold is-size-5 is-size-6-mobile">
-                    Новые продукты, сайты, сервисы и стартапы, которые помогут в работе и учёбе 👇
-                </p>
-                <hr>
-                {% for bookmark in bookmarks  %}
-                <div class="box-home box-link">
-                                    <p class="title is-7 has-text-weight-bold is-uppercase">
-                                        <a href="{% url 'category'  bookmark.category.slug bookmark.category.id  %}" class="has-text-black">
-                                            {{ bookmark.category.title|truncatechars:100 }}
-                                        </a>
+        <div class="columns is-centered">
+            <div class="column is-2 is-unselectable is-hidden-mobile">
+                <aside class="menu">
+                    <p class="menu-label is-size-6">
+                        Меню
+                    </p>
+                    <ul class="menu-list">
+                        <li>
+                            <a href="/">
+                                <span class="is-flex is-size-5">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home icon-mr" width="16"
+                                           height="16" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none"
+                                           stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                        <polyline points="5 12 3 12 12 3 21 12 19 12"/>
+                                        <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7"/>
+                                        <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6"/>
+                                    </svg>
+                                    Главная
+                                </span>
+                            </a>
+                        </li>
+                        {% if request.user.is_authenticated %}
+                        <li>
+                            <a href="{% url 'profile' request.user.username %}">
+                                <span class="is-flex is-size-5">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user icon-mr" width="24"
+                                         height="24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round"
+                                         stroke-linejoin="round">
+                                      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                      <circle cx="12" cy="7" r="4"/>
+                                      <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"/>
+                                    </svg>
+                                    Профиль
+                                </span>
+                            </a>
+                        </li>
+                        {% endif %}
+                        <li>
+                            <a href="{% url 'categories' %}">
+                                <span class="is-flex is-size-5">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-box-multiple icon-mr"
+                                         width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none"
+                                         stroke-linecap="round" stroke-linejoin="round">
+                                      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                      <rect x="7" y="3" width="14" height="14" rx="2"/>
+                                      <path d="M17 17v2a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h2"/>
+                                    </svg>
+                                    Категории
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'board' %}">
+                                <span class="is-flex is-size-5">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-unlink icon-mr" width="44"
+                                         height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none"
+                                         stroke-linecap="round" stroke-linejoin="round">
+                                      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                      <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5"/>
+                                      <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5"/>
+                                      <line x1="16" y1="21" x2="16" y2="19"/>
+                                      <line x1="19" y1="16" x2="21" y2="16"/>
+                                      <line x1="3" y1="8" x2="5" y2="8"/>
+                                      <line x1="8" y1="3" x2="8" y2="5"/>
+                                    </svg>
+                                    Ссылки
+                                </span>
+                            </a>
+                        </li>
+                        <!--    <li>-->
+                        <!--        <a>-->
+                        <!--            <span class="is-flex is-size-5">-->
+                        <!--                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-users icon-mr" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">-->
+                        <!--                  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>-->
+                        <!--                  <circle cx="9" cy="7" r="4" />-->
+                        <!--                  <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />-->
+                        <!--                  <path d="M16 3.13a4 4 0 0 1 0 7.75" />-->
+                        <!--                  <path d="M21 21v-2a4 4 0 0 0 -3 -3.85" />-->
+                        <!--                </svg>-->
+                        <!--                Профили-->
+                        <!--            </span>-->
+                        <!--        </a>-->
+                        <!--    </li>-->
+                        {% if request.user.is_authenticated %}
+                        <li>
+                            <a href="{% url 'bookmark_favorite_lists' request.user.username %}">
+                                <span class="is-flex is-size-5">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-heart icon-mr" width="44"
+                                       height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none"
+                                       stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                        <path d="M19.5 13.572l-7.5 7.428l-7.5 -7.428m0 0a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572"/>
+                                    </svg>
+                                    Избранное
+                              </span>
+                            </a>
+                        </li>
+                        {% endif %}
+                        <li>
+                            <a href="{% url 'services' %}">
+                                <span class="is-flex is-size-5">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-accessible icon-mr"
+                                         width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none"
+                                         stroke-linecap="round" stroke-linejoin="round">
+                                      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                      <circle cx="12" cy="12" r="9"/>
+                                      <path d="M10 16.5l2 -3l2 3m-2 -3v-2l3 -1m-6 0l3 1"/>
+                                      <circle cx="12" cy="7.5" r=".5" fill="currentColor"/>
+                                    </svg>
+                                    Услуги
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'about' %}">
+              <span class="is-flex is-size-5">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-alert-circle icon-mr"
+                   width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none"
+                   stroke-linecap="round" stroke-linejoin="round">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                  <circle cx="12" cy="12" r="9"/>
+                  <line x1="12" y1="8" x2="12" y2="12"/>
+                  <line x1="12" y1="16" x2="12.01" y2="16"/>
+                </svg>
+                  О нас
+              </span>
+                            </a>
+                        </li>
+                    </ul>
+                    <hr>
+                </aside>
 
-                                    </p>
-                                <p class="subtitle is-7 has-text-weight-bold">
-                                        <a href="{% url 'profile' bookmark.user.username %}" class="has-text-black is-lowercase">
-                                            @{{ bookmark.user.username|truncatechars:25 }}
-                                         </a>
-                                    </p>
-                                {% if bookmark.url_icon %}
-                                   <p class="subtitle is-5">
-                                       <a class="icon-bookmark subtitle is-5 has-text-weight-bold is-size-6-mobile"
-                                           href="{{ bookmark.url }}"
-                                           target="_blank">
-                                        </a>
-                                       <a href="{{ bookmark.url_icon }}" class="subtitle is-5 has-text-weight-bold"
-                                       target="_blank">
-                                        {{ bookmark.title|truncatechars:40 }}
-                                           <span class="icon link is-size-6">
-                                            <i class="fa fa-external-link" aria-hidden="true"></i>
-                                        </span>
-                                    </a>
+
+                <!--  Share  -->
+                <div class="buttons">
+                    <div class="block share has-text-centered">
+                        <a class="button is-light" role="button" title="Копировать ссыылку">
+                                <span class="copy-icon ">
+                                    <i class="fas fa-link icon"></i>
+                                </span>
+                        </a>
+                        <a class="button is-light sharer" href="#" id="share-em" title="Отправить на почту">
+                                <span>
+                                    <i aria-hidden="true" class="fa fa-envelope-o"></i>
+                                </span>
+                        </a>
+                        <a class="button is-light sharer" href="#" id="share-vk" title="Поделиться ВКонтакте">
+                                <span>
+                                    <i class="fab fa-vk"></i>
+                                </span>
+                        </a>
+                        <a class="button is-light sharer" href="#" id="share-tg" title="Поделиться в Telegram">
+                                <span>
+                                    <i class="fab fa-telegram"></i>
+                                </span>
+                        </a>
+                    </div>
+                </div>
+                <!--  End Share  -->
+
+                {% if request.user.is_authenticated %}
+                {% else %}
+                <p class="subtitle is-6">
+                    Войдите, чтобы начать создавать свои подборки веб-сайтов и делиться ими с друзьями.
+                </p>
+                <a class="navbar-item button is-black is-rounded is-outlined" href="{% url 'account_login' %}">
+                    Войти
+                </a>
+                <br>
+                <a class="navbar-item button is-black is-rounded" href="{% url 'account_signup' %}">
+                    Регистрация
+                </a>
+
+                {% endif %}
+            </div>
+            <div class="border-right"></div>
+            <div class="column is-6">
+                <h1 class="title has-text-weight-bold is-size-5 is-size-6-mobile">
+                    Новые продукты, сайты, сервисы и стартапы, которые помогут в работе и учёбе 👇
+                </h1>
+                <hr>
+                {% for bookmark in bookmarks %}
+                <div class="is-flex">
+                    <div class="box-home box-link">
+                        <h1 class="title is-7 has-text-weight-bold is-uppercase">
+                            <a href="{% url 'category'  bookmark.category.slug bookmark.category.id  %}"
+                               class="has-text-black">
+                                {{ bookmark.category.title|truncatechars:100 }}
+                            </a>
+                        </h1>
+                        <p class="subtitle is-7 has-text-weight-bold">
+                            <a href="{% url 'profile' bookmark.user.username %}" class="has-text-black is-lowercase">
+                                @{{ bookmark.user.username|truncatechars:25 }}
+                            </a>
                         </p>
-                    {% else %}
-                       <p class="subtitle is-5">
+                        {% if bookmark.url_icon %}
+                        <h1 class="subtitle is-5">
+                            <a class="icon-bookmark subtitle is-5 has-text-weight-bold is-size-6-mobile"
+                               href="{{ bookmark.url }}"
+                               target="_blank">
+                            </a>
+                            <a href="{{ bookmark.url_icon }}" class="subtitle is-5 has-text-weight-bold"
+                               target="_blank">
+                                {{ bookmark.title|truncatechars:40 }}
+                                <span class="icon link is-size-6">
+                                            <svg height="21" viewBox="0 0 21 21" width="21"
+                                                 xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"
+                                                                                       stroke="currentColor"
+                                                                                       stroke-linecap="round"
+                                                                                       stroke-linejoin="round"
+                                                                                       transform="translate(3.5 6.5)"><path
+                                                    d="m0 8v-2c0-1.65685425 1.34314575-3 3-3h8"/><path
+                                                    d="m7.999 6 3.001-3-3.001-3"/><path d="m10.999 6 3.001-3-3.001-3"/></g></svg>
+                                        </span>
+                            </a>
+                        </h1>
+                        {% else %}
+                        <h1 class="subtitle is-5">
                             <a class="icon-bookmark subtitle is-5 has-text-weight-bold is-size-6-mobile"
                                href="{{ bookmark.url }}"
                                target="_blank">
                                 {{ bookmark.title|truncatechars:40 }}
-                                           <span class="icon link is-size-6">
-                                            <i class="fa fa-external-link" aria-hidden="true"></i>
+                                <span class="icon link is-size-6">
+                                            <svg height="21" viewBox="0 0 21 21" width="21"
+                                                 xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"
+                                                                                       stroke="currentColor"
+                                                                                       stroke-linecap="round"
+                                                                                       stroke-linejoin="round"
+                                                                                       transform="translate(3.5 6.5)"><path
+                                                    d="m0 8v-2c0-1.65685425 1.34314575-3 3-3h8"/><path
+                                                    d="m7.999 6 3.001-3-3.001-3"/><path d="m10.999 6 3.001-3-3.001-3"/></g></svg>
                                         </span>
                             </a>
-                           </p>
-                    {% endif %}
+                        </h1>
+                        {% endif %}
 
 
-                                    <p class="title is-6 has-text-weight-normal is-lowercase is-size-7-mobile">
-                                        {{ bookmark.body|truncatechars:150 }}
-                                    </p>
-                                    <p class="subtitle is-6 is-size-7-mobile">
-                                        {% for tag in bookmark.tags.all %}
-                                            {% if forloop.counter <= 3 %}
-                                            <a href="{% url 'tag_detail_url' tag.slug %}" class="has-text-info">
-                                                #{{ tag.name|truncatechars:25 }}
-                                            </a>
-                                            {% endif %}
-                                        {% endfor %}
-                                    </p>
-                                    <p  class="title is-7">
-
+                        <p class="title is-6 has-text-weight-normal is-lowercase is-size-7-mobile">
+                            {{ bookmark.body|truncatechars:150 }}
+                        </p>
+                        <p class="subtitle is-6 is-size-7-mobile">
+                            {% for tag in bookmark.tags.all %}
+                            {% if forloop.counter <= 3 %}
+                            <a href="{% url 'tag_detail_url' tag.slug %}" class="has-text-info">
+                                #{{ tag.name|truncatechars:25 }}
+                            </a>
+                            {% endif %}
+                            {% endfor %}
+                        </p>
+                        <p class="title is-7">
+                            <a href="{% url 'bookmark' bookmark.id %}" class="tag is-light hero-btn"
+                               title="В избранном">
+                                <span class="icon is-size-6">
+                                                <i class="fa fa-heart-o" aria-hidden="true"></i>
+                                            </span>
+                                <span>{{ bookmark.favorite.all|length|intword }}</span>
+                            </a>
                             <a href="{% url 'bookmark' bookmark.id %}" class="tag is-light hero-btn" title="Просмотров">
                                 <span class="icon">
                                     <i class="fa fa-eye" aria-hidden="true"></i>
@@ -143,32 +335,20 @@
                                 <span> {{ bookmark.number_of_votes }}</span>
                             </a>
                         </p>
+                    </div>
                 </div>
                 <hr>
                 {% endfor %}
 
 
-                {% include 'core/include/pagination.html' %}
             </div>
-                <div class="border-right"></div>
+            <div class="border-right"></div>
             <div class="column is-3 is-unselectable is-hidden-mobile">
                 <aside>
-                        <h1 class="title is-6 is-uppercase">
-                            облако тегов
-                        </h1>
-
-
-                                        {% for tag in tags.all %}
-                                            <a href="{% url 'tag_detail_url' tag.slug %}" class="tag is-light">
-                                                #{{ tag.name|truncatechars:25 }}
-                                            </a>
-                                        {% endfor %}
-
-                 <hr>
-
                     {% include 'core/include/footer.html' %}
                 </aside>
             </div>
+
         </div>
     </div>
 </section>
@@ -195,6 +375,7 @@
       scrollTop: 0
     }, '300');
   });
+
 </script>
 <script>
  $("a.icon-category-bookmark[href^='http']").each(function() {
@@ -203,6 +384,7 @@
         "background-size": "22px", "padding-left": "30px", "pointer-events": "none", "cursor": "default"
     });
 });
+
 </script>
 <script>
  $("a.icon-bookmark[href^='http']").each(function() {
@@ -211,6 +393,7 @@
         "background-size": "22px", "padding-left": "30px"
     });
 });
+
 </script>
 
 <script>
@@ -336,6 +519,7 @@
   })();
 
   copyToClipboard.handleCopyIconClick();
+
 </script>
 
 <!-- Slider -->
@@ -876,6 +1060,7 @@ $(document).on("click", ".ld-lightbox__close, .ld-lightbox", function () {
     closeLB();
   }, 300);
 });
+
 </script>
 {% endblock %}
 

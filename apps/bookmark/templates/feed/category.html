@@ -54,7 +54,7 @@
                         <div class="dropdown-trigger button is-light is-small">
                             <div title="Поделиться">
                             <span class="icon is-size-7">
-                              <i class="fa fa-share-square-o" aria-hidden="true"></i>
+                              <svg height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(4 2)"><path d="m8.5 2.5-1.978-2-2.022 2"/><path d="m6.5.5v9"/><path d="m3.5 4.5h-1c-1.1045695 0-2 .8954305-2 2v7c0 1.1045695.8954305 2 2 2h8c1.1045695 0 2-.8954305 2-2v-7c0-1.1045695-.8954305-2-2-2h-1"/></g></svg>
                             </span>
                             </div>
                         </div>
@@ -89,34 +89,33 @@
                         </div>
                     </div>
                     <!--  End Share  -->
-
-                    <a class="button is-light is-small" title="Добавить в закладки">
-                        <span class="icon">
-                            <i class="fa fa-bookmark-o" aria-hidden="true"></i>
-                        </span>
-                    </a>
-
-
                 </div>
       </div>
     </div>
-
         <hr>
-
-
             <div class="title has-text-weight-bold is-size-2 is-size-5-mobile">
             <a class="has-text-black">
                 {{ category.title }}
             </a>
                 {% if user == category.user %}
                     {% if category.published_date %}
-                                <a title="Категория опубликована">
-                                    <span class="icon has-text-success is-size-5 is-size-6-mobile">
-                                            <i class="fa fa-check-circle-o" aria-hidden="true"></i>
-                                        </span>
-                                </a>
+                                <div class="dropdown is-hoverable">
+                                    <div class="dropdown-trigger">
+                                    <span class="icon has-text-success is-size-6 is-size-6-mobile">
+                                        <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                                    </span>
+                                    </div>
+                                    <div class="dropdown-menu" role="menu">
+                                        <div class="dropdown-content">
+                                            <div class="dropdown-item">
+                                                <p>
+                                                    Эта категория опубликована
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                         {% endif %}
-
                         {% endif %}
         </div>
         <div class="column is-9 category-body">
@@ -125,7 +124,6 @@
         </p>
         <p  class="title is-size-7">
             <span>{{ category.created_at|naturaltime }}</span>
-
         </p>
        </div>
 
@@ -134,22 +132,13 @@
 
          {% if category.published_date %}
                                     {% else %}
-                                    {% if user.is_superuser %}
+                                    {% if user == bookmark.user %}
                                     <a class="button is-link is-outlined"
                                        href="{% url 'category_publish' category.id  %}">
                                         Опубликовать
                                     </a>
-                                    {% else %}
-                                    {% if user == bookmark.user %}
-                                    <a class="button is-link is-outlined"
-                                       href="https://yoomoney.ru/to/410019178238860">
-                                        Запуск
-                                    </a>
                                      {% endif %}
                                     {% endif %}
-
-                                    {% endif %}
-
         {% endif %}
         <hr>
         {% if messages %}
@@ -164,112 +153,34 @@
 
           {% if user == category.user %}
         <div class="columns is-multiline is-variable is-1-mobile is-0-tablet is-3-desktop is-8-widescreen is-2-fullhd">
-            {% for bookmark in bookmarks %}
+            {% for bookmark in page_obj %}
                 <div class="column is-4">
                     <div class="box-link is-unselectable">
                         {% if bookmark.url_icon %}
                         <div class="title is-5">
-                            <a class="icon-bookmark subtitle is-5 has-text-weight-bold is-capitalized"
+                            <a class="icon-bookmark subtitle is-5 has-text-weight-bold"
                                href="{{ bookmark.url }}"
                                target="_blank">
                             </a>
-                            <a class="subtitle is-5 has-text-weight-bold is-capitalized"
+                            <a class="subtitle is-5 has-text-weight-bold"
                                href="{{ bookmark.url_icon }}"
                                target="_blank">
-                                {{ bookmark.title|truncatechars:40 }}
-
+                                {{ bookmark.title|truncatechars:25 }}
                                 <span class="icon link is-size-6 is-size-6-mobile">
-                                    <i class="fa fa-external-link" aria-hidden="true"></i>
+                                    <svg height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(3.5 6.5)"><path d="m0 8v-2c0-1.65685425 1.34314575-3 3-3h8"/><path d="m7.999 6 3.001-3-3.001-3"/><path d="m10.999 6 3.001-3-3.001-3"/></g></svg>
                                 </span>
                             </a>
-                            {% if user == bookmark.user %}
-                                {% if bookmark.published_date %}
-                                    <div class="dropdown is-hoverable is-pulled-right">
-                                    <div class="dropdown-trigger">
-                                    <span class="icon has-text-success is-size-6 is-size-6-mobile">
-                                        <i class="fa fa-check-circle-o" aria-hidden="true"></i>
-                                    </span>
-                                    </div>
-                                    <div class="dropdown-menu" role="menu">
-                                        <div class="dropdown-content">
-                                            <div class="dropdown-item">
-                                                <p>
-                                                    Эта категория опубликованная
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                {% else %}
-                                    <div class="dropdown is-hoverable is-pulled-right">
-                                    <div class="dropdown-trigger">
-                                    <span class="icon has-text-danger is-size-6 is-size-6-mobile">
-                                        <i class="fa fa-check-circle-o" aria-hidden="true"></i>
-                                    </span>
-                                    </div>
-                                    <div class="dropdown-menu" role="menu">
-                                        <div class="dropdown-content">
-                                            <div class="dropdown-item">
-                                                <p>
-                                                    Эта категория не опубликованная
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                {% endif %}
-                                {% endif %}
-
                         </div>
                         {% else %}
                         <div class="title is-5">
-                            <a class="icon-bookmark subtitle is-5 has-text-weight-bold is-capitalized"
+                            <a class="icon-bookmark subtitle is-5 has-text-weight-bold"
                                href="{{ bookmark.url }}"
                                target="_blank">
-                                {{ bookmark.title|truncatechars:40 }}
-
+                                {{ bookmark.title|truncatechars:25 }}
                                 <span class="icon link is-size-6 is-size-6-mobile">
-                                    <i class="fa fa-external-link" aria-hidden="true"></i>
+                                    <svg height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(3.5 6.5)"><path d="m0 8v-2c0-1.65685425 1.34314575-3 3-3h8"/><path d="m7.999 6 3.001-3-3.001-3"/><path d="m10.999 6 3.001-3-3.001-3"/></g></svg>
                                 </span>
-
                             </a>
-                            {% if user == bookmark.user %}
-                                {% if bookmark.published_date %}
-                                    <div class="dropdown is-hoverable is-pulled-right">
-                                    <div class="dropdown-trigger">
-                                    <span class="icon has-text-success is-size-6 is-size-6-mobile">
-                                        <i class="fa fa-check-circle-o" aria-hidden="true"></i>
-                                    </span>
-                                    </div>
-                                    <div class="dropdown-menu" role="menu">
-                                        <div class="dropdown-content">
-                                            <div class="dropdown-item">
-                                                <p>
-                                                    Эта категория опубликованная
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                {% else %}
-                                    <div class="dropdown is-hoverable is-pulled-right">
-                                    <div class="dropdown-trigger">
-                                    <span class="icon has-text-danger is-size-6 is-size-6-mobile">
-                                        <i class="fa fa-check-circle-o" aria-hidden="true"></i>
-                                    </span>
-                                    </div>
-                                    <div class="dropdown-menu" role="menu">
-                                        <div class="dropdown-content">
-                                            <div class="dropdown-item">
-                                                <p>
-                                                    Эта категория не опубликованная
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                {% endif %}
-                                {% endif %}
                         </div>
                         {% endif %}
 
@@ -289,7 +200,7 @@
                                         </p>
                         <p  class="subtitle is-7">
                             <!--  Like  -->
-                            <a href="{% url 'bookmark' bookmark.id %}" class="tag is-light hero-btn" title="Просмотров">
+                            <a href="{% url 'bookmark' bookmark.id %}" class="tag is-light hero-btn" title="В избранном">
                                 <span class="icon is-size-6">
                                                 <i class="fa fa-heart-o" aria-hidden="true"></i>
                                             </span>
@@ -313,11 +224,22 @@
                                                     <span class="icon">
                                                      <i class="fa fa-star-o" aria-hidden="true"></i>
                                                     </span>
-                                <span> 0</span>
+                                <span> {{ bookmark.number_of_votes }}</span>
                             </a>
+                            {% if user == bookmark.user %}
+                                {% if bookmark.published_date %}
+                                    <span class="tag is-light has-text-success is-size-7" title="опубликованно">
+                                        <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                                    </span>
+                                {% else %}
+                                    <span class="tag is-light has-text-danger is-size-7" title="черновик">
+                                        <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                                    </span>
+                                {% endif %}
+                                {% endif %}
                         </p>
                     </div>
-                    <br>
+                    <hr>
                 </div>
             {% empty %}
 
@@ -351,22 +273,21 @@
  {% else %}
 
              <div class="columns is-multiline is-variable is-1-mobile is-0-tablet is-3-desktop is-8-widescreen is-2-fullhd">
-            {% for bookmark in b %}
+            {% for bookmark in page_objb %}
                 <div class="column is-4">
                     <div class="box-link is-unselectable">
                         {% if bookmark.url_icon %}
                         <div class="title is-5">
-                            <a class="icon-bookmark subtitle is-5 has-text-weight-bold is-capitalized"
+                            <a class="icon-bookmark subtitle is-5 has-text-weight-bold"
                                href="{{ bookmark.url }}"
                                target="_blank">
                             </a>
-                            <a class="subtitle is-5 has-text-weight-bold is-capitalized"
+                            <a class="subtitle is-5 has-text-weight-bold"
                                href="{{ bookmark.url_icon }}"
                                target="_blank">
-                                {{ bookmark.title|truncatechars:40 }}
-
+                                {{ bookmark.title|truncatechars:25 }}
                                 <span class="icon link is-size-6 is-size-6-mobile">
-                                    <i class="fa fa-external-link" aria-hidden="true"></i>
+                                    <svg height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(3.5 6.5)"><path d="m0 8v-2c0-1.65685425 1.34314575-3 3-3h8"/><path d="m7.999 6 3.001-3-3.001-3"/><path d="m10.999 6 3.001-3-3.001-3"/></g></svg>
                                 </span>
                             </a>
                         </div>
@@ -375,10 +296,9 @@
                             <a class="icon-bookmark subtitle is-5 has-text-weight-bold is-capitalized"
                                href="{{ bookmark.url }}"
                                target="_blank">
-                                {{ bookmark.title|truncatechars:40 }}
-
+                                {{ bookmark.title|truncatechars:25 }}
                                 <span class="icon link is-size-6 is-size-6-mobile">
-                                    <i class="fa fa-external-link" aria-hidden="true"></i>
+                                    <svg height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(3.5 6.5)"><path d="m0 8v-2c0-1.65685425 1.34314575-3 3-3h8"/><path d="m7.999 6 3.001-3-3.001-3"/><path d="m10.999 6 3.001-3-3.001-3"/></g></svg>
                                 </span>
 
                             </a>
@@ -427,7 +347,7 @@
                             </a>
                         </p>
                     </div>
-                    <br>
+                    <hr>
                 </div>
             {% empty %}
 
@@ -447,7 +367,8 @@
                 <div class="box">
                     <span>☹️</span>
                     <p class="subtitle is-6">
-                        {{ category.user.username|truncatechars:25 }}, еще не добавил ссылки
+                        @{{ category.user.username|truncatechars:25 }}, добавил <span class="tag">{{ category.bookmarks.all|length|intword }}</span> ссылки
+                        <br> но ещё не опубликовал их
                     </p>
                 </div>
                 {% endif %}
@@ -499,7 +420,7 @@
                         <div class="dropdown-trigger button is-light is-small">
                             <div class="" title="Поделиться">
                             <span class="icon is-size-7">
-                              <i class="fa fa-share-square-o" aria-hidden="true"></i>
+                              <svg height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(4 2)"><path d="m8.5 2.5-1.978-2-2.022 2"/><path d="m6.5.5v9"/><path d="m3.5 4.5h-1c-1.1045695 0-2 .8954305-2 2v7c0 1.1045695.8954305 2 2 2h8c1.1045695 0 2-.8954305 2-2v-7c0-1.1045695-.8954305-2-2-2h-1"/></g></svg>
                             </span>
                             </div>
                         </div>
@@ -535,16 +456,6 @@
                     </div>
                     <!--  End Share Category -->
 
-
-                                {% if user == category.user %}
-                                <a class="button is-light is-small" title="Эта категория не опубликованная">
-                                            <span class="icon has-text-danger is-size-6">
-                                                <i class="fa fa-check-circle-o" aria-hidden="true"></i>
-                                            </span>
-                                </a>
-                                {% endif %}
-
-
                 </div>
       </div>
     </div>
@@ -552,6 +463,24 @@
         <hr>
         <div class="title has-text-weight-bold is-size-2 is-size-3-mobile">
                 {{ category.title }}
+                                {% if user == category.user %}
+                                <div class="dropdown is-hoverable">
+                                    <div class="dropdown-trigger">
+                                    <span class="icon has-text-danger is-size-6 is-size-6-mobile">
+                                        <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                                    </span>
+                                    </div>
+                                    <div class="dropdown-menu" role="menu">
+                                        <div class="dropdown-content">
+                                            <div class="dropdown-item">
+                                                <p>
+                                                    Эта категория не опубликована
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endif %}
         </div>
         <div class="column is-9 category-body">
         <p class="subtitle is-size-6">
@@ -565,26 +494,16 @@
         <div class="buttons">
             {% if user == category.user %}
             {% include 'feed/add_bookmark.html' %}
-
-        {% if category.published_date %}
+                                    {% if category.published_date %}
                                     {% else %}
-                                    {% if user.is_superuser %}
-                                    <a class="button is-link is-outlined"
+                                    {% if user == category.user %}
+                                    <a class="button is-link is-outlined "
                                        href="{% url 'category_publish' category.slug category.id  %}">
                                         Опубликовать
                                     </a>
-                                    {% else %}
-                                    {% if user == category.user %}
-                                    <a class="button is-link is-outlined"
-                                       href="https://yoomoney.ru/to/410019178238860">
-                                        Запуск
-                                    </a>
                                      {% endif %}
                                     {% endif %}
-
                                     {% endif %}
-        {% endif %}
-
         </div>
         <hr>
         {% if messages %}
@@ -598,7 +517,7 @@
         {% endif %}
 
         <div class="columns is-multiline is-variable is-1-mobile is-0-tablet is-3-desktop is-8-widescreen is-2-fullhd">
-            {% for bookmark in bookmarks %}
+            {% for bookmark in page_object %}
             <div class="column is-4">
                 <div class="box-link is-unselectable">
 
@@ -611,14 +530,14 @@
                         <a class="subtitle is-5 has-text-weight-bold is-capitalized"
                            href="{{ bookmark.url_icon }}"
                            target="_blank">
-                            {{ bookmark.title|truncatechars:40 }}
+                            {{ bookmark.title|truncatechars:25 }}
                             <span class="icon link is-size-6 is-size-6-mobile">
-                                <i class="fa fa-external-link" aria-hidden="true"></i>
+                                <svg height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(3.5 6.5)"><path d="m0 8v-2c0-1.65685425 1.34314575-3 3-3h8"/><path d="m7.999 6 3.001-3-3.001-3"/><path d="m10.999 6 3.001-3-3.001-3"/></g></svg>
                             </span>
                         </a>
 
 
-                        {% if user.is_superuser %}
+
                             {% if bookmark.published_date %}
                                 <div class="dropdown is-hoverable is-pulled-right">
                                 <div class="dropdown-trigger">
@@ -629,7 +548,8 @@
                                 <div class="dropdown-menu" role="menu">
                                     <div class="dropdown-content">
                                         <div class="dropdown-item">
-                                            <p>Этой ссылке можно <b>доверять</b>, проверенно нашей командой.
+                                            <p>
+                                                Эта ссылка опубликована
                                             </p>
                                         </div>
                                     </div>
@@ -645,26 +565,26 @@
                                 <div class="dropdown-menu" role="menu">
                                     <div class="dropdown-content">
                                         <div class="dropdown-item">
-                                            <p>Этой ссылке можно <b>доверять</b>, проверенно нашей командой.
+                                            <p>Эта ссылка не опубликована
                                             </p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             {% endif %}
-                            {% endif %}
+
                     </div>
                     {% else %}
                     <div class="title is-5">
                         <a class="icon-bookmark subtitle is-5 has-text-weight-bold"
                            href="{{ bookmark.url }}"
                            target="_blank">
-                            {{ bookmark.title }}
+                            {{ bookmark.title|truncatechars:25 }}
                             <span class="icon link is-size-6 is-size-6-mobile">
-                                <i class="fa fa-external-link" aria-hidden="true"></i>
+                                <svg height="21" viewBox="0 0 21 21" width="21" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" transform="translate(3.5 6.5)"><path d="m0 8v-2c0-1.65685425 1.34314575-3 3-3h8"/><path d="m7.999 6 3.001-3-3.001-3"/><path d="m10.999 6 3.001-3-3.001-3"/></g></svg>
                             </span>
                         </a>
-                        {% if user.is_superuser %}
+
                             {% if bookmark.published_date %}
                                 <div class="dropdown is-hoverable is-pulled-right">
                                 <div class="dropdown-trigger">
@@ -675,7 +595,8 @@
                                 <div class="dropdown-menu" role="menu">
                                     <div class="dropdown-content">
                                         <div class="dropdown-item">
-                                            <p>Этой ссылке можно <b>доверять</b>, проверенно нашей командой.
+                                            <p>
+                                                Эта ссылка опубликована
                                             </p>
                                         </div>
                                     </div>
@@ -691,14 +612,15 @@
                                 <div class="dropdown-menu" role="menu">
                                     <div class="dropdown-content">
                                         <div class="dropdown-item">
-                                            <p>Этой ссылке можно <b>доверять</b>, проверенно нашей командой.
+                                            <p>
+                                                Эта ссылка не опубликована
                                             </p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             {% endif %}
-                            {% endif %}
+
                     </div>
                     {% endif %}
 
@@ -716,7 +638,12 @@
                                     {% endfor %}
                                     </p>
                     <p  class="subtitle is-7">
-
+                            <a href="{% url 'bookmark' bookmark.id %}" class="tag is-light hero-btn" title="В избранном">
+                                <span class="icon is-size-6">
+                                                <i class="fa fa-heart-o" aria-hidden="true"></i>
+                                            </span>
+                                <span>{{ bookmark.favorite.all|length|intword }}</span>
+                            </a>
                             <a href="{% url 'bookmark' bookmark.id %}" class="tag is-light hero-btn" title="Просмотров">
                                 <span class="icon">
                                     <i class="fa fa-eye" aria-hidden="true"></i>
@@ -734,11 +661,11 @@
                                                     <span class="icon">
                                                      <i class="fa fa-star-o" aria-hidden="true"></i>
                                                     </span>
-                                <span> 0</span>
+                                <span> {{ bookmark.number_of_votes }}</span>
                             </a>
                         </p>
                 </div>
-                <br>
+                <hr>
             </div>
             {% empty %}
 
@@ -801,6 +728,9 @@
 
 
 {% include 'core/include/pagination.html' %}
+
+
+
 
 
 <span class="toastbox" role="alert"></span>

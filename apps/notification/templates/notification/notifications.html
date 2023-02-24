@@ -40,16 +40,20 @@
             <div class="column is-4">
                     <div class="box-link is-unselectable">
                           {% if notification.notification_type == 'follower' %}
-                                            <a href="{% url 'notifications' %}?goto=profile&notification={{ notification.id }}">
-                                                <strong>{{ notification.created_by.username }}</strong> started following you<br>
-                                                <small>{{ notification.created_at|naturaltime }}</small>
-                                            </a>
-                                        {% elif notification.notification_type == 'vote' %}
-                                            <a href="{% url 'notifications' %}?goto=profile&notification={{ notification.id }}">
-                                                <strong>{{ notification.created_by.username }}</strong> Проголосовал<br>
-                                                <small>{{ notification.created_at|naturaltime }}</small>
-                                            </a>
-                                        {% endif %}
+                        <div class="notification">
+                            <a href="{% url 'notifications' %}?goto=profile&notification={{ notification.id }}">
+                                <strong>{{ notification.created_by.username }}</strong> подписался на вас<br>
+                            </a>
+                            <small>{{ notification.created_at|naturaltime }}</small>
+                        </div>
+                        {% elif notification.notification_type == 'vote' %}
+                        <div class="notification">
+                            <a href="{% url 'notifications' %}?goto=profile&notification={{ notification.id }}">
+                                <strong>{{ notification.created_by.username }}</strong> Проголосовал<br>
+                            </a>
+                            <small>{{ notification.created_at|naturaltime }}</small>
+                        </div>
+                        {% endif %}
                     </div>
                     <br>
                 </div>

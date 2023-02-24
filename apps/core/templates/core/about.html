@@ -1,0 +1,260 @@
+{% extends 'base.html' %}
+{% block title %}О нас | Surffers {% endblock %}
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+{% include 'core/include/navbar.html' %}
+
+<section class="section hero home">
+    <div class="container">
+        <div class="hero-body home">
+
+            <div class="columns is-vcentered">
+                <div class="column is-5">
+                    <h1 class="title home">
+                        Сервис для систематизации ссылок
+                    </h1>
+                    <!-- Description -->
+                    <p class="title is-4 has-text-weight-normal">
+                        Организуйте свои любимые веб-сайты. Добавляйте ссылки на нужные вам сайты для быстрого доступа к
+                        ним.
+                    </p>
+                    <!-- Button -->
+                    {% if request.user.is_authenticated %}
+                    <a class="button is-large is-fullwidth is-link is-rounded is-medium" title="Disabled button" disabled>
+                        <span class="has-text-weight-medium">Начать cёрфить</span>
+                    </a>
+                    {% else %}
+                    <a class="button is-large is-fullwidth is-link is-rounded is-medium" href="{% url 'account_signup' %}">
+                        <span class="has-text-weight-medium">Начать cёрфить</span>
+                    </a>
+                    {% endif %}
+
+
+                </div>
+                <div class="column is-5 image-home is-offset-2 is-hidden-mobile">
+                    <img alt="" src="/static/img/home_image.png">
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section class="section about is-medium is-light">
+    <div class="container">
+        <h1 class="title is-size-1 is-size-3-mobile has-text-weight-bold has-text-centered">Собирай свои категории</h1>
+        <div class="spacer"></div>
+        <div class="columns is-multiline">
+            {% for category in categories_public %}
+            {% if category.published_date %}
+            <div class="column is-one-fifth">
+                <div class="story-item">
+                    <a href="{% url 'category' category.slug category.id %}">
+                        <div class="card profile">
+                            <div class="card-content">
+                                <h1 class="title is-4 has-text-weight-bold">
+                                    {{ category.title|truncatechars:21 }}
+                                </h1>
+                                <div class="block-home-category">
+                                    <p class="title is-6 has-text-weight-normal title-body is-lowercase">
+                                        {{ category.body|truncatechars:50}}
+                                    </p>
+                                    <div class="media subtitle">
+                                        <div class="media-left">
+                                            <p class="subtitle is-size-7 is-lowercase has-text-weight-bold">
+                                                 @{{ category.user.username|truncatechars:25 }}
+                                            </p>
+                                        </div>
+                                        <div class="media-content"></div>
+                                        <div class="media-right ">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="section hero is-medium">
+    <div class="container">
+        <div class="columns is-centered has-text-centered">
+            <div class="column is-6">
+                <h1 class="title is-size-1 is-size-3-mobile has-text-weight-bold">
+                    Организуйте ваши ссылки легко с помощью нашего сервиса закладок
+                </h1>
+            </div>
+        </div>
+        <div class="spacer"></div>
+        <div class="columns is-multiline is-centered">
+            <div class="column is-4">
+                <div class="spacer"></div>
+                <div class="block has-text-centered is-centered">
+                     <p class="title is-1">
+                     💾
+                    </p>
+                    <p class="title is-size-4 is-size-5-mobile">
+                       Общее хранение всех сохраненных ссылок в одном месте.
+                    </p>
+                </div>
+            </div>
+            <div class="column is-4">
+                <div class="spacer"></div>
+                <div class="block has-text-centered is-centered">
+                     <p class="title is-1">
+                       ⚡️
+                    </p>
+                    <p class="title is-size-4 is-size-5-mobile">
+                       Возможность сортировки ссылок по разным категориям.
+                    </p>
+                </div>
+            </div>
+            <div class="column is-4">
+                <div class="spacer"></div>
+                <div class="block has-text-centered is-centered">
+                     <p class="title is-1">
+                       🔗
+                    </p>
+                    <p class="title is-size-4 is-size-5-mobile">
+                       Очень быстрое добавление и изменение ссылок.
+                    </p>
+                </div>
+            </div>
+
+            <div class="column is-4">
+                <div class="spacer"></div>
+                <div class="block has-text-centered is-centered">
+                     <p class="title is-1">
+                       📁
+                    </p>
+                    <p class="title is-size-4 is-size-5-mobile">
+                       Организовать ссылки по категориям позволяет хранить и находить информацию быстрее и проще.
+                    </p>
+                </div>
+            </div>
+            <div class="column is-4">
+                <div class="spacer"></div>
+                <div class="block has-text-centered is-centered">
+                     <p class="title is-1">
+                       🕵️‍♀️
+                    </p>
+                    <p class="title is-size-4 is-size-5-mobile">
+                       Этот сервис позволяет отслеживать изменения и обновления ссылок, а также обмениваться информацией между пользователями.
+                    </p>
+                </div>
+            </div>
+            <div class="column is-4">
+                <div class="spacer"></div>
+                <div class="block has-text-centered is-centered">
+                     <p class="title is-1">
+                       🔍
+                    </p>
+                    <p class="title is-size-4 is-size-5-mobile">
+                       Удобный интерфейс позволяет пользователям легко искать и делиться информацией.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section about hero is-medium">
+    <div class="container">
+        <div class="hero-header has-text-centered">
+            <h1 class="title is-size-1 is-size-3-mobile has-text-weight-bold">Вопросы и ответы</h1>
+        </div>
+        <div class="hero-body">
+            <div class="accordion">
+                <div class="accordion-item">
+                    <button><span class="accordion-title has-text-weight-bold">Что такое Surffers?</span><span
+                            class="icon" aria-hidden="true"></span></button>
+                    <div class="accordion-content">
+                        <p>Surffers - это помощник в сёрфинге интернета и организации ссылок. С помощью него вы
+                            можете:</p>
+                        <ul>
+                            <li>1. Создавать категории для удобного хранения ваших ссылок.</li>
+                            <li>2. Добавлять ваши любимые веб-сайты по категориям для быстрого доступа к ним.</li>
+                            <li>3.Вы можете поделится любой ссылкой со своими друзьями.</li>
+                            <li>4. Найти любую ссылку через поиск или теги.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section is-medium">
+    <div class="container">
+        <div class="columns is-centered">
+            <div class="column is-6 has-text-centered">
+                <h1 class="title is-size-1 is-size-3-mobile has-text-weight-bold">
+                    Организуйте ваши ссылки легко с помощью нашего сервиса закладок
+                </h1>
+
+                {% if request.user.is_authenticated %}
+                <a class="button is-large is-fullwidth is-rounded is-link" title="Disabled button" disabled>
+                    Присоединиться к Surffers
+                </a>
+                {% else %}
+                <a class="button is-large is-fullwidth is-rounded is-link" href="{% url 'account_signup' %}">
+                    Присоединиться к Surffers
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="footer">
+  <div class="content has-text-centered">
+    <p>
+      <strong>&copy; 2023 Surffers.</strong> созданно
+        <a href="https://vk.com/karpukalexandr" class="has-text-black">Aleksandr Karpuk</a>&nbsp;&nbsp;
+        <a href="https://vc.ru/u/762241-surffers" class="has-text-black">Блог</a>&nbsp;&nbsp;
+        <a class="has-text-black" href="{% url 'about' %}"> О нас </a>&nbsp;&nbsp;
+        <a href="{% url 'privacy' %}" class="has-text-black">Политика конфиденциальности</a>
+    </p>
+  </div>
+</footer>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  $("a.icon-bookmark[href^='http']").each(function() {
+    $(this).css({
+        background: "url(http://www.google.com/s2/favicons?domain=" + this.href + ") left center no-repeat",
+        "background-size": "22px", "padding-left": "30px",
+    });
+});
+
+
+</script>
+<script>
+// Accordion
+const items = document.querySelectorAll(".accordion button");
+
+function toggleAccordion() {
+  const itemToggle = this.getAttribute('aria-expanded');
+
+  for (i = 0; i < items.length; i++) {
+    items[i].setAttribute('aria-expanded', 'false');
+  }
+
+  if (itemToggle == 'false') {
+    this.setAttribute('aria-expanded', 'true');
+  }
+}
+
+items.forEach(item => item.addEventListener('click', toggleAccordion));
+
+</script>
+{% endblock %}

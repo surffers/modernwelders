@@ -22,21 +22,38 @@
 <!--    End Search Modal    -->
 
 <!--    Navbar    -->
-<nav class="navbar is-fixed-top" id="navbar">
+<nav class="navbar is-fixed-top has-centered-menu" id="navbar">
     <div class="navbar-brand">
-        <a class="navbar-item logo" href="/">
-            <h1 class="navbar-item title-logo">Surffers</h1>
-        </a>
-        <div class="navbar-item is-hidden-desktop">
-            <svg class="header__search" id="search_btn" viewBox="0 0 24 24">
-                <path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z"></path>
+        <div onclick="window.history.back()"  class="navbar-item is-hidden-desktop">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <polyline points="15 6 9 12 15 18" />
             </svg>
         </div>
-        <a class="navbar-item is-hidden-mobile">
-            <form action="{% url 'search' %}" class="search-bar" method="get">
-                <input class="input" name="q" placeholder="Поиск" type="text">
-            </form>
+        <div onclick="history.forward()"  class="navbar-item navbar-item is-hidden-desktop">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-right" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <polyline points="9 6 15 12 9 18" />
+            </svg>
+        </div>
+        <a class="navbar-item logo" href="/">
+            <img src="/static/img/logo.svg" width="28" height="28" class="ml">
+            <h1 class="navbar-item title-logo">Surffers</h1>
         </a>
+        <div onclick="window.history.back()"  class="navbar-item is-hidden-mobile">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <polyline points="15 6 9 12 15 18" />
+            </svg>
+        </div>
+        <div onclick="history.forward()"  class="navbar-item is-hidden-mobile">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-right" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <polyline points="9 6 15 12 9 18" />
+            </svg>
+        </div>
+
+
         <div class="navbar-burger burger" data-target="navMenubd-example">
             <span></span>
             <span></span>
@@ -46,111 +63,236 @@
 
     <div class="navbar-menu" id="navMenubd-example">
         <div class="navbar-start">
-            <a class="navbar-item" href="{% url 'categories' %}"> Категории </a>
-            <a class="navbar-item" href="{% url 'board' %}"> Ссылки </a>
-            <a class="navbar-item" href="#"> О нас </a>
-            <hr class="dropdown-divider">
-            {% if request.user.is_authenticated %}
-            <a class="navbar-item has-text-danger is-hidden-desktop" href="{% url 'account_logout' %}">
-                Выход
-            </a>
-            {% endif %}
+            <a class="navbar-item is-hidden-mobile has-text-centered">
+            <form action="{% url 'search' %}" class="search-bar" method="get">
+                <input class="input" name="q" placeholder="Поиск" type="text">
+            </form>
+        </a>
         </div>
+
         <div class="navbar-end">
             {% if request.user.is_authenticated %}
-            {% include 'feed/include/add-category.html' %}
+                {% include 'feed/include/add-category.html' %}
             {% endif %}
-            {% if request.user.is_authenticated %}
-            <a href="{% url 'notifications' %}" class="navbar-item">
-                <span class="icon">
-                    <i class="fa fa-bell-o" aria-hidden="true"></i>
+            <a href="/" class="navbar-item is-flex is-hidden-desktop">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="16" height="16" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+                  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+                  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+                </svg>
+                <span class="ml">
+                    Главная
                 </span>
-            <span>
-                ({{ notifications.count }})
-            </span>
+            </a>
+            {% if request.user.is_authenticated %}
+            <a href="{% url 'profile' request.user.username %}" class="navbar-item is-flex is-hidden-desktop">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24"  stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                  <circle cx="12" cy="7" r="4" />
+                  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+                </svg>
+                <span class="ml">
+                    Профиль
+                </span>
+            </a>
+            {% endif %}
+            <a href="{% url 'categories' %}" class="navbar-item is-flex is-hidden-desktop">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-box-multiple" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                  <rect x="7" y="3" width="14" height="14" rx="2" />
+                  <path d="M17 17v2a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h2" />
+                </svg>
+                <span class="ml">
+                    Категории
+                </span>
             </a>
 
-            <div class="navbar-item is-hidden-mobile">
+            <a href="{% url 'board' %}" class="navbar-item is-flex is-hidden-desktop">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-unlink" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+                  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+                  <line x1="16" y1="21" x2="16" y2="19" />
+                  <line x1="19" y1="16" x2="21" y2="16" />
+                  <line x1="3" y1="8" x2="5" y2="8" />
+                  <line x1="8" y1="3" x2="8" y2="5" />
+                </svg>
+                <span class="ml">
+                    Ссылки
+                </span>
+            </a>
+
+            <a class="navbar-item is-flex is-hidden-desktop" id="search_btn">
+            <svg class="header__search"  viewBox="0 0 24 24" stroke-width="1.5">
+                <path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z"></path>
+            </svg>
+                <span class="ml">
+                    Поиск
+                </span>
+            </a>
+
+<!--           <a href="#" class="navbar-item is-flex is-hidden-desktop">-->
+<!--                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-users" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">-->
+<!--                  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>-->
+<!--                  <circle cx="9" cy="7" r="4" />-->
+<!--                  <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />-->
+<!--                  <path d="M16 3.13a4 4 0 0 1 0 7.75" />-->
+<!--                  <path d="M21 21v-2a4 4 0 0 0 -3 -3.85" />-->
+<!--                </svg>-->
+<!--               <span class="ml">-->
+<!--                    Профили-->
+<!--                </span>-->
+<!--            </a>-->
+
+            {% if request.user.is_authenticated %}
+                <a href="{% url 'notifications' %}" class="navbar-item is-flex" title="Уведомления">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-bell" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                      <path d="M10 5a2 2 0 0 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" />
+                      <path d="M9 17v1a3 3 0 0 0 6 0v-1" />
+                    </svg>
+                {% if notifications %}
+                    <span class="notifications tag">
+                           {{ notifications.count }}
+                    </span>
+                {% endif %}
+                <span class="is-hidden-desktop ml">
+                    Уведомления
+                </span>
+            </a>
+
+                <a href="{% url 'bookmark_favorite_lists' request.user.username %}" class="navbar-item is-flex is-hidden-desktop">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-heart " width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                  <path d="M19.5 13.572l-7.5 7.428l-7.5 -7.428m0 0a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
+                </svg>
+                <span class="ml">
+                    Избранное
+                </span>
+            </a>
+
+
+             <div class="navbar-item is-hidden-mobile">
                 <div class="dropdown is-right">
                     <div class="dropdown-trigger">
                         <button aria-controls="dropdown-menu"
                                 aria-haspopup="true"
-                                class="button is-black is-small is-rounded is-outlined add-link-btn ">
-                            <span class="icon is-small">
-                                <i aria-hidden="true" class="fas fa-angle-down"></i>
-                            </span>
+                                class="button add-link-btn ">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" viewBox="0 0 24 24" width="24" height="24"  stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                      <circle cx="12" cy="7" r="4" />
+                                      <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+                                    </svg>
                         </button>
                     </div>
                     <div class="dropdown-menu" role="menu">
                         <div class="dropdown-content">
-                            <a class="dropdown-item" href="{% url 'profile' request.user.username %}">
-                                <span class="icon-text">
-                                    <span class="icon has-text-link">
-                                        <i aria-hidden="true" class="fa fa-user-o"></i>
-                                    </span>
-                                    <span>
-                                        Профиль
-                                    </span>
+                            {% if request.user.is_authenticated %}
+                            <a href="{% url 'profile' request.user.username %}" class="dropdown-item is-flex">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24"  stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                  <circle cx="12" cy="7" r="4" />
+                                  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+                                </svg>
+                                <span class="ml">
+                                    Профиль
                                 </span>
                             </a>
-                            <a class="dropdown-item" href="{% url 'bookmark_favorite_lists' request.user.username %} ">
-                                <span class="icon-text">
-                                    <span class="icon has-text-link">
-                                        <i aria-hidden="true" class="fa fa-heart-o"></i>
-                                    </span>
-                                    <span>
-                                        Избранное
-                                    </span>
-                               </span>
-                            </a>
-                            <a class="dropdown-item" href="{% url 'categories' %}">
-                                <span class="icon-text">
-                                    <span class="icon has-text-link">
-                                        <i aria-hidden="true" class="fa fa-folder-o"></i>
-                                    </span>
-                                    <span>
-                                        Категории
-                                    </span>
+                            <a href="{% url 'bookmark_favorite_lists' request.user.username %}" class="dropdown-item is-flex">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-heart " width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                  <path d="M19.5 13.572l-7.5 7.428l-7.5 -7.428m0 0a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" />
+                                </svg>
+                                <span class="ml">
+                                    Избранное
                                 </span>
                             </a>
-                            <a class="dropdown-item" href="{% url 'board' %}">
-                                <span class="icon-text">
-                                    <span class="icon has-text-link">
-                                        <i aria-hidden="true" class="fa fa-external-link"></i>
-                                    </span>
-                                    <span>
-                                        Ссылки
-                                    </span>
+                            {% endif %}
+                            <a href="{% url 'categories' %}" class="dropdown-item is-flex">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-box-multiple" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                  <rect x="7" y="3" width="14" height="14" rx="2" />
+                                  <path d="M17 17v2a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h2" />
+                                </svg>
+                                <span class="ml">
+                                    Категории
                                 </span>
                             </a>
-                            <a class="dropdown-item" href="{% url 'tests' %}">
-                                <span class="icon-text">
-                                    <span class="icon has-text-link">
-                                        <i aria-hidden="true" class="fa fa-thermometer-empty"></i>
-                                    </span>
-                                    <span>
-                                        Тесты
-                                    </span>
+                            <a href="{% url 'board' %}" class="dropdown-item is-flex">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-unlink" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+                                  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+                                  <line x1="16" y1="21" x2="16" y2="19" />
+                                  <line x1="19" y1="16" x2="21" y2="16" />
+                                  <line x1="3" y1="8" x2="5" y2="8" />
+                                  <line x1="8" y1="3" x2="8" y2="5" />
+                                </svg>
+                                <span class="ml">
+                                    Ссылки
                                 </span>
                             </a>
                             <hr class="dropdown-divider">
-                            <a class="dropdown-item has-text-danger" href="{% url 'account_logout' %}">
-                                Выход
+                            <a href="{% url 'account_logout' %}" class="dropdown-item is-flex" title="Выход">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-logout" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                  <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
+                                  <path d="M7 12h14l-3 -3m0 6l3 -3" />
+                                </svg>
+                                <span class=" ml">
+                                    Выход
+                                </span>
                             </a>
                         </div>
                     </div>
                 </div>
             </div>
             {% else %}
-            <div class="buttons navbar-item">
-                <a class="button is-black is-small is-rounded is-outlined" href="{% url 'account_login' %}">
+            <div class="navbar-item">
+                <a class="button is-black is-small is-rounded is-outlined is-flex-fullhd" href="{% url 'account_login' %}">
                     Войти
-                </a>
-                <a class="button is-black is-small is-rounded" href="{% url 'account_signup' %}">
-                    Регистрация
                 </a>
             </div>
             {% endif %}
+            <hr class="dropdown-divider">
+            <a class="navbar-item is-flex is-hidden-desktop" href="{% url 'about' %}">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-accessible"
+                                         width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none"
+                                         stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <circle cx="12" cy="12" r="9"/>
+                    <path d="M10 16.5l2 -3l2 3m-2 -3v-2l3 -1m-6 0l3 1"/>
+                    <circle cx="12" cy="7.5" r=".5" fill="currentColor"/>
+                </svg>
+                <span class="ml">
+                    Услуги
+                </span>
+            </a>
+            <a class="navbar-item is-flex is-hidden-desktop" href="{% url 'about' %}">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-info-circle" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                  <circle cx="12" cy="12" r="9" />
+                  <line x1="12" y1="8" x2="12.01" y2="8" />
+                  <polyline points="11 12 12 12 12 16 13 16" />
+                </svg>
+                <span class="ml">
+                    О нас
+                </span>
+            </a>
+            <hr class="dropdown-divider">
+            {% if request.user.is_authenticated %}
+                <a href="{% url 'account_logout' %}" class="dropdown-item is-flex is-hidden-desktop" title="Выход">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-logout" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
+                        <path d="M7 12h14l-3 -3m0 6l3 -3" />
+                    </svg>
+                    <span class=" ml">
+                        Выход
+                    </span>
+                </a>
+             {% endif %}
         </div>
     </div>
 </nav>
@@ -159,6 +301,9 @@
 {% endblock %}
 
 {% block scripts %}
+<script>
+
+</script>
 <!-- Scripts -->
         <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script>
@@ -173,4 +318,5 @@ window.onscroll = function() {scrollFunction()};
       }
     }
 </script>
+
 {% endblock %}

@@ -24,7 +24,17 @@
     font-size: 14px;
 }
 
+.card.profile {
+  cursor: pointer;
+  height:250px;
+    width:100%;
+    border-radius: 1em;
+  overflow: hidden;
+  position: relative;
+  display: inline-block;
+    box-shadow: 8px 8px 15px var(--shadowDark), -8px -8px 15px var(--shadowLight);
 
+}
 .card.profile:hover{
     transform: scale(1.05, 1.05);
 }
@@ -119,6 +129,9 @@
     font-size: 8px;
 }
 
-#user-edit-profile a {
-    margin-left: 20px;
+.profile-username {
+    margin-right: 20px;
+}
+.mr-10 {
+    margin-right: 10px;
 }

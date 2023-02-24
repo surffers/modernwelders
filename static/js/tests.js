@@ -1,3 +1,26 @@
+// COOKIE
+function getCookie(name) {
+    let matches = document.cookie.match(new RegExp(
+    "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+    ));
+    return matches ? decodeURIComponent(matches[1]) : undefined;
+  }
+  let cookiecook = getCookie("cookiecook"),
+  cookiewin = document.getElementsByClassName('cookie-banner')[0];
+
+  if (cookiecook != "no") {
+    // показываем
+    cookiewin.style.display="block";
+    // закрываем по клику
+    document.getElementById("cookie_close").addEventListener("click", function(){
+    cookiewin.style.display="none";
+
+    let date = new Date;
+    date.setDate(date.getDate() + 1);
+    document.cookie = "cookiecook=no; path=/; expires=" + date.toUTCString();
+    });
+  }
+
 let $search = $('.search'),
 clazz = 'search--active';
 

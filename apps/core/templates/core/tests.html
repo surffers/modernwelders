@@ -5,38 +5,21 @@
 
 {% block content %}
 
-
- Сайты могут быть категоризованы по различным параметрам, включая тип содержимого, используемые технологии и целевые аудитории. Основные популярные категории сайтов включают:
-
-* **Блоги:** Блоги могут иметь различные темы и предоставлять уникальный контент автора.
-
-* **Социальные сети:** Социальные сети позволяют пользователям взаимодействовать друг с другом, делиться контентом и создавать сети контактов.
-
-* **Интернет-магазины:** Интернет-магазины предоставляют пользователям возможность искать и покупать товары онлайн.
-1.
- [Mebelion](https://mebelion.ru/): интернет-магазин мебели с доставкой по всей России
-2. [Обувьв] (https://obuv.ru/): интернет-магазин обуви с более чем 2 000 торговых марок
-3. [Lamoda] (https://lamoda.ru/): большой интернет-магазин модной одежды, обуви и аксессуаров
-4. [Wildberries] (https://www.wildberries.ru/): один из крупнейших интернет-магазинов одежды, обуви и аксессуаров в России
-5. [KupiVIP] (https://www.kupivip.ru/): интернет-магазин одежды, обуви и аксессуаров с более чем 1 500 брендов
-6. [Shop24] (https://shop24.ru/): интернет-магазин с одеждой, аксессуарами и другими товарами
-7. [Kari] (https://kari.ru/): интернет-магазин одежды, аксессуаров и обуви с более чем 3 000 торговых марок
-8. [Ostin] (https://www.ostin.ru/): интернет-магазин с модной одеждой, обувью и аксессуарами
-9. [Nordic Outdoor] (https://www.nordicoutdoor.ru/): интернет-магазин для активного отдыха и цифровой техники
-10. [Кишкин дом](https://www.kiskindom.ru/): интернет-магазин детской мебели и игрушек
-11. [Sneakerhead] (https://sneakerhead.ru/): интернет-магазин спортивной обуви и аксессуаров
-12. [O`Stin Kids] (https://www.ostinkids.ru/): интернет-магазин детской одежды, аксессуаров и обуви
-13. [Eldorado] (https://www.eldorado.ru/
-
-* **Сайты общения:** Сайты общения предоставляют пользователям возможность общаться и взаимодействовать друг с другом на платформе чата.
-
-* **Сайты поиска:** Сайты поиска помогают пользователям найти информацию в Интернете.
-
-* **Новостные сайты:** Новостные сайты предоставляют пользователям актуальную информацию о мировых событиях.
-
-* **Видео-хостинги:** Видео-хостинги предоставляют пользователям платформы для просмотра
-
-
+<div class="container">
+<div class="row no-gutters slider-text align-items-center justify-content-end">
+<div class="col-lg-8">
+<div class="text rellaxHero" data-rellax-speed="-3">
+<span class="subheading">👋 Привет</span>
+<h1 class="mb-3">А<span>ле</span>кс.</h1>
+<div class="row justify-content-end">
+<div class="col-lg-9">
+<h2>Я блогер &amp; Веб-разработчик 👨‍💻<br>базируюсь в Магадане </h2>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 
 
 <section class="hero home is-unselectable">
@@ -49,32 +32,27 @@
 			 <a href="{% url 'category' category.slug category.id %}">
                             <div class="card slider">
                                 <div class="card-content">
-                                    <p class="title is-4 has-text-weight-bold">
-                                        {{ category.title|truncatechars:25 }}
-                                    </p>
-                                    <br>
-                                    {% for bookmark in category.bookmarks.all  %}
-                                        <a class="icon-bookmark"
-                                       href="{{ bookmark.url }}"
-                                       target="_blank">
-
-                                    </a>
+                                <h1 class="title is-4 has-text-weight-bold">
+                                        {{ category.title|truncatechars:21 }}
+                                    </h1>
+                                        <div class="block-home-bookmark">
+                                            {% for bookmark in category.bookmarks.all  %}
+                                        {% if bookmark.published_date %}
+                                        {% if forloop.counter <= 7 %}
+                                            <a class="icon-bookmark" href="{{ bookmark.url }}" target="_blank"></a>
+                                        {% endif %}
+                                        {% endif %}
                                     {% endfor %}
-
-
-                                    <div class="block-home-category">
-                                        <p class="title is-6 has-text-weight-normal title-body is-lowercase">
-                                        {{ category.body|truncatechars:55 }}
-                                        </p>
-                                        <p class="subtitle  is-7 has-text-weight-bold is-lowercase">
+                                        </div>
+                                <div class="block-home-category">
+                                    <p class="title is-6 has-text-weight-normal title-body is-lowercase">
+                                        {{ category.body|truncatechars:50 }}
+                                    </p>
+                                    <p class="subtitle  is-7 has-text-weight-bold is-lowercase">
                                                 @{{ category.user.username|truncatechars:25 }}
                                         </p>
-                                        <p  class="title is-size-7 has-text-weight-normal is-lowercase">
-                                            <span>{{ category.created_at|naturaltime }}</span>
-                                        </p>
-
-                                    </div>
                                 </div>
+                            </div>
                             </div>
                         </a>
 		</div>
@@ -96,68 +74,9 @@
 
 
 
-
-<section class="section">
-    <div class="container">
-  <div class="accordion">
-    <div class="accordion-item">
-      <button ><span class="accordion-title">Why is the moon sometimes out during the day?</span><span class="icon" aria-hidden="true"></span></button>
-      <div class="accordion-content">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Elementum sagittis vitae et leo duis ut. Ut tortor pretium viverra suspendisse potenti.</p>
-      </div>
-    </div>
-    <div class="accordion-item">
-      <button id="accordion-button-2" aria-expanded="false"><span class="accordion-title">Why is the sky blue?</span><span class="icon" aria-hidden="true"></span></button>
-      <div class="accordion-content">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Elementum sagittis vitae et leo duis ut. Ut tortor pretium viverra suspendisse potenti.</p>
-      </div>
-    </div>
-    <div class="accordion-item">
-      <button id="accordion-button-3" aria-expanded="false"><span class="accordion-title">Will we ever discover aliens?</span><span class="icon" aria-hidden="true"></span></button>
-      <div class="accordion-content">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Elementum sagittis vitae et leo duis ut. Ut tortor pretium viverra suspendisse potenti.</p>
-      </div>
-    </div>
-    <div class="accordion-item">
-      <button id="accordion-button-4" aria-expanded="false"><span class="accordion-title">How much does the Earth weigh?</span><span class="icon" aria-hidden="true"></span></button>
-      <div class="accordion-content">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Elementum sagittis vitae et leo duis ut. Ut tortor pretium viverra suspendisse potenti.</p>
-      </div>
-    </div>
-    <div class="accordion-item">
-      <button id="accordion-button-5" aria-expanded="false"><span class="accordion-title">How do airplanes stay up?</span><span class="icon" aria-hidden="true"></span></button>
-      <div class="accordion-content">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Elementum sagittis vitae et leo duis ut. Ut tortor pretium viverra suspendisse potenti.</p>
-      </div>
-    </div>
-  </div>
-</div>
-</section>
-
-
-
 {% endblock %}
 
 {% block scripts %}
-
-<script>
-// Accordion
-const items = document.querySelectorAll(".accordion button");
-
-function toggleAccordion() {
-  const itemToggle = this.getAttribute('aria-expanded');
-
-  for (i = 0; i < items.length; i++) {
-    items[i].setAttribute('aria-expanded', 'false');
-  }
-
-  if (itemToggle == 'false') {
-    this.setAttribute('aria-expanded', 'true');
-  }
-}
-
-items.forEach(item => item.addEventListener('click', toggleAccordion));
-</script>
 <script>
   $("a.icon-bookmark[href^='http']").each(function() {
     $(this).css({
@@ -165,7 +84,6 @@ items.forEach(item => item.addEventListener('click', toggleAccordion));
         "background-size": "22px", "padding-left": "30px",
     });
 });
-
 </script>
 
 {% endblock %}
